@@ -4,7 +4,8 @@ import omit from 'omit.js';
 import ItemMap from './map';
 import LoginContext from './LoginContext';
 import styles from './index.less';
-import { getFakeCaptcha } from '@/services/login';
+import { getFakeCaptcha } from '../../service';
+
 const FormItem = Form.Item;
 
 const getFormItemOptions = ({ onChange, defaultValue, customProps = {}, rules }) => {

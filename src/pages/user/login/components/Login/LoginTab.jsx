@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
 import LoginContext from './LoginContext';
+
 const { TabPane } = Tabs;
 
 const generateId = (() => {
@@ -21,7 +22,7 @@ const LoginTab = props => {
     }
   }, []);
   const { children } = props;
-  return <TabPane {...props}>{children}</TabPane>;
+  return <TabPane {...props}>{props.active && children}</TabPane>;
 };
 
 const WrapContext = props => (
