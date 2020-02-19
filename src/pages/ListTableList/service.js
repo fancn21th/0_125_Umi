@@ -1,8 +1,16 @@
 import request from '@/utils/request';
+
 export async function queryRule(params) {
-  return request('/api/rule', {
+  const data = await request('/api/rule', {
     params,
   });
+  return {
+    data,
+    total: 103,
+    success: true,
+    pageSize: '10',
+    current: 1,
+  };
 }
 export async function removeRule(params) {
   return request('/api/rule', {
