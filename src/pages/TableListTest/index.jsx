@@ -125,7 +125,7 @@ const TableList = () => {
       <ProTable
         headerTitle="人员日工作量报表"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         params={{
           sorter,
         }}

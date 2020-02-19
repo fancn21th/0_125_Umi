@@ -3,7 +3,6 @@ import request from '@/utils/request';
 const baseUrl = 'http://localhost:4000';
 
 export async function queryRule(params) {
-  console.log(params);
   return request('/api/rule', {
     params,
   });
@@ -29,11 +28,13 @@ export async function updateRule(params) {
 
 // 获取日工作量报表数据列表
 export async function getWorkList({ current, pageSize, sorter }) {
-  console.log(sorter);
-  return request(`${baseUrl}/report/workloads`, {
-    ...sorter,
-    pageNum: current,
-    pageSize,
-    mode: 'day',
+  const data = await request(`${baseUrl}/report/workloads`, {
+    params: {
+      mode: 'day',
+      ...sorter,
+      pageNum: current,
+      pageSize,
+    },
   });
+  return { data, current, total: 10, success: true, pageSize };
 }
