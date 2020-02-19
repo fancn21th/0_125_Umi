@@ -14,6 +14,7 @@ export function DatatransformToCargos(data) {
   }, []);
   return {
     total: list.length,
+    success: true,
     data: list,
   };
 }

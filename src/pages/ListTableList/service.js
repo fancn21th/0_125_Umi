@@ -6,12 +6,13 @@ export async function queryRule({ current, pageSize, sorter, InOrderNo }) {
     params: {
       pageindex: current - 1,
       pageSize,
-      orderno: InOrderNo ? InOrderNo : '',
+      orderno: InOrderNo ? InOrderNo : ''
     },
   });
   const list = DatatransformToCargos(data);
   return list;
 }
+
 
 export async function removeRule(params) {
   return request('/api/rule', {

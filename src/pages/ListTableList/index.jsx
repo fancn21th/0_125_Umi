@@ -13,7 +13,6 @@ const { Text } = Typography;
 const TableList = () => {
   const [sorter, setSorter] = useState({});
   const [orderno, setOrderno] = useState('');
-  const [searchText, setSearchText] = useState('');
 
   const actionRef = useRef();
 
@@ -33,13 +32,8 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <Text>单号：</Text>,
-          <Input
-            placeholder="单号..."
-            onChange={e => {
-              setSearchText(e.target.value);
-            }}
-          />,
-          <Button type="primary" onClick={() => setOrderno(searchText)}>
+          <Input placeholder="单号..." />,
+          <Button type="primary" onClick={() => handleModalVisible(true)}>
             查询
           </Button>,
           <Search
