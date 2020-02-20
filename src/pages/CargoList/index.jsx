@@ -10,8 +10,9 @@ const { Text } = Typography;
 
 const TableList = () => {
   const [sorter, setSorter] = useState({});
-  const [orderno, setOrderno] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const [tableparams, setTableparams] = useState({
+    sorter,
+  });
 
   const actionRef = useRef();
 
@@ -25,33 +26,12 @@ const TableList = () => {
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}
-        params={{
-          sorter,
-          InOrderNo: orderno,
-        }}
+        params={tableparams}
         toolBarRender={(action, { selectedRows }) => [
-          <Text>单号：</Text>,
-          <Input
-            placeholder="单号..."
-            value={searchText}
-            onChange={e => setSearchText(e.target.value)}
-          />,
-          <Button type="primary" onClick={() => setOrderno(searchText)}>
-            查询
-          </Button>,
-          <Button
-            type="default"
-            onClick={() => {
-              setSearchText('');
-              setOrderno('');
-            }}
-          >
-            重置
-          </Button>,
           <Search
-            placeholder="search..."
+            placeholder="搜索..."
             onSearch={val => {
-              setOrderno(val);
+              setTableparams({ InOrderNo: val });
             }}
             style={{ width: 200 }}
           />,

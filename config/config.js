@@ -118,6 +118,18 @@ export default {
               component: './ListTableList',
             },
             {
+              name: 'list.cargo-list',
+              icon: 'table',
+              path: '/cargolist',
+              component: './CargoList',
+            },
+            {
+              name: 'list.out-cargo-list',
+              icon: 'table',
+              path: '/outcargolist',
+              component: './OutCargoList',
+            },
+            {
               component: './404',
             },
           ],
