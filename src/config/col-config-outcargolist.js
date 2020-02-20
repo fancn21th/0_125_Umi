@@ -13,61 +13,73 @@ export const columns = [
     title: '货物RFID',
     dataIndex: 'RFID',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '货位号',
     dataIndex: 'ShelfGroup',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '物料行数',
     dataIndex: 'Cargos',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '行号',
     dataIndex: 'InOrderItemNo',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '物料号',
     dataIndex: 'CargoNo',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '物料名',
     dataIndex: 'CargoName',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '批次号',
     dataIndex: 'CargoBatchNo',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '应收',
     dataIndex: 'Quantity',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '实收',
     dataIndex: 'QuantityReal',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '包装',
     dataIndex: 'Package',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '危险等级',
     dataIndex: 'DagLvl',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '货物状态',
     dataIndex: 'CargoStatus',
     sorter: false,
+    hideInSearch: true,
     valueEnum: {
       '0': {
         text: '待收货',
@@ -105,6 +117,7 @@ export const columns = [
     title: '同步状态',
     dataIndex: 'SyncStatus',
     sorter: false,
+    hideInSearch: true,
     valueEnum: {
       '0': {
         text: '未同步',
@@ -119,5 +132,6 @@ export const columns = [
     dataIndex: 'Timestamp',
     sorter: false,
     valueType: 'dateTime',
+    hideInSearch: true,
   },
 ];
