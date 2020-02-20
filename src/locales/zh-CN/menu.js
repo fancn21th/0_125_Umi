@@ -23,6 +23,8 @@ export default {
   'menu.list': '列表页',
   'menu.list.table-list': '查询表格',
   'menu.list.order-goods': '订单货物',
+  'menu.list.cargo-list': '库存记录',
+  'menu.list.out-cargo-list': '出库记录',
   'menu.list.basic-list': '标准列表',
   'menu.list.card-list': '卡片列表',
   'menu.list.search-list': '搜索列表',
