@@ -18,7 +18,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="订单操作"
+        headerTitle="库存记录"
         actionRef={actionRef}
         rowKey="key"
         search={true}
