@@ -117,12 +117,12 @@ export default {
               path: '/list',
               component: './ListTableList',
             },
-            // {
-            //   name: 'list.cargo-list',
-            //   icon: 'table',
-            //   path: '/cargolist',
-            //   component: './CargoList',
-            // },
+            {
+              name: 'list.order-goods',
+              icon: 'table',
+              path: '/ordergoods',
+              component: './OrderGoods',
+            },
             {
               component: './404',
             },
