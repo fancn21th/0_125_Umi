@@ -31,9 +31,16 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <Text>单号：</Text>,
-          <Input placeholder="单号..." onChange={e => setSearchText(e.target.value)} />,
+          <Input placeholder="单号..." value={searchText} onChange={e => setSearchText(e.target.value)} />,
           <Button type="primary" onClick={() => setOrderno(searchText)}>
             查询
+          </Button>,
+          <Button type="default" onClick={() => {
+            setSearchText('');
+            setOrderno('');
+            action.reload();
+          }}>
+            重置
           </Button>,
           <Search
             placeholder="search..."
