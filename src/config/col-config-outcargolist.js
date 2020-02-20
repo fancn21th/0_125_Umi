@@ -1,5 +1,10 @@
 export const columns = [
   {
+    title: '出库单号',
+    dataIndex: 'OutOrderNo',
+    sorter: false,
+  },
+  {
     title: '入库单号',
     dataIndex: 'InOrderNo',
     sorter: false,

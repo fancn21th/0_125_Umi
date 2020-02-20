@@ -1,5 +1,5 @@
-export function DatatransformToCargos(data) {
-  const list = data.reduce((acc, val) => {
+export function ApiTransformToData(apidata) {
+  const data = apidata.reduce((acc, val) => {
     let { Cargos: cargos } = val;
     cargos = cargos.map(v => {
       const cargo = {
@@ -13,8 +13,8 @@ export function DatatransformToCargos(data) {
     return [...acc, ...cargos];
   }, []);
   return {
-    total: list.length,
+    total: data.length,
     success: true,
-    data: list,
+    data
   };
 }

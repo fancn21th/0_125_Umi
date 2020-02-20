@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { DatatransformToCargos } from './data-formator';
+import { ApiTransformToData } from '../../utils/api-to-data-cargo';
 
 export async function queryCargos({ current, pageSize, sorter, InOrderNo }) {
   const data = await request('/api/sinoapi/getcargolist', {
@@ -9,6 +9,5 @@ export async function queryCargos({ current, pageSize, sorter, InOrderNo }) {
       orderno: InOrderNo ? InOrderNo : ''
     },
   });
-  const list = DatatransformToCargos(data);
-  return list;
+  return ApiTransformToData(data);
 }

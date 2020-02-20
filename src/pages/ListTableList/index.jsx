@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { queryCargos } from './service';
-import { columns } from './col-config';
+import { columns } from '../../config/col-config-cargolist';
 const { Search } = Input;
 const { Text } = Typography;
 
@@ -31,14 +31,21 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <Text>单号：</Text>,
-          <Input placeholder="单号..." value={searchText} onChange={e => setSearchText(e.target.value)} />,
+          <Input
+            placeholder="单号..."
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+          />,
           <Button type="primary" onClick={() => setOrderno(searchText)}>
             查询
           </Button>,
-          <Button type="default" onClick={() => {
-            setSearchText('');
-            setOrderno('');
-          }}>
+          <Button
+            type="default"
+            onClick={() => {
+              setSearchText('');
+              setOrderno('');
+            }}
+          >
             重置
           </Button>,
           <Search
