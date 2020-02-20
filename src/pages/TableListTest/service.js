@@ -31,7 +31,8 @@ export async function getWorkList({ current, pageSize, sorter }) {
   const data = await request(`${baseUrl}/report/workloads`, {
     params: {
       mode: 'day',
-      ...sorter,
+      startTime: sorter[0],
+      endTime: sorter[1],
       pageNum: current,
       pageSize,
     },

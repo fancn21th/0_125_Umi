@@ -5,9 +5,12 @@ import { Button, Divider, Dropdown, Menu, message, DatePicker } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import moment from 'moment';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { queryRule, updateRule, addRule, removeRule, getWorkList } from './service';
+
+const { RangePicker } = DatePicker;
 
 /**
  * 添加节点
@@ -75,11 +78,18 @@ const handleRemove = async selectedRows => {
   }
 };
 
+// 默认起止时间
+const defaultDate = [
+  moment()
+    .startOf('day')
+    .valueOf(),
+  moment()
+    .endOf('day')
+    .valueOf(),
+];
+
 const TableList = () => {
-  const [sorter, setSorter] = useState({
-    startTime: 1577808000000,
-    endTime: 1582099199999,
-  });
+  const [sorter, setSorter] = useState(defaultDate);
   const [createModalVisible, handleModalVisible] = useState(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
@@ -126,13 +136,22 @@ const TableList = () => {
         headerTitle="人员日工作量报表"
         actionRef={actionRef}
         rowKey="id"
+        search={false}
         params={{
           sorter,
         }}
         toolBarRender={(action, { selectedRows }) => [
-          <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
-            新建
-          </Button>,
+          <RangePicker
+            format="YYYY-MM-DD"
+            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+            onChange={date => {
+              const dateArr = [date[0].valueOf(), date[1].valueOf()];
+              setSorter(dateArr);
+            }}
+          />,
+          // <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
+          //   新建
+          // </Button>,
           selectedRows && selectedRows.length > 0 && (
             <Dropdown
               overlay={
