@@ -3,9 +3,7 @@ import { Button, Divider, Dropdown, Menu, message, Input, Typography } from 'ant
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import { queryCargos } from './service';
 import { columns } from './col-config';
 const { Search } = Input;
 const { Text } = Typography;
@@ -13,6 +11,7 @@ const { Text } = Typography;
 const TableList = () => {
   const [sorter, setSorter] = useState({});
   const [orderno, setOrderno] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const actionRef = useRef();
 
@@ -32,8 +31,8 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <Text>单号：</Text>,
-          <Input placeholder="单号..." />,
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
+          <Input placeholder="单号..." onChange={e => setSearchText(e.target.value)} />,
+          <Button type="primary" onClick={() => setOrderno(searchText)}>
             查询
           </Button>,
           <Search
@@ -44,7 +43,7 @@ const TableList = () => {
             style={{ width: 200 }}
           />,
         ]}
-        request={params => queryRule(params)}
+        request={params => queryCargos(params)}
         columns={columns}
       />
     </PageHeaderWrapper>
