@@ -1,7 +1,5 @@
 import request from '@/utils/request';
 
-const baseUrl = 'http://localhost:4000';
-
 export async function queryRule(params) {
   return request('/api/rule', {
     params,
@@ -28,7 +26,7 @@ export async function updateRule(params) {
 
 // 获取日工作量报表数据列表
 export async function getWorkList({ current, pageSize, sorter }) {
-  const data = await request(`${baseUrl}/report/workloads`, {
+  const data = await request('/api/report/workloads', {
     params: {
       mode: 'day',
       startTime: sorter[0],
