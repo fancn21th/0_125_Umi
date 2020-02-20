@@ -8,7 +8,7 @@ import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { getWorkloads } from './service';
+import { getMonthWorkloads } from './service';
 import { columns } from '../../config/col-config-workloads';
 
 const { RangePicker } = DatePicker;
@@ -35,10 +35,10 @@ const handleRemove = async selectedRows => {};
 // 默认起止时间
 const defaultDate = [
   moment()
-    .startOf('day')
+    .startOf('month')
     .valueOf(),
   moment()
-    .endOf('day')
+    .endOf('month')
     .valueOf(),
 ];
 
@@ -53,7 +53,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="日工作量"
+        headerTitle="月工作量"
         actionRef={actionRef}
         rowKey="id"
         search={false}
@@ -63,18 +63,18 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <RangePicker
-            format="YYYY-MM-DD"
-            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+            format="YYYY-MM"
+            defaultValue={[moment().startOf('month'), moment().endOf('month')]}
             onChange={date => {
               const dateArr = [date[0].valueOf(), date[1].valueOf()];
               setSorter(dateArr);
             }}
           />,
           <Select
-            defaultValue=""
             onChange={val => {
               setType(val);
             }}
+            defaultValue=""
           >
             <Option value="" key="1">
               人员
@@ -122,7 +122,7 @@ const TableList = () => {
             </span>
           </div>
         )}
-        request={params => getWorkloads(params)}
+        request={params => getMonthWorkloads(params)}
         columns={columns}
         rowSelection={{}}
       />

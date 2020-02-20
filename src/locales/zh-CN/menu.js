@@ -24,6 +24,8 @@ export default {
   'menu.list.table-list': '查询表格',
   // 'menu.list.cargo-list': '库存记录',
   'menu.list.kc-workloads': '日工作量',
+  'menu.list.kc-month-workloads': '月工作量',
+  'menu.list.kc-year-workloads': '年工作量',
   'menu.list.basic-list': '标准列表',
   'menu.list.card-list': '卡片列表',
   'menu.list.search-list': '搜索列表',

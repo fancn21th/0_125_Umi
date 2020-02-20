@@ -124,6 +124,18 @@ export default {
               path: '/kcWorkloads',
               component: './KcWorkloads',
             },
+            {
+              name: 'list.kc-month-workloads',
+              icon: 'table',
+              path: '/kcMonthWorkloads',
+              component: './KcMonthWorkloads',
+            },
+            {
+              name: 'list.kc-year-workloads',
+              icon: 'table',
+              path: '/kcYearWorkloads',
+              component: './KcYearWorkloads',
+            },
             // {
             //   name: 'list.cargo-list',
             //   icon: 'table',

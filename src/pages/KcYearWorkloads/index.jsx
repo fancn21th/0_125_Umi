@@ -35,10 +35,10 @@ const handleRemove = async selectedRows => {};
 // 默认起止时间
 const defaultDate = [
   moment()
-    .startOf('day')
+    .startOf('year')
     .valueOf(),
   moment()
-    .endOf('day')
+    .endOf('year')
     .valueOf(),
 ];
 
@@ -53,7 +53,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="日工作量"
+        headerTitle="年工作量"
         actionRef={actionRef}
         rowKey="id"
         search={false}
@@ -63,8 +63,8 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <RangePicker
-            format="YYYY-MM-DD"
-            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+            format="YYYY"
+            defaultValue={[moment().startOf('year'), moment().endOf('year')]}
             onChange={date => {
               const dateArr = [date[0].valueOf(), date[1].valueOf()];
               setSorter(dateArr);

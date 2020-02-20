@@ -9,7 +9,7 @@ export async function getWorkloads({ current, pageSize, sorter, type }) {
       begin: sorter[0],
       end: sorter[1],
       devtype: type,
-      mode: 'day',
+      mode: 'year',
       // pageindex: current,
       // pageSize,
     };
@@ -17,7 +17,7 @@ export async function getWorkloads({ current, pageSize, sorter, type }) {
     params = {
       begin: sorter[0],
       end: sorter[1],
-      mode: 'day',
+      mode: 'year',
       // devType: type,
       // pageindex: current,
       // pageSize,
