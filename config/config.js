@@ -118,22 +118,29 @@ export default {
               component: './ListTableList',
             },
             {
-              name: 'list.cargo-list',
+              name: 'category.cargo',
               icon: 'table',
-              path: '/cargolist',
-              component: './CargoList',
-            },
-            {
-              name: 'list.out-cargo-list',
-              icon: 'table',
-              path: '/outcargolist',
-              component: './OutCargoList',
-            },
-            {
-              name: 'list.order-goods',
-              icon: 'table',
-              path: '/ordergoods',
-              component: './OrderGoods',
+              path: '/',
+              routes: [
+                {
+                  name: 'list.cargo-list',
+                  icon: 'table',
+                  path: '/cargolist',
+                  component: './CargoList',
+                },
+                {
+                  name: 'list.out-cargo-list',
+                  icon: 'table',
+                  path: '/outcargolist',
+                  component: './OutCargoList',
+                },
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/ordergoods',
+                  component: './OrderGoods',
+                },
+              ],
             },
             {
               component: './404',
