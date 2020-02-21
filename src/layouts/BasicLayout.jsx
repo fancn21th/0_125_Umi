@@ -8,12 +8,14 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import React, { useEffect } from 'react';
 import { Link } from 'umi';
 import { connect } from 'dva';
-import { GithubOutlined } from '@ant-design/icons';
+// import { GithubOutlined } from '@ant-design/icons';
 import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
-import logo from '../assets/logo.svg';
+// import logo from '../assets/logo.svg';
+import logo from '../assets/sinotrans-logo.png';
+
 const noMatch = (
   <Result
     status="403"
@@ -38,24 +40,12 @@ const menuDataRender = menuList =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright="2019 蚂蚁金服体验技术部出品"
+    copyright="2020 中外运股份有限公司"
     links={[
       {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
-        blankTarget: true,
-      },
-      {
-        key: 'github',
-        title: <GithubOutlined />,
-        href: 'https://github.com/ant-design/ant-design-pro',
-        blankTarget: true,
-      },
-      {
-        key: 'Ant Design',
-        title: 'Ant Design',
-        href: 'https://ant.design',
+        key: 'sinotrans',
+        title: 'Sinotrans.com',
+        href: 'http://www.sinotrans.com/',
         blankTarget: true,
       },
     ]}

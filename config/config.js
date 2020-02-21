@@ -96,14 +96,14 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/cargolist',
             },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            // },
             {
               path: '/admin',
               name: 'admin',
@@ -111,13 +111,8 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
-            {
-              name: 'list.table-list',
-              icon: 'table',
-              path: '/list',
-              component: './ListTableList',
-            },
             // {
+<<<<<<< HEAD
             //   name: 'category.cargo',
             //   icon: 'table',
             //   path: '/',
@@ -129,7 +124,38 @@ export default {
             //       component: './CargoList',
             //     },
             //   ],
+=======
+            //   name: 'list.table-list',
+            //   icon: 'table',
+            //   path: '/list',
+            //   component: './ListTableList',
+>>>>>>> dev
             // },
+            {
+              name: 'category.cargo',
+              icon: 'table',
+              path: '/',
+              routes: [
+                {
+                  name: 'list.cargo-list',
+                  icon: 'table',
+                  path: '/cargolist',
+                  component: './CargoList',
+                },
+                {
+                  name: 'list.out-cargo-list',
+                  icon: 'table',
+                  path: '/outcargolist',
+                  component: './OutCargoList',
+                },
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/ordergoods',
+                  component: './OrderGoods',
+                },
+              ],
+            },
             {
               component: './404',
             },
