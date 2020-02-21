@@ -3,18 +3,21 @@ import { Button, Divider, Dropdown, Menu, message, Input, Typography } from 'ant
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import { connect } from 'dva';
 import { queryCargos } from './service';
 import { columns } from '../../config/col-config-cargolist';
+
 const { Search } = Input;
 const { Text } = Typography;
 
-const TableList = () => {
+const TableList = ({ cargoNoList }) => {
   const [sorter, setSorter] = useState({});
   const [tableparams, setTableparams] = useState({
     sorter,
   });
-
   const actionRef = useRef();
+  const hasNoData = params => new Promise(resolve => resolve([]));
+  const hasData = params => queryCargos(params);
 
   return (
     <PageHeaderWrapper>
@@ -22,7 +25,7 @@ const TableList = () => {
         headerTitle="库存记录"
         actionRef={actionRef}
         rowKey="key"
-        search={true}
+        search
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}
@@ -36,11 +39,11 @@ const TableList = () => {
             style={{ width: 200 }}
           />,
         ]}
-        request={params => queryCargos(params)}
+        request={cargoNoList.length > 0 ? hasData : hasNoData}
         columns={columns}
       />
     </PageHeaderWrapper>
   );
 };
 
-export default TableList;
+export default connect(({ cargolist }) => cargolist)(TableList);
