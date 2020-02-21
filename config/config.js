@@ -153,6 +153,12 @@ export default {
                   path: '/order/oplist',
                   component: './OpList',
                 },
+                {
+                  name: 'list.op-list-by-time',
+                  icon: 'table',
+                  path: '/order/oplistbytime',
+                  component: './OpListByTime',
+                },
               ],
             },
             {
