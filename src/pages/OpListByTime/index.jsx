@@ -6,6 +6,8 @@ import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { queryCargos } from './service';
 import { columns } from '../../config/col-config-oplistbytime';
+import momentToTimestamp from '../../utils/moment-to-timestamp';
+
 const { Search } = Input;
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -14,24 +16,14 @@ const { RangePicker } = DatePicker;
 const defaultDate = [moment(1581436800000), moment(1581523199999)];
 
 // 默认起止时间
-// const defaultDate = [
-//   moment()
-//     .startOf('day')
-//     .valueOf(),
-//   moment()
-//     .endOf('day')
-//     .valueOf(),
-// ];
+// const defaultDate = [moment().startOf('day'), moment().endOf('day')];
 
 const TableList = () => {
   const [sorter, setSorter] = useState({});
-  const [date, setDate] = useState({
-    begin: defaultDate[0].valueOf(),
-    end: defaultDate[1].valueOf(),
-  });
   const [tableparams, setTableparams] = useState({
     sorter,
-    date,
+    begin: momentToTimestamp(defaultDate[0]),
+    end: momentToTimestamp(defaultDate[1]),
   });
 
   const actionRef = useRef();
@@ -62,8 +54,11 @@ const TableList = () => {
             defaultValue={defaultDate}
             onChange={dates => {
               if (dates && dates.length) {
-                const date = { begin: dates[0].valueOf(), end: dates[1].valueOf() };
-                setDate(date);
+                setTableparams({
+                  ...tableparams,
+                  begin: momentToTimestamp(dates[0]),
+                  end: momentToTimestamp(dates[1]),
+                });
               }
             }}
           />,
