@@ -54,4 +54,5 @@ export default {
   'menu.category.cargo.list.order-goods': '订单货物',
   'menu.category.order': '订单记录',
   'menu.category.order.list.op-list': '订单操作',
+  'menu.category.order.list.op-list-by-time': '流水操作',
 };
