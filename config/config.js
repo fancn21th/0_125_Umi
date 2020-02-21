@@ -119,22 +119,28 @@ export default {
               component: './ListTableList',
             },
             {
-              name: 'list.kc-workloads',
+              name: 'list.workloads',
               icon: 'table',
-              path: '/kcWorkloads',
-              component: './KcWorkloads',
-            },
-            {
-              name: 'list.kc-month-workloads',
-              icon: 'table',
-              path: '/kcMonthWorkloads',
-              component: './KcMonthWorkloads',
-            },
-            {
-              name: 'list.kc-year-workloads',
-              icon: 'table',
-              path: '/kcYearWorkloads',
-              component: './KcYearWorkloads',
+              routes: [
+                {
+                  name: 'kc-day-workloads',
+                  icon: 'table',
+                  path: '/kcDayWorkloads',
+                  component: './KcWorkloads',
+                },
+                {
+                  name: 'kc-month-workloads',
+                  icon: 'table',
+                  path: '/kcMonthWorkloads',
+                  component: './KcMonthWorkloads',
+                },
+                {
+                  name: 'kc-year-workloads',
+                  icon: 'table',
+                  path: '/kcYearWorkloads',
+                  component: './KcYearWorkloads',
+                },
+              ],
             },
             // {
             //   name: 'list.cargo-list',
