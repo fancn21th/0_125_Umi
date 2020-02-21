@@ -117,19 +117,19 @@ export default {
               path: '/list',
               component: './ListTableList',
             },
-            // {
-            //   name: 'category.cargo',
-            //   icon: 'table',
-            //   path: '/',
-            //   routes: [
-            //     {
-            //       name: 'list.cargo-list',
-            //       icon: 'table',
-            //       path: '/cargolist',
-            //       component: './CargoList',
-            //     },
-            //   ],
-            // },
+            {
+              name: 'category.order',
+              icon: 'table',
+              path: '/',
+              routes: [
+                {
+                  name: 'list.op-list',
+                  icon: 'table',
+                  path: '/oplist',
+                  component: './OpList',
+                },
+              ],
+            },
             {
               component: './404',
             },

@@ -23,7 +23,7 @@ export const columns = [
       'ship': {
         text: '发运',
       },
-    }
+    },
   },
   {
     title: '单号',
@@ -89,34 +89,41 @@ export const columns = [
     dataIndex: 'OpSta',
     sorter: false,
     hideInSearch: true,
+    valueEnum: {
+      'undo': {
+        text: '未做',
+      },
+      'doing': {
+        text: '进行',
+      },
+      'done': {
+        text: '完成',
+      },
+    },
   },
   {
     title: '下发时间',
     dataIndex: 'OrderTimestamp',
     sorter: false,
     hideInSearch: true,
-    valueType: 'dateTime',
   },
   {
     title: '截止时间',
     dataIndex: 'DeadlineTimestamp',
     sorter: false,
     hideInSearch: true,
-    valueType: 'dateTime',
   },
   {
     title: '开始时间',
     dataIndex: 'BeginTimestamp',
     sorter: false,
     hideInSearch: true,
-    valueType: 'dateTime',
   },
   {
     title: '完成时间',
     dataIndex: 'EndTimestamp',
     sorter: false,
     hideInSearch: true,
-    valueType: 'dateTime',
   },
   {
     title: '同步状态',
@@ -130,9 +137,22 @@ export const columns = [
       '1': {
         text: '已同步',
       },
-      '2': {
-        text: '回滚',
-      },
     },
+  },
+  {
+    title: '日志',
+    dataIndex: 'option',
+    valueType: 'option',
+    render: (_, record) => (
+      <>
+        <a
+          onClick={() => {
+            console.log(record);
+          }}
+        >
+          查看
+        </a>
+      </>
+    ),
   },
 ];
