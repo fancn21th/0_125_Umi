@@ -156,6 +156,19 @@ export default {
               ],
             },
             {
+              name: 'category.cargoinfo',
+              icon: 'table',
+              path: '/cargoinfo',
+              routes: [
+                {
+                  name: 'list.cargobroken-by-inorder',
+                  icon: 'table',
+                  path: '/cargoinfo/cargobrokenbyinorder',
+                  component: './CargobrokenByInorder',
+                },
+              ],
+            },
+            {
               component: './404',
             },
           ],
