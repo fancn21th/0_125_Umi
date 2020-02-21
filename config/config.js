@@ -118,10 +118,17 @@ export default {
               component: './ListTableList',
             },
             // {
-            //   name: 'list.cargo-list',
+            //   name: 'category.cargo',
             //   icon: 'table',
-            //   path: '/cargolist',
-            //   component: './CargoList',
+            //   path: '/',
+            //   routes: [
+            //     {
+            //       name: 'list.cargo-list',
+            //       icon: 'table',
+            //       path: '/cargolist',
+            //       component: './CargoList',
+            //     },
+            //   ],
             // },
             {
               component: './404',
