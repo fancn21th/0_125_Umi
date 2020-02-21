@@ -4,15 +4,19 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { queryCargos } from './service';
-import { columns } from '../../config/col-config-cargolist';
+import { columns } from '../../config/col-config-cargobrokenbyinorder';
 const { Search } = Input;
 const { Text } = Typography;
+
+//测试用默认入库单号
+const defaultNo = 'INS4211136251920190830000005';
 
 const TableList = () => {
   const [sorter, setSorter] = useState({});
   const [searchText, setSearchText] = useState('');
   const [tableparams, setTableparams] = useState({
     sorter,
+    InOrderNo: defaultNo
   });
 
   const actionRef = useRef();
@@ -29,35 +33,6 @@ const TableList = () => {
         }}
         params={tableparams}
         toolBarRender={(action, { selectedRows }) => [
-          <Text>单号：</Text>,
-          <Input
-            placeholder="单号..."
-            value={searchText}
-            onChange={e => setSearchText(e.target.value)}
-          />,
-          <Button
-            type="primary"
-            onClick={() =>
-              setTableparams({
-                ...tableparams,
-                InOrderNo: searchText,
-              })
-            }
-          >
-            查询
-          </Button>,
-          <Button
-            type="default"
-            onClick={() => {
-              setSearchText('');
-              setTableparams({
-                ...tableparams,
-                InOrderNo: '',
-              });
-            }}
-          >
-            重置
-          </Button>,
           <Search
             placeholder="search..."
             onSearch={val => {

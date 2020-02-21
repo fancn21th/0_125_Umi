@@ -1,12 +1,10 @@
 import request from '@/utils/request';
-import { ApiTransformToData } from '../../utils/api-to-data-cargo';
+import { ApiTransformToData } from '../../utils/api-to-data-cargobroken';
 
 export async function queryCargos({ current, pageSize, sorter, InOrderNo }) {
-  const data = await request('/api/sinoapi/getcargolist', {
+  const data = await request('/api/sinoapi/cargobrokenbyinorder', {
     params: {
-      pageindex: current - 1,
-      pageSize,
-      orderno: InOrderNo ? InOrderNo : ''
+      inorder: InOrderNo ? InOrderNo : '',
     },
   });
   return ApiTransformToData(data);
