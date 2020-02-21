@@ -22,6 +22,7 @@ export default {
   'menu.form.advanced-form': '高级表单',
   'menu.list': '列表页',
   'menu.list.table-list': '查询表格',
+  'menu.list.order-goods': '订单货物',
   'menu.list.cargo-list': '库存记录',
   'menu.list.out-cargo-list': '出库记录',
   'menu.list.basic-list': '标准列表',

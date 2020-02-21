@@ -130,6 +130,12 @@ export default {
               component: './OutCargoList',
             },
             {
+              name: 'list.order-goods',
+              icon: 'table',
+              path: '/ordergoods',
+              component: './OrderGoods',
+            },
+            {
               component: './404',
             },
           ],
