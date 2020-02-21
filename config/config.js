@@ -96,14 +96,14 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/cargolist',
             },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            // },
             {
               path: '/admin',
               name: 'admin',
@@ -111,11 +111,29 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
+            // {
+            //   name: 'list.table-list',
+            //   icon: 'table',
+            //   path: '/list',
+            //   component: './ListTableList',
+            // },
             {
-              name: 'list.table-list',
+              name: 'list.cargo-list',
               icon: 'table',
-              path: '/list',
-              component: './ListTableList',
+              path: '/cargolist',
+              component: './CargoList',
+            },
+            {
+              name: 'list.out-cargo-list',
+              icon: 'table',
+              path: '/outcargolist',
+              component: './OutCargoList',
+            },
+            {
+              name: 'list.order-goods',
+              icon: 'table',
+              path: '/ordergoods',
+              component: './OrderGoods',
             },
             {
               component: './404',
@@ -172,11 +190,11 @@ export default {
   manifest: {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
-  // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^/server': '' },
-  //   },
-  // },
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:3000',
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
+  },
 };
