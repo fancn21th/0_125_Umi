@@ -96,7 +96,7 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/cargolist',
+              redirect: '/cargo/cargolist',
             },
             // {
             //   path: '/welcome',
@@ -120,24 +120,24 @@ export default {
             {
               name: 'category.cargo',
               icon: 'table',
-              path: '/',
+              path: '/cargo',
               routes: [
                 {
                   name: 'list.cargo-list',
                   icon: 'table',
-                  path: '/cargolist',
+                  path: '/cargo/cargolist',
                   component: './CargoList',
                 },
                 {
                   name: 'list.out-cargo-list',
                   icon: 'table',
-                  path: '/outcargolist',
+                  path: '/cargo/outcargolist',
                   component: './OutCargoList',
                 },
                 {
                   name: 'list.order-goods',
                   icon: 'table',
-                  path: '/ordergoods',
+                  path: '/cargo/ordergoods',
                   component: './OrderGoods',
                 },
               ],
@@ -145,12 +145,12 @@ export default {
             {
               name: 'category.order',
               icon: 'table',
-              path: '/',
+              path: '/order',
               routes: [
                 {
                   name: 'list.op-list',
                   icon: 'table',
-                  path: '/oplist',
+                  path: '/order/oplist',
                   component: './OpList',
                 },
               ],
