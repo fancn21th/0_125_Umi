@@ -16,9 +16,36 @@ const TableList = ({ cargoNoList }) => {
     sorter,
   });
   const actionRef = useRef();
-  const hasNoData = params => new Promise(resolve => resolve([]));
+  const hasNoData = () => new Promise(resolve => resolve([]));
   const hasData = params => queryCargos(params);
 
+  if (cargoNoList.length > 0) {
+    return (
+      <PageHeaderWrapper>
+        <ProTable
+          headerTitle="库存记录"
+          actionRef={actionRef}
+          rowKey="key"
+          search
+          onChange={(_, _filter, _sorter) => {
+            setSorter(`${_sorter.field}_${_sorter.order}`);
+          }}
+          params={tableparams}
+          toolBarRender={(action, { selectedRows }) => [
+            <Search
+              placeholder="搜索..."
+              onSearch={val => {
+                setTableparams({ InOrderNo: val });
+              }}
+              style={{ width: 200 }}
+            />,
+          ]}
+          request={hasData}
+          columns={columns}
+        />
+      </PageHeaderWrapper>
+    );
+  }
   return (
     <PageHeaderWrapper>
       <ProTable
@@ -39,7 +66,7 @@ const TableList = ({ cargoNoList }) => {
             style={{ width: 200 }}
           />,
         ]}
-        request={cargoNoList.length > 0 ? hasData : hasNoData}
+        request={hasNoData}
         columns={columns}
       />
     </PageHeaderWrapper>
