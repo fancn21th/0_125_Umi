@@ -55,4 +55,6 @@ export default {
   'menu.category.order': '订单记录',
   'menu.category.order.list.op-list': '订单操作',
   'menu.category.order.list.op-list-by-time': '流水操作',
+  'menu.category.cargoinfo': '货物信息',
+  'menu.category.cargoinfo.list.cargobroken-by-inorder': '货物破损',
 };
