@@ -3,23 +3,18 @@ import { Button, Divider, Dropdown, Menu, message, Input, Typography, Select } f
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { queryCargoListIvt, queryIvtList } from './service';
+import { connect } from 'dva';
+import { queryCargoListIvt } from './service';
 import { columns } from '../../config/col-config-cargolistivt';
-import compose from '../../utils/compose';
+import uuid from '../../utils/uuid';
+
 const { Search } = Input;
 const { Option } = Select;
 const { Text } = Typography;
 
-const getOptionsOnLoad = async function({ pageindex, pagesize }) {
-  return queryIvtList({
-    pageindex,
-    pagesize,
-  });
-};
-
 const mapStringToOption = function(str) {
   return (
-    <Option value={str} key={Date.now().toString(36)}>
+    <Option value={str} key={uuid()}>
       {str}
     </Option>
   );
@@ -29,25 +24,52 @@ const mapStringsToOptions = function(arr) {
   return arr.map(mapStringToOption);
 };
 
-const generateOptions = function(promise) {
-  return promise.then(mapStringsToOptions);
-};
-
-const getOptions = compose(getOptionsOnLoad, generateOptions);
-
-const TableList = () => {
+const TableList = ({ ivtList }) => {
   const [sorter, setSorter] = useState({});
   const [searchText, setSearchText] = useState('');
   const [tableparams, setTableparams] = useState({
     sorter,
   });
   const actionRef = useRef();
-  let options = [];
-  getOptions({
-    pageindex: 0,
-    pagesize: 100,
-  }).then(res => (options = res));
+  const hasNoData = () => new Promise(resolve => resolve([]));
+  const hasData = params => {
+    return queryCargoListIvt(params);
+  };
 
+  if (ivtList.length > 0) {
+    return (
+      <PageHeaderWrapper>
+        <ProTable
+          headerTitle="盘库记录"
+          actionRef={actionRef}
+          rowKey="key"
+          search={false}
+          onChange={(_, _filter, _sorter) => {
+            setSorter(`${_sorter.field}_${_sorter.order}`);
+          }}
+          params={tableparams}
+          toolBarRender={(action, { selectedRows }) => [
+            <Text>盘点编号：</Text>,
+            <Select style={{ width: 120 }} onChange={e => console.log(e)}>
+              {mapStringsToOptions(ivtList)}
+            </Select>,
+            <Search
+              placeholder="search..."
+              onSearch={val => {
+                setTableparams({
+                  ...tableparams,
+                  InOrderNo: val,
+                });
+              }}
+              style={{ width: 200 }}
+            />,
+          ]}
+          request={hasData}
+          columns={columns}
+        />
+      </PageHeaderWrapper>
+    );
+  }
   return (
     <PageHeaderWrapper>
       <ProTable
@@ -61,43 +83,9 @@ const TableList = () => {
         params={tableparams}
         toolBarRender={(action, { selectedRows }) => [
           <Text>盘点编号：</Text>,
-          options.length ? (
-            <Select
-              defaultValue="default"
-              style={{ width: 120 }}
-              onChange={() => console.log('ex')}
-            >
-              <Option value="default">default</Option>
-              {options}
-            </Select>
-          ) : (
-            <Select defaultValue="loading" style={{ width: 120 }} loading>
-              <Option value="loading">Loading...</Option>
-            </Select>
-          ),
-          <Button
-            type="primary"
-            onClick={() =>
-              setTableparams({
-                ...tableparams,
-                InOrderNo: searchText,
-              })
-            }
-          >
-            查询
-          </Button>,
-          <Button
-            type="default"
-            onClick={() => {
-              setSearchText('');
-              setTableparams({
-                ...tableparams,
-                InOrderNo: '',
-              });
-            }}
-          >
-            重置
-          </Button>,
+          <Select default="loading" style={{ width: 120 }} loading>
+            <Option value="loading">loading...</Option>
+          </Select>,
           <Search
             placeholder="search..."
             onSearch={val => {
@@ -109,7 +97,7 @@ const TableList = () => {
             style={{ width: 200 }}
           />,
         ]}
-        request={params => queryCargoListIvt(params)}
+        request={hasNoData}
         columns={columns}
       />
     </PageHeaderWrapper>
