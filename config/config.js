@@ -135,6 +135,12 @@ export default {
                   component: './OutCargoList',
                 },
                 {
+                  name: 'list.cargo-list-ivt',
+                  icon: 'table',
+                  path: '/cargo/cargolistivt',
+                  component: './CargoListIvt',
+                },
+                {
                   name: 'list.order-goods',
                   icon: 'table',
                   path: '/cargo/ordergoods',

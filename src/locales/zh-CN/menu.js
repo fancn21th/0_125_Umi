@@ -51,6 +51,7 @@ export default {
   'menu.category.cargo': '仓库管理',
   'menu.category.cargo.list.cargo-list': '库存记录',
   'menu.category.cargo.list.out-cargo-list': '出库记录',
+  'menu.category.cargo.list.cargo-list-ivt': '盘库记录',
   'menu.category.cargo.list.order-goods': '订单货物',
   'menu.category.order': '订单记录',
   'menu.category.order.list.op-list': '订单操作',
