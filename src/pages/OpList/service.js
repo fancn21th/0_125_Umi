@@ -6,7 +6,7 @@ export async function queryCargos({ current, pageSize, sorter, OrderNo }) {
     params: {
       pageindex: current - 1,
       pageSize,
-      orderno: OrderNo ? OrderNo : ''
+      orderno: OrderNo || '',
     },
   });
   return ApiTransformToData(data);
