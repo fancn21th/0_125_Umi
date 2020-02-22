@@ -66,6 +66,14 @@ if (isAntDesignProPreview) {
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
+// api server endpoint
+const serveUrlMap = {
+  local: 'http://localhost:3000',
+  dev: 'http://36.110.117.58:8000',
+};
+
+const { SERVE_ENV = 'local' } = process.env;
+
 export default {
   plugins,
   hash: true,
@@ -236,8 +244,18 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   proxy: {
+    '/api/login/account': {
+      target: serveUrlMap['local'],
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
+    '/api/currentUser': {
+      target: serveUrlMap['local'],
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
     '/api/': {
-      target: 'http://localhost:3000',
+      target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
