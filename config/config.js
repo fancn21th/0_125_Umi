@@ -96,14 +96,14 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/cargo/cargolist',
             },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            // },
             {
               path: '/admin',
               name: 'admin',
@@ -111,17 +111,61 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
+            // {
+            //   name: 'list.table-list',
+            //   icon: 'table',
+            //   path: '/list',
+            //   component: './ListTableList',
+            // },
             {
-              name: 'list.table-list',
+              name: 'category.cargo',
               icon: 'table',
-              path: '/list',
-              component: './ListTableList',
+              path: '/cargo',
+              routes: [
+                {
+                  name: 'list.cargo-list',
+                  icon: 'table',
+                  path: '/cargo/cargolist',
+                  component: './CargoList',
+                },
+                {
+                  name: 'list.out-cargo-list',
+                  icon: 'table',
+                  path: '/cargo/outcargolist',
+                  component: './OutCargoList',
+                },
+                {
+                  name: 'list.cargo-list-ivt',
+                  icon: 'table',
+                  path: '/cargo/cargolistivt',
+                  component: './CargoListIvt',
+                },
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/cargo/ordergoods',
+                  component: './OrderGoods',
+                },
+              ],
             },
             {
-              name: 'list.cargo-list-ivt',
+              name: 'category.order',
               icon: 'table',
-              path: '/cargolistivt',
-              component: './CargoListIvt',
+              path: '/order',
+              routes: [
+                {
+                  name: 'list.op-list',
+                  icon: 'table',
+                  path: '/order/oplist',
+                  component: './OpList',
+                },
+                {
+                  name: 'list.op-list-by-time',
+                  icon: 'table',
+                  path: '/order/oplistbytime',
+                  component: './OpListByTime',
+                },
+              ],
             },
             {
               component: './404',

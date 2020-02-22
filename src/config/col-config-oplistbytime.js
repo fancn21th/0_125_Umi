@@ -29,6 +29,7 @@ export const columns = [
     title: '单号',
     dataIndex: 'OrderNo',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '货物RFID',
@@ -137,22 +138,9 @@ export const columns = [
       '1': {
         text: '已同步',
       },
+      '2': {
+        text: '回滚',
+      },
     },
-  },
-  {
-    title: '日志',
-    dataIndex: 'option',
-    valueType: 'option',
-    render: (_, record) => (
-      <>
-        <a
-          onClick={() => {
-            console.log(record);
-          }}
-        >
-          查看
-        </a>
-      </>
-    ),
   },
 ];

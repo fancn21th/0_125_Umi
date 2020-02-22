@@ -1,7 +1,9 @@
 import request from '@/utils/request';
 import { ApiTransformToData } from '../../utils/api-to-data-cargo';
 
-export async function queryCargoListIvt({ current, pageSize, sorter, inventoryno = '' }) {
+const defaultNo = '30000214-002';
+
+export async function queryCargoListIvt({ current, pageSize, sorter, inventoryno = defaultNo }) {
   const data = await request('/api/sinoapi/getcargolistivt', {
     params: {
       pageindex: current - 1,

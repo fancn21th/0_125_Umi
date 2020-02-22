@@ -50,7 +50,15 @@ const TableList = ({ ivtList }) => {
           params={tableparams}
           toolBarRender={(action, { selectedRows }) => [
             <Text>盘点编号：</Text>,
-            <Select style={{ width: 120 }} onChange={e => console.log(e)}>
+            <Select
+              style={{ width: 120 }}
+              onChange={val => {
+                setTableparams({
+                  ...tableparams,
+                  inventoryno: val,
+                });
+              }}
+            >
               {mapStringsToOptions(ivtList)}
             </Select>,
             <Search
@@ -66,6 +74,11 @@ const TableList = ({ ivtList }) => {
           ]}
           request={hasData}
           columns={columns}
+          pagination={{
+            showSizeChanger: true,
+            pageSize: 10,
+            current: 1,
+          }}
         />
       </PageHeaderWrapper>
     );
@@ -99,9 +112,14 @@ const TableList = ({ ivtList }) => {
         ]}
         request={hasNoData}
         columns={columns}
+        pagination={{
+          showSizeChanger: true,
+          pageSize: 10,
+          current: 1,
+        }}
       />
     </PageHeaderWrapper>
   );
 };
 
-export default TableList;
+export default connect(({ ivtlist }) => ivtlist)(TableList);
