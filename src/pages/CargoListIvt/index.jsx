@@ -11,7 +11,7 @@ const { Option } = Select;
 const { Text } = Typography;
 
 const getOptionsOnLoad = async function({ pageindex, pagesize }) {
-  return await queryIvtList({
+  return queryIvtList({
     pageindex,
     pagesize,
   });
@@ -41,12 +41,12 @@ const TableList = () => {
   const [tableparams, setTableparams] = useState({
     sorter,
   });
-  const [options, setOptions] = useState([]);
   const actionRef = useRef();
+  let options = [];
   getOptions({
     pageindex: 0,
     pagesize: 100,
-  }).then(res => setOptions(res));
+  }).then(res => (options = res));
 
   return (
     <PageHeaderWrapper>
@@ -62,7 +62,11 @@ const TableList = () => {
         toolBarRender={(action, { selectedRows }) => [
           <Text>盘点编号：</Text>,
           options.length ? (
-            <Select defaultValue="default" style={{ width: 120 }}>
+            <Select
+              defaultValue="default"
+              style={{ width: 120 }}
+              onChange={() => console.log('ex')}
+            >
               <Option value="default">default</Option>
               {options}
             </Select>
