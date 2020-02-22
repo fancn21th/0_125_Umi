@@ -96,7 +96,7 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/cargolist',
+              redirect: '/cargo/cargolist',
             },
             // {
             //   path: '/welcome',
@@ -118,22 +118,48 @@ export default {
             //   component: './ListTableList',
             // },
             {
-              name: 'list.cargo-list',
+              name: 'category.cargo',
               icon: 'table',
-              path: '/cargolist',
-              component: './CargoList',
+              path: '/cargo',
+              routes: [
+                {
+                  name: 'list.cargo-list',
+                  icon: 'table',
+                  path: '/cargo/cargolist',
+                  component: './CargoList',
+                },
+                {
+                  name: 'list.out-cargo-list',
+                  icon: 'table',
+                  path: '/cargo/outcargolist',
+                  component: './OutCargoList',
+                },
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/cargo/ordergoods',
+                  component: './OrderGoods',
+                },
+              ],
             },
             {
-              name: 'list.out-cargo-list',
+              name: 'category.order',
               icon: 'table',
-              path: '/outcargolist',
-              component: './OutCargoList',
-            },
-            {
-              name: 'list.order-goods',
-              icon: 'table',
-              path: '/ordergoods',
-              component: './OrderGoods',
+              path: '/order',
+              routes: [
+                {
+                  name: 'list.op-list',
+                  icon: 'table',
+                  path: '/order/oplist',
+                  component: './OpList',
+                },
+                {
+                  name: 'list.op-list-by-time',
+                  icon: 'table',
+                  path: '/order/oplistbytime',
+                  component: './OpListByTime',
+                },
+              ],
             },
             {
               component: './404',
