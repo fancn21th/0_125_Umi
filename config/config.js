@@ -148,12 +148,6 @@ export default {
                   path: '/cargo/cargolistivt',
                   component: './CargoListIvt',
                 },
-                {
-                  name: 'list.order-goods',
-                  icon: 'table',
-                  path: '/cargo/ordergoods',
-                  component: './OrderGoods',
-                },
               ],
             },
             {
@@ -161,6 +155,12 @@ export default {
               icon: 'table',
               path: '/order',
               routes: [
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/order/ordergoods',
+                  component: './OrderGoods',
+                },
                 {
                   name: 'list.op-list',
                   icon: 'table',

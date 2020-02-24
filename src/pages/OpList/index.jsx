@@ -113,6 +113,11 @@ const TableList = () => {
           />,
         ]}
         request={params => queryOpList(params)}
+        pagination={{
+          showSizeChanger: true,
+          pageSize: 10,
+          current: 1,
+        }}
         columns={[
           ...columns,
           {
