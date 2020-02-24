@@ -3,10 +3,12 @@ import { Button, Divider, Dropdown, Menu, message, Input, Typography, Select } f
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import xlsx, { utils } from 'xlsx';
 import { connect } from 'dva';
 import { queryCargoListIvt } from './service';
 import { columns } from '../../config/col-config-cargolistivt';
 import uuid from '../../utils/uuid';
+import data2ExcelJson from '../../utils/cargoData2ExcelJson';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -49,6 +51,38 @@ const TableList = ({ ivtList }) => {
           }}
           params={tableparams}
           toolBarRender={(action, { selectedRows }) => [
+            <Button
+              type="primary"
+              onClick={() => {
+                const { dataSource } = action;
+                const workBook = utils.book_new();
+                const { body, header } = data2ExcelJson(dataSource, columns);
+                const workSheet = utils.json_to_sheet(body, { ...header });
+                utils.book_append_sheet(workBook, workSheet, '盘库记录');
+                const result = xlsx.write(workBook, {
+                  bookType: 'xlsx',
+                  type: 'array',
+                });
+                const blob = new Blob([result], { type: 'application/octet-stream' });
+                const link = document.createElement('a');
+                const dateStr = new Date()
+                  .toLocaleDateString()
+                  .split('/')
+                  .map(val => (val.length <= 1 ? `0${val}` : val))
+                  .join('');
+                const filename = `库存盘点表-${dateStr}.xlsx`;
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+                Promise.resolve().then(() => {
+                  URL.revokeObjectURL(link.href);
+                  link.remove();
+                });
+                return;
+              }}
+            >
+              导出表格
+            </Button>,
             <Text>盘点编号：</Text>,
             <Select
               style={{ width: 120 }}
@@ -95,6 +129,7 @@ const TableList = ({ ivtList }) => {
         }}
         params={tableparams}
         toolBarRender={(action, { selectedRows }) => [
+          <Button type="primary">导出表格</Button>,
           <Text>盘点编号：</Text>,
           <Select default="loading" style={{ width: 120 }} loading>
             <Option value="loading">loading...</Option>
