@@ -11,6 +11,7 @@ const { Text } = Typography;
 
 const TableList = () => {
   const [sorter, setSorter] = useState({});
+  const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
 
   const actionRef = useRef();
@@ -23,6 +24,7 @@ const TableList = () => {
         rowKey="key"
         search
         beforeSearchSubmit={params => {
+          setKeywordsValue('');
           setKeywords('');
           return params;
         }}
@@ -36,6 +38,10 @@ const TableList = () => {
             onSearch={val => {
               setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}
