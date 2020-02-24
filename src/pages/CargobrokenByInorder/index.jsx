@@ -48,6 +48,11 @@ const TableList = () => {
           />,
         ]}
         request={params => queryCargos(params)}
+        pagination={{
+          showSizeChanger: true,
+          pageSize: 10,
+          current: 1,
+        }}
         columns={[
           ...columns,
           {

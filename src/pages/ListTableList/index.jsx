@@ -71,6 +71,11 @@ const TableList = () => {
         ]}
         request={params => queryCargos(params)}
         columns={columns}
+        pagination={{
+          showSizeChanger: true,
+          pageSize: 10,
+          current: 1,
+        }}
       />
     </PageHeaderWrapper>
   );
