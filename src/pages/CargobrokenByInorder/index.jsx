@@ -1,8 +1,8 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Divider, Dropdown, Menu, message, Input, Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import ImageModal from './components/ImageModal';
 import { queryCargos } from './service';
 import { columns } from '../../config/col-config-cargobrokenbyinorder';
 const { Search } = Input;
@@ -13,10 +13,13 @@ const defaultNo = 'INS4211136251920190830000005';
 
 const TableList = () => {
   const [sorter, setSorter] = useState({});
+  const [imageModalVisibilyty, setImageModalVisibilyty] = useState(false);
+  const [imgurls, setImgurls] = useState([]);
+  const [modalIsLoading, setModalIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [tableparams, setTableparams] = useState({
     sorter,
-    InOrderNo: defaultNo
+    InOrderNo: defaultNo,
   });
 
   const actionRef = useRef();
@@ -45,8 +48,40 @@ const TableList = () => {
           />,
         ]}
         request={params => queryCargos(params)}
-        columns={columns}
+        columns={[
+          ...columns,
+          {
+            title: '破损照片',
+            dataIndex: 'option',
+            valueType: 'option',
+            render: (_, record) => (
+              <>
+                <a
+                  onClick={() => {
+                    console.log(record);
+                    const { Img } = record;
+                    const imgs = Img.map(img => ({ url: img }));
+                    setImgurls(imgs);
+                    setModalIsLoading(false);
+                    setImageModalVisibilyty(true);
+                  }}
+                >
+                  查看
+                </a>
+              </>
+            ),
+          },
+        ]}
       />
+      <ImageModal
+        modalVisible={imageModalVisibilyty}
+        onCancel={() => {
+          setModalIsLoading(true);
+          setImageModalVisibilyty(false);
+        }}
+        imgurls={imgurls}
+        loading={modalIsLoading}
+      ></ImageModal>
     </PageHeaderWrapper>
   );
 };

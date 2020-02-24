@@ -52,20 +52,4 @@ export const columns = [
     sorter: false,
     hideInSearch: true,
   },
-  {
-    title: '破损照片',
-    dataIndex: 'option',
-    valueType: 'option',
-    render: (_, record) => (
-      <>
-        <a
-          onClick={() => {
-            console.log(record);
-          }}
-        >
-          查看
-        </a>
-      </>
-    ),
-  },
 ];
