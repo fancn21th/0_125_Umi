@@ -5,22 +5,22 @@ export const columns = [
     sorter: false,
     hideInSearch: true,
     valueEnum: {
-      'receipt': {
+      receipt: {
         text: '收货',
       },
-      'receive': {
+      receive: {
         text: '缓存',
       },
-      'shelve': {
+      shelve: {
         text: '上架',
       },
-      'move': {
+      move: {
         text: '移库',
       },
-      'pick': {
+      pick: {
         text: '拣货',
       },
-      'ship': {
+      ship: {
         text: '发运',
       },
     },
@@ -90,13 +90,13 @@ export const columns = [
     sorter: false,
     hideInSearch: true,
     valueEnum: {
-      'undo': {
+      undo: {
         text: '未做',
       },
-      'doing': {
+      doing: {
         text: '进行',
       },
-      'done': {
+      done: {
         text: '完成',
       },
     },
@@ -138,21 +138,5 @@ export const columns = [
         text: '已同步',
       },
     },
-  },
-  {
-    title: '日志',
-    dataIndex: 'option',
-    valueType: 'option',
-    render: (_, record) => (
-      <>
-        <a
-          onClick={() => {
-            console.log(record);
-          }}
-        >
-          查看
-        </a>
-      </>
-    ),
   },
 ];
