@@ -1,7 +1,8 @@
+import slash from 'slash2';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 
-import slash from 'slash2';
 import themePluginConfig from './themePluginConfig';
+
 const { pwa } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
@@ -176,6 +177,31 @@ export default {
               ],
             },
             {
+              name: 'category.workloads',
+              icon: 'table',
+              path: '/workloads',
+              routes: [
+                {
+                  name: 'list.day-workloads',
+                  icon: 'table',
+                  path: '/workloads/dayworkloads',
+                  component: './KcWorkloads',
+                },
+                {
+                  name: 'list.month-workloads',
+                  icon: 'table',
+                  path: '/workloads/monthworkloads',
+                  component: './KcMonthWorkloads',
+                },
+                {
+                  name: 'list.year-workloads',
+                  icon: 'table',
+                  path: '/workloads/yearworkloads',
+                  component: './KcYearWorkloads',
+                },
+              ],
+            },
+            {
               name: 'category.cargoinfo',
               icon: 'table',
               path: '/cargoinfo',
@@ -187,6 +213,12 @@ export default {
                   component: './CargobrokenByInorder',
                 },
               ],
+            },
+            {
+              name: '人员日工作量',
+              icon: 'table',
+              path: '/testList',
+              component: './TableListTest',
             },
             {
               component: './404',
