@@ -58,4 +58,9 @@ export default {
   'menu.category.order.list.op-list-by-time': '流水操作',
   'menu.category.cargoinfo': '货物信息',
   'menu.category.cargoinfo.list.cargobroken-by-inorder': '货物破损',
+  'menu.whWorkloads': '报表服务',
+  'menu.whWorkloads.whPerson': '人员工作量服务',
+  'menu.whWorkloads.whFork': '叉车工作量服务',
+  'menu.whWorkloads.whDestroy': '货物破损信息',
+  'menu.whWorkloads.whState': '货物状态信息',
 };

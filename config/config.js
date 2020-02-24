@@ -1,7 +1,8 @@
+import slash from 'slash2';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 
-import slash from 'slash2';
 import themePluginConfig from './themePluginConfig';
+
 const { pwa } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
@@ -189,6 +190,18 @@ export default {
               ],
             },
             {
+              name: 'whWorkloads',
+              icon: 'table',
+              routes: [
+                {
+                  name: 'whPerson',
+                  icon: 'table',
+                  path: '/whWorkloads',
+                  component: './whWorkloads',
+                },
+              ],
+            },
+            {
               component: './404',
             },
           ],
@@ -245,12 +258,12 @@ export default {
   }, // chainWebpack: webpackPlugin,
   proxy: {
     '/api/login/account': {
-      target: serveUrlMap['local'],
+      target: serveUrlMap.local,
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
     '/api/currentUser': {
-      target: serveUrlMap['local'],
+      target: serveUrlMap.local,
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
