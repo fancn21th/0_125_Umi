@@ -215,12 +215,6 @@ export default {
               ],
             },
             {
-              name: '人员日工作量',
-              icon: 'table',
-              path: '/testList',
-              component: './TableListTest',
-            },
-            {
               component: './404',
             },
           ],
