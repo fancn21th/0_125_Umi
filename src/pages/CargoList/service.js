@@ -3,13 +3,26 @@ import { ApiTransformToData } from '../../utils/api-to-data-cargo';
 
 const context = {
   last: {
-    params: {},
-    data: {},
+    params: null,
+    data: null,
   },
 };
 
-const searchInLast = (keywords, data = []) => data;
-const isKeywordsSearch = params => params.keywords && params.keywords.length > 0;
+const searchInLast = (keywords, data) => {
+  const { data: innerData } = data;
+  if (data) {
+    return {
+      ...data,
+      data: innerData.filter(item =>
+        Object.keys(item).some(
+          key => item[key] && typeof item[key] === 'string' && item[key].includes(keywords),
+        ),
+      ),
+    };
+  }
+};
+// 关键字搜索约定搜索内容不为空
+const isKeywordsSearch = params => params.keywords && params.keywords.trim().length > 0;
 const setLast = (params, data) => {
   context.last = {
     params,
@@ -22,7 +35,7 @@ export const searchByKeywords = params => {
   const { keywords } = params;
   // 通过关键字搜索
   if (isKeywordsSearch(params)) {
-    return searchInLast(keywords, context.last.data);
+    return searchInLast(keywords.trim(), context.last.data);
   }
   return params;
 };

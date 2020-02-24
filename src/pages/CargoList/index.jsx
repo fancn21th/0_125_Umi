@@ -22,6 +22,10 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search
+        beforeSearchSubmit={params => {
+          setKeywords('');
+          return params;
+        }}
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}
