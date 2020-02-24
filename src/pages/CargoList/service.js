@@ -1,25 +1,39 @@
 import request from '@/utils/request';
 import { ApiTransformToData } from '../../utils/api-to-data-cargo';
 
-const context = { last: {} };
+const context = {
+  last: {
+    params: {},
+    data: {},
+  },
+};
 
-const searchIn = (keywords, data = []) => data;
+const searchInLast = (keywords, data = []) => data;
+const isKeywordsSearch = params => params.keywords && params.keywords.length > 0;
+const setLast = (params, data) => {
+  context.last = {
+    params,
+    data,
+  };
+};
 
 // composed function
 export const searchByKeywords = params => {
-  const { isKeywords, keywords } = params;
+  const { keywords } = params;
   // 通过关键字搜索
-  if (isKeywords) {
-    return searchIn(keywords, context.last);
+  if (isKeywordsSearch(params)) {
+    return searchInLast(keywords, context.last.data);
   }
   return params;
 };
 
 export async function queryCargos(params) {
+  console.log('alex', params);
   let data = searchByKeywords(params);
+  // 特征检查
   if (data.current) {
     data = await queryCargos2(params);
-    context.last = data;
+    setLast(params, data);
   }
   return data;
 }

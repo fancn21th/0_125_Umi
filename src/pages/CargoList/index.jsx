@@ -12,7 +12,6 @@ const { Text } = Typography;
 const TableList = () => {
   const [sorter, setSorter] = useState({});
   const [keywords, setKeywords] = useState('');
-  const [isKeywords, setIsKeywords] = useState(false);
 
   const actionRef = useRef();
 
@@ -26,12 +25,11 @@ const TableList = () => {
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}
-        params={{ keywords, isKeywords }}
+        params={{ keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Search
             placeholder="搜索..."
             onSearch={val => {
-              setIsKeywords(true);
               setKeywords(val);
             }}
             style={{ width: 200 }}
