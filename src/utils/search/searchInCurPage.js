@@ -1,3 +1,4 @@
+// singleton for each page
 const context = {
   // last search result
   last: {
@@ -29,23 +30,27 @@ const searchInLast = (keywords, data) => {
   return null;
 };
 
-// 关键字搜索约定搜索内容不为空
+/*
+关键字搜索的约定:
+  1. 关键字 params 字段名字是 keywords
+  2. 当进行关键字搜索时 该字段必须不为空
+  3. 当进行其它字段搜索时 关键字字段被设置为空
+*/
 const isKeywordsSearch = params => params.keywords && params.keywords.trim().length > 0;
 
-// composed function
 const searchByKeywords = params => {
   const { keywords } = params;
-  // 通过关键字搜索
   if (isKeywordsSearch(params)) {
     return searchInLast(keywords.trim(), context.last.data);
   }
   return params;
 };
 
+const isNonKeywordsSearchReturned = data => data.current;
+
 export const genAsyncSearch = asyncQueryFun => async params => {
   let data = searchByKeywords(params);
-  // 特征检查
-  if (data.current) {
+  if (isNonKeywordsSearchReturned(data)) {
     data = await asyncQueryFun(params);
     setLast(params, data);
   }
