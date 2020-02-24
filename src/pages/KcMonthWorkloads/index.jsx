@@ -1,34 +1,14 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Button, Dropdown, Menu, DatePicker, Select } from 'antd';
+import { Button, Dropdown, Menu, DatePicker, Select,Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
-import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
 import { getMonthWorkloads } from './service';
 import { columns } from '../../config/col-config-workloads';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
-
-/**
- * 添加节点
- * @param fields
- */
-const handleAdd = async fields => {};
-/**
- * 更新节点
- * @param fields
- */
-
-const handleUpdate = async fields => {};
-/**
- *  删除节点
- * @param selectedRows
- */
+const { Text } = Typography;
 
 const handleRemove = async selectedRows => {};
 
@@ -45,9 +25,6 @@ const defaultDate = [
 const TableList = () => {
   const [sorter, setSorter] = useState(defaultDate);
   const [type, setType] = useState('');
-  const [createModalVisible, handleModalVisible] = useState(false);
-  const [updateModalVisible, handleUpdateModalVisible] = useState(false);
-  const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
 
   return (
@@ -62,6 +39,8 @@ const TableList = () => {
           type,
         }}
         toolBarRender={(action, { selectedRows }) => [
+          <Button type="primary">导出表格</Button>,
+          <Text>日期：</Text>,
           <RangePicker
             format="YYYY-MM"
             defaultValue={[moment().startOf('month'), moment().endOf('month')]}
@@ -70,6 +49,7 @@ const TableList = () => {
               setSorter(dateArr);
             }}
           />,
+          <Text>类型：</Text>,
           <Select
             onChange={val => {
               setType(val);
@@ -83,28 +63,6 @@ const TableList = () => {
               叉车
             </Option>
           </Select>,
-          selectedRows && selectedRows.length > 0 && (
-            <Dropdown
-              overlay={
-                <Menu
-                  onClick={async e => {
-                    if (e.key === 'remove') {
-                      await handleRemove(selectedRows);
-                      action.reload();
-                    }
-                  }}
-                  selectedKeys={[]}
-                >
-                  <Menu.Item key="remove">批量删除</Menu.Item>
-                  <Menu.Item key="approval">批量审批</Menu.Item>
-                </Menu>
-              }
-            >
-              <Button>
-                批量操作 <DownOutlined />
-              </Button>
-            </Dropdown>
-          ),
         ]}
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
@@ -124,47 +82,14 @@ const TableList = () => {
         )}
         request={params => getMonthWorkloads(params)}
         columns={columns}
-        rowSelection={{}}
-      />
-      <CreateForm
-        onSubmit={async value => {
-          const success = await handleAdd(value);
-
-          if (success) {
-            handleModalVisible(false);
-
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
+        pagination={{
+          showSizeChanger: true,
+          pageSize: 10,
+          current: 1,
         }}
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createModalVisible}
       />
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          onSubmit={async value => {
-            const success = await handleUpdate(value);
-
-            if (success) {
-              handleModalVisible(false);
-              setStepFormValues({});
-
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
     </PageHeaderWrapper>
   );
 };
 
-export default Form.create()(TableList);
+export default TableList;

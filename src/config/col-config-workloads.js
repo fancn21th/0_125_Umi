@@ -6,31 +6,31 @@ export const columns = [
   {
     title: '日期',
     dataIndex: 'Date',
-    sorter: true,
+    sorter: false,
   },
   {
     title: '收货任务数',
     dataIndex: 'Receipt',
-    sorter: true,
+    sorter: false,
   },
   {
     title: '入库任务数',
     dataIndex: 'Pick',
-    sorter: true,
+    sorter: false,
   },
   {
     title: '拣货任务数',
     dataIndex: 'Shelve',
-    sorter: true,
+    sorter: false,
   },
   {
     title: '移库任务数',
     dataIndex: 'Move',
-    sorter: true,
+    sorter: false,
   },
   {
     title: '发运任务数',
     dataIndex: 'Ship',
-    sorter: true,
+    sorter: false,
   },
 ];

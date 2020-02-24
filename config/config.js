@@ -67,6 +67,14 @@ if (isAntDesignProPreview) {
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
+// api server endpoint
+const serveUrlMap = {
+  local: 'http://localhost:3000',
+  dev: 'http://36.110.117.58:8000',
+};
+
+const { SERVE_ENV = 'local' } = process.env;
+
 export default {
   plugins,
   hash: true,
@@ -97,14 +105,14 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/cargo/cargolist',
             },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            // },
             {
               path: '/admin',
               name: 'admin',
@@ -112,42 +120,100 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
+            // {
+            //   name: 'list.table-list',
+            //   icon: 'table',
+            //   path: '/list',
+            //   component: './ListTableList',
+            // },
             {
-              name: 'list.table-list',
+              name: 'category.cargo',
               icon: 'table',
-              path: '/list',
-              component: './ListTableList',
-            },
-            {
-              name: 'list.workloads',
-              icon: 'table',
+              path: '/cargo',
               routes: [
                 {
-                  name: 'kc-day-workloads',
+                  name: 'list.cargo-list',
                   icon: 'table',
-                  path: '/kcDayWorkloads',
+                  path: '/cargo/cargolist',
+                  component: './CargoList',
+                },
+                {
+                  name: 'list.out-cargo-list',
+                  icon: 'table',
+                  path: '/cargo/outcargolist',
+                  component: './OutCargoList',
+                },
+                {
+                  name: 'list.cargo-list-ivt',
+                  icon: 'table',
+                  path: '/cargo/cargolistivt',
+                  component: './CargoListIvt',
+                },
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/cargo/ordergoods',
+                  component: './OrderGoods',
+                },
+              ],
+            },
+            {
+              name: 'category.order',
+              icon: 'table',
+              path: '/order',
+              routes: [
+                {
+                  name: 'list.op-list',
+                  icon: 'table',
+                  path: '/order/oplist',
+                  component: './OpList',
+                },
+                {
+                  name: 'list.op-list-by-time',
+                  icon: 'table',
+                  path: '/order/oplistbytime',
+                  component: './OpListByTime',
+                },
+              ],
+            },
+            {
+              name: 'category.workloads',
+              icon: 'table',
+              path: '/workloads',
+              routes: [
+                {
+                  name: 'list.day-workloads',
+                  icon: 'table',
+                  path: '/workloads/dayworkloads',
                   component: './KcWorkloads',
                 },
                 {
-                  name: 'kc-month-workloads',
+                  name: 'list.month-workloads',
                   icon: 'table',
-                  path: '/kcMonthWorkloads',
+                  path: '/workloads/monthworkloads',
                   component: './KcMonthWorkloads',
                 },
                 {
-                  name: 'kc-year-workloads',
+                  name: 'list.year-workloads',
                   icon: 'table',
-                  path: '/kcYearWorkloads',
+                  path: '/workloads/yearworkloads',
                   component: './KcYearWorkloads',
                 },
               ],
             },
-            // {
-            //   name: 'list.cargo-list',
-            //   icon: 'table',
-            //   path: '/cargolist',
-            //   component: './CargoList',
-            // },
+            {
+              name: 'category.cargoinfo',
+              icon: 'table',
+              path: '/cargoinfo',
+              routes: [
+                {
+                  name: 'list.cargobroken-by-inorder',
+                  icon: 'table',
+                  path: '/cargoinfo/cargobrokenbyinorder',
+                  component: './CargobrokenByInorder',
+                },
+              ],
+            },
             {
               component: './404',
             },
@@ -204,8 +270,18 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   proxy: {
+    '/api/login/account': {
+      target: serveUrlMap['local'],
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
+    '/api/currentUser': {
+      target: serveUrlMap['local'],
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
     '/api/': {
-      target: 'http://localhost:3000',
+      target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
