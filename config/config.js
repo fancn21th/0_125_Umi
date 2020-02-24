@@ -177,6 +177,31 @@ export default {
               ],
             },
             {
+              name: 'category.workloads',
+              icon: 'table',
+              path: '/workloads',
+              routes: [
+                {
+                  name: 'list.day-workloads',
+                  icon: 'table',
+                  path: '/workloads/dayworkloads',
+                  component: './KcWorkloads',
+                },
+                {
+                  name: 'list.month-workloads',
+                  icon: 'table',
+                  path: '/workloads/monthworkloads',
+                  component: './KcMonthWorkloads',
+                },
+                {
+                  name: 'list.year-workloads',
+                  icon: 'table',
+                  path: '/workloads/yearworkloads',
+                  component: './KcYearWorkloads',
+                },
+              ],
+            },
+            {
               name: 'category.cargoinfo',
               icon: 'table',
               path: '/cargoinfo',
