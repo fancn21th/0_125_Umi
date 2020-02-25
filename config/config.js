@@ -240,6 +240,12 @@ export default {
                   path: '/report/workloadsdev',
                   component: './Report/WorkloadsDev',
                 },
+                {
+                  name: 'list.cargo-broken',
+                  icon: 'table',
+                  path: '/report/cargobroken',
+                  component: './Report/Cargobroken',
+                },
               ],
             },
             {
