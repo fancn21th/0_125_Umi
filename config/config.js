@@ -308,10 +308,15 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
-    '/api/': {
+    '/api/sinoapi': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/': '/sapi/' },
+      pathRewrite: { '^/api/sinoapi/': '/sapi/sinoapi/' },
+    },
+    '/api/report': {
+      target: serveUrlMap[SERVE_ENV],
+      changeOrigin: true,
+      pathRewrite: { '^/api/report/': '/rapi/report/' },
     },
   },
 };
