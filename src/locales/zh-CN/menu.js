@@ -70,4 +70,5 @@ export default {
   'menu.category.report.list.workloads-staff': '人员工作量报表',
   'menu.category.report.list.workloads-dev': '叉车工作量报表',
   'menu.category.report.list.cargo-broken': '货物破损信息报表',
+  'menu.category.report.list.cargo-status': '货物状态信息报表',
 };
