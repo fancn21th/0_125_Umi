@@ -67,7 +67,9 @@ const BasicForm = props => {
   };
 
   return (
-    <PageHeaderWrapper content={<FormattedMessage id="formandbasic-form.basic.description" />}>
+    <PageHeaderWrapper
+      content={<FormattedMessage id="email-sending-config-form.basic.description" />}
+    >
       <Card bordered={false}>
         <Form
           hideRequiredMark
@@ -85,32 +87,32 @@ const BasicForm = props => {
         >
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.title.label" />}
+            label={<FormattedMessage id="email-sending-config-form.title.label" />}
             name="title"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.title.required',
+                  id: 'email-sending-config-form.title.required',
                 }),
               },
             ]}
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.title.placeholder',
+                id: 'email-sending-config-form.title.placeholder',
               })}
             />
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.date.label" />}
+            label={<FormattedMessage id="email-sending-config-form.date.label" />}
             name="date"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.date.required',
+                  id: 'email-sending-config-form.date.required',
                 }),
               },
             ]}
@@ -121,23 +123,23 @@ const BasicForm = props => {
               }}
               placeholder={[
                 formatMessage({
-                  id: 'formandbasic-form.placeholder.start',
+                  id: 'email-sending-config-form.placeholder.start',
                 }),
                 formatMessage({
-                  id: 'formandbasic-form.placeholder.end',
+                  id: 'email-sending-config-form.placeholder.end',
                 }),
               ]}
             />
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.goal.label" />}
+            label={<FormattedMessage id="email-sending-config-form.goal.label" />}
             name="goal"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.goal.required',
+                  id: 'email-sending-config-form.goal.required',
                 }),
               },
             ]}
@@ -147,20 +149,20 @@ const BasicForm = props => {
                 minHeight: 32,
               }}
               placeholder={formatMessage({
-                id: 'formandbasic-form.goal.placeholder',
+                id: 'email-sending-config-form.goal.placeholder',
               })}
               rows={4}
             />
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.standard.label" />}
+            label={<FormattedMessage id="email-sending-config-form.standard.label" />}
             name="standard"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.standard.required',
+                  id: 'email-sending-config-form.standard.required',
                 }),
               },
             ]}
@@ -170,7 +172,7 @@ const BasicForm = props => {
                 minHeight: 32,
               }}
               placeholder={formatMessage({
-                id: 'formandbasic-form.standard.placeholder',
+                id: 'email-sending-config-form.standard.placeholder',
               })}
               rows={4}
             />
@@ -179,10 +181,12 @@ const BasicForm = props => {
             {...formItemLayout}
             label={
               <span>
-                <FormattedMessage id="formandbasic-form.client.label" />
+                <FormattedMessage id="email-sending-config-form.client.label" />
                 <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                  <Tooltip title={<FormattedMessage id="formandbasic-form.label.tooltip" />}>
+                  <FormattedMessage id="email-sending-config-form.form.optional" />
+                  <Tooltip
+                    title={<FormattedMessage id="email-sending-config-form.label.tooltip" />}
+                  >
                     <InfoCircleOutlined
                       style={{
                         marginRight: 4,
@@ -196,7 +200,7 @@ const BasicForm = props => {
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.client.placeholder',
+                id: 'email-sending-config-form.client.placeholder',
               })}
             />
           </FormItem>
@@ -204,9 +208,9 @@ const BasicForm = props => {
             {...formItemLayout}
             label={
               <span>
-                <FormattedMessage id="formandbasic-form.invites.label" />
+                <FormattedMessage id="email-sending-config-form.invites.label" />
                 <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
+                  <FormattedMessage id="email-sending-config-form.form.optional" />
                 </em>
               </span>
             }
@@ -214,7 +218,7 @@ const BasicForm = props => {
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.invites.placeholder',
+                id: 'email-sending-config-form.invites.placeholder',
               })}
             />
           </FormItem>
@@ -222,9 +226,9 @@ const BasicForm = props => {
             {...formItemLayout}
             label={
               <span>
-                <FormattedMessage id="formandbasic-form.weight.label" />
+                <FormattedMessage id="email-sending-config-form.weight.label" />
                 <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
+                  <FormattedMessage id="email-sending-config-form.form.optional" />
                 </em>
               </span>
             }
@@ -232,7 +236,7 @@ const BasicForm = props => {
           >
             <InputNumber
               placeholder={formatMessage({
-                id: 'formandbasic-form.weight.placeholder',
+                id: 'email-sending-config-form.weight.placeholder',
               })}
               min={0}
               max={100}
@@ -241,20 +245,20 @@ const BasicForm = props => {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.public.label" />}
-            help={<FormattedMessage id="formandbasic-form.label.help" />}
+            label={<FormattedMessage id="email-sending-config-form.public.label" />}
+            help={<FormattedMessage id="email-sending-config-form.label.help" />}
             name="publicType"
           >
             <div>
               <Radio.Group>
                 <Radio value="1">
-                  <FormattedMessage id="formandbasic-form.radio.public" />
+                  <FormattedMessage id="email-sending-config-form.radio.public" />
                 </Radio>
                 <Radio value="2">
-                  <FormattedMessage id="formandbasic-form.radio.partially-public" />
+                  <FormattedMessage id="email-sending-config-form.radio.partially-public" />
                 </Radio>
                 <Radio value="3">
-                  <FormattedMessage id="formandbasic-form.radio.private" />
+                  <FormattedMessage id="email-sending-config-form.radio.private" />
                 </Radio>
               </Radio.Group>
               <FormItem
@@ -266,7 +270,7 @@ const BasicForm = props => {
                 <Select
                   mode="multiple"
                   placeholder={formatMessage({
-                    id: 'formandbasic-form.publicUsers.placeholder',
+                    id: 'email-sending-config-form.publicUsers.placeholder',
                   })}
                   style={{
                     margin: '8px 0',
@@ -274,13 +278,13 @@ const BasicForm = props => {
                   }}
                 >
                   <Option value="1">
-                    <FormattedMessage id="formandbasic-form.option.A" />
+                    <FormattedMessage id="email-sending-config-form.option.A" />
                   </Option>
                   <Option value="2">
-                    <FormattedMessage id="formandbasic-form.option.B" />
+                    <FormattedMessage id="email-sending-config-form.option.B" />
                   </Option>
                   <Option value="3">
-                    <FormattedMessage id="formandbasic-form.option.C" />
+                    <FormattedMessage id="email-sending-config-form.option.C" />
                   </Option>
                 </Select>
               </FormItem>
@@ -293,14 +297,14 @@ const BasicForm = props => {
             }}
           >
             <Button type="primary" htmlType="submit" loading={submitting}>
-              <FormattedMessage id="formandbasic-form.form.submit" />
+              <FormattedMessage id="email-sending-config-form.form.submit" />
             </Button>
             <Button
               style={{
                 marginLeft: 8,
               }}
             >
-              <FormattedMessage id="formandbasic-form.form.save" />
+              <FormattedMessage id="email-sending-config-form.form.save" />
             </Button>
           </FormItem>
         </Form>
