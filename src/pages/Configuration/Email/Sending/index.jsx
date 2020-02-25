@@ -72,7 +72,7 @@ const BasicForm = props => {
     >
       <Card bordered={false}>
         <Form
-          hideRequiredMark
+          hideRequiredMark={false}
           style={{
             marginTop: 8,
           }}
@@ -87,209 +87,95 @@ const BasicForm = props => {
         >
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="email-sending-config-form.title.label" />}
-            name="title"
+            label={<FormattedMessage id="email-sending-config-form.host.title" />}
+            name="host"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'email-sending-config-form.title.required',
+                  id: 'email-sending-config-form.host.required',
                 }),
               },
             ]}
           >
             <Input
               placeholder={formatMessage({
-                id: 'email-sending-config-form.title.placeholder',
+                id: 'email-sending-config-form.host.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="email-sending-config-form.date.label" />}
-            name="date"
+            label={<FormattedMessage id="email-sending-config-form.user.title" />}
+            name="user"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'email-sending-config-form.date.required',
+                  id: 'email-sending-config-form.user.required',
                 }),
               },
             ]}
-          >
-            <RangePicker
-              style={{
-                width: '100%',
-              }}
-              placeholder={[
-                formatMessage({
-                  id: 'email-sending-config-form.placeholder.start',
-                }),
-                formatMessage({
-                  id: 'email-sending-config-form.placeholder.end',
-                }),
-              ]}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="email-sending-config-form.goal.label" />}
-            name="goal"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'email-sending-config-form.goal.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'email-sending-config-form.goal.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="email-sending-config-form.standard.label" />}
-            name="standard"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'email-sending-config-form.standard.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'email-sending-config-form.standard.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="email-sending-config-form.client.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="email-sending-config-form.form.optional" />
-                  <Tooltip
-                    title={<FormattedMessage id="email-sending-config-form.label.tooltip" />}
-                  >
-                    <InfoCircleOutlined
-                      style={{
-                        marginRight: 4,
-                      }}
-                    />
-                  </Tooltip>
-                </em>
-              </span>
-            }
-            name="client"
           >
             <Input
               placeholder={formatMessage({
-                id: 'email-sending-config-form.client.placeholder',
+                id: 'email-sending-config-form.user.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="email-sending-config-form.invites.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="email-sending-config-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="invites"
+            label={<FormattedMessage id="email-sending-config-form.password.title" />}
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.password.required',
+                }),
+              },
+            ]}
           >
             <Input
               placeholder={formatMessage({
-                id: 'email-sending-config-form.invites.placeholder',
+                id: 'email-sending-config-form.password.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="email-sending-config-form.weight.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="email-sending-config-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="weight"
+            label={<FormattedMessage id="email-sending-config-form.ssl.title" />}
+            name="ssl"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.ssl.required',
+                }),
+              },
+            ]}
           >
-            <InputNumber
+            <Select
               placeholder={formatMessage({
-                id: 'email-sending-config-form.weight.placeholder',
+                id: 'email-sending-config-form.ssl.placeholder',
               })}
-              min={0}
-              max={100}
-            />
-            <span className="ant-form-text">%</span>
+            >
+              <Option value="{true}">
+                {formatMessage({
+                  id: 'email-sending-config-form.ssl.option.a',
+                })}
+              </Option>
+              <Option value="{false}">
+                {formatMessage({
+                  id: 'email-sending-config-form.ssl.option.b',
+                })}
+              </Option>
+            </Select>
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="email-sending-config-form.public.label" />}
-            help={<FormattedMessage id="email-sending-config-form.label.help" />}
-            name="publicType"
-          >
-            <div>
-              <Radio.Group>
-                <Radio value="1">
-                  <FormattedMessage id="email-sending-config-form.radio.public" />
-                </Radio>
-                <Radio value="2">
-                  <FormattedMessage id="email-sending-config-form.radio.partially-public" />
-                </Radio>
-                <Radio value="3">
-                  <FormattedMessage id="email-sending-config-form.radio.private" />
-                </Radio>
-              </Radio.Group>
-              <FormItem
-                style={{
-                  marginBottom: 0,
-                }}
-                name="publicUsers"
-              >
-                <Select
-                  mode="multiple"
-                  placeholder={formatMessage({
-                    id: 'email-sending-config-form.publicUsers.placeholder',
-                  })}
-                  style={{
-                    margin: '8px 0',
-                    display: showPublicUsers ? 'block' : 'none',
-                  }}
-                >
-                  <Option value="1">
-                    <FormattedMessage id="email-sending-config-form.option.A" />
-                  </Option>
-                  <Option value="2">
-                    <FormattedMessage id="email-sending-config-form.option.B" />
-                  </Option>
-                  <Option value="3">
-                    <FormattedMessage id="email-sending-config-form.option.C" />
-                  </Option>
-                </Select>
-              </FormItem>
-            </div>
-          </FormItem>
+
           <FormItem
             {...submitFormLayout}
             style={{
