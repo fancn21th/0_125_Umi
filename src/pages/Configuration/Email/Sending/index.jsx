@@ -12,7 +12,7 @@ import {
   // Tooltip,
 } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 
@@ -69,6 +69,11 @@ const BasicForm = props => {
   };
 
   const onValuesChange = () => {};
+
+  // 坑: https://blog.csdn.net/weixin_33736649/article/details/91392178
+  useEffect(() => {
+    form.resetFields();
+  }, [sender]);
 
   return (
     <PageHeaderWrapper
