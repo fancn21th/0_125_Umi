@@ -233,6 +233,12 @@ export default {
                   path: '/report/workloadsstaff',
                   component: './Report/WorkloadsStaff',
                 },
+                {
+                  name: 'list.workloads-dev',
+                  icon: 'table',
+                  path: '/report/workloadsdev',
+                  component: './Report/WorkloadsDev',
+                },
               ],
             },
             {
