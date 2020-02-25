@@ -4,7 +4,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { queryCargos, sendmail } from './service';
-import { columns } from '../../../config/col-config-reportcargobroken';
+import { columns } from '../../../config/col-config-reportcargostatus';
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
