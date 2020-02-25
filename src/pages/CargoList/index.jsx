@@ -5,14 +5,14 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { queryCargos } from './service';
 import { columns } from '../../config/col-config-cargolist';
+
 const { Search } = Input;
 const { Text } = Typography;
 
 const TableList = () => {
   const [sorter, setSorter] = useState({});
-  const [tableparams, setTableparams] = useState({
-    sorter,
-  });
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
 
   const actionRef = useRef();
 
@@ -22,17 +22,26 @@ const TableList = () => {
         headerTitle="库存记录"
         actionRef={actionRef}
         rowKey="key"
-        search={true}
+        search
+        beforeSearchSubmit={params => {
+          setKeywordsValue('');
+          setKeywords('');
+          return params;
+        }}
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}
-        params={tableparams}
+        params={{ keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Search
             placeholder="搜索..."
             onSearch={val => {
-              setTableparams({ InOrderNo: val });
+              setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}

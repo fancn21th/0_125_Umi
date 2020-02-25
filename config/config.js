@@ -1,7 +1,8 @@
+import slash from 'slash2';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 
-import slash from 'slash2';
 import themePluginConfig from './themePluginConfig';
+
 const { pwa } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
@@ -66,6 +67,15 @@ if (isAntDesignProPreview) {
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
+// api server endpoint
+const serveUrlMap = {
+  local: 'http://localhost:3000',
+  // dev: 'http://36.110.117.58:8000',
+  dev: 'http://10.3.69.26:9000',
+};
+
+const { SERVE_ENV = 'local' } = process.env;
+
 export default {
   plugins,
   hash: true,
@@ -98,12 +108,6 @@ export default {
               path: '/',
               redirect: '/cargo/cargolist',
             },
-            // {
-            //   path: '/welcome',
-            //   name: 'welcome',
-            //   icon: 'smile',
-            //   component: './Welcome',
-            // },
             {
               path: '/admin',
               name: 'admin',
@@ -111,12 +115,6 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
-            // {
-            //   name: 'list.table-list',
-            //   icon: 'table',
-            //   path: '/list',
-            //   component: './ListTableList',
-            // },
             {
               name: 'category.cargo',
               icon: 'table',
@@ -135,10 +133,10 @@ export default {
                   component: './OutCargoList',
                 },
                 {
-                  name: 'list.order-goods',
+                  name: 'list.cargo-list-ivt',
                   icon: 'table',
-                  path: '/cargo/ordergoods',
-                  component: './OrderGoods',
+                  path: '/cargo/cargolistivt',
+                  component: './CargoListIvt',
                 },
               ],
             },
@@ -147,6 +145,12 @@ export default {
               icon: 'table',
               path: '/order',
               routes: [
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/order/ordergoods',
+                  component: './OrderGoods',
+                },
                 {
                   name: 'list.op-list',
                   icon: 'table',
@@ -158,6 +162,89 @@ export default {
                   icon: 'table',
                   path: '/order/oplistbytime',
                   component: './OpListByTime',
+                },
+              ],
+            },
+            {
+              name: 'category.workloads',
+              icon: 'table',
+              path: '/workloads',
+              routes: [
+                {
+                  name: 'list.day-workloads',
+                  icon: 'table',
+                  path: '/workloads/dayworkloads',
+                  component: './KcWorkloads',
+                },
+                {
+                  name: 'list.month-workloads',
+                  icon: 'table',
+                  path: '/workloads/monthworkloads',
+                  component: './KcMonthWorkloads',
+                },
+                {
+                  name: 'list.year-workloads',
+                  icon: 'table',
+                  path: '/workloads/yearworkloads',
+                  component: './KcYearWorkloads',
+                },
+              ],
+            },
+            {
+              name: 'category.cargoinfo',
+              icon: 'table',
+              path: '/cargoinfo',
+              routes: [
+                {
+                  name: 'list.cargobroken-by-inorder',
+                  icon: 'table',
+                  path: '/cargoinfo/cargobrokenbyinorder',
+                  component: './CargobrokenByInorder',
+                },
+              ],
+            },
+            {
+              name: 'config',
+              icon: 'table',
+              path: '/config',
+              routes: [
+                {
+                  name: 'email',
+                  icon: 'table',
+                  path: '/config/email',
+                  routes: [
+                    {
+                      name: 'sending',
+                      icon: 'table',
+                      path: '/config/email/sending',
+                      component: './Configuration/Email/Sending',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'category.report',
+              icon: 'table',
+              path: '/report',
+              routes: [
+                {
+                  name: 'list.workloads-staff',
+                  icon: 'table',
+                  path: '/report/workloadsstaff',
+                  component: './Report/WorkloadsStaff',
+                },
+                {
+                  name: 'list.workloads-dev',
+                  icon: 'table',
+                  path: '/report/workloadsdev',
+                  component: './Report/WorkloadsDev',
+                },
+                {
+                  name: 'list.cargo-broken',
+                  icon: 'table',
+                  path: '/report/cargobroken',
+                  component: './Report/Cargobroken',
                 },
               ],
             },
@@ -217,10 +304,25 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   proxy: {
-    '/api/': {
-      target: 'http://localhost:3000',
+    '/api/login/account': {
+      target: serveUrlMap['local'],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
+    },
+    '/api/currentUser': {
+      target: serveUrlMap['local'],
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
+    '/api/sinoapi': {
+      target: serveUrlMap[SERVE_ENV],
+      changeOrigin: true,
+      pathRewrite: { '^/api/sinoapi/': '/sapi/sinoapi/' },
+    },
+    '/api/report': {
+      target: serveUrlMap[SERVE_ENV],
+      changeOrigin: true,
+      pathRewrite: { '^/api/report/': '/rapi/report/' },
     },
   },
 };
