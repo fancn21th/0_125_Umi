@@ -70,7 +70,8 @@ if (isAntDesignProPreview) {
 // api server endpoint
 const serveUrlMap = {
   local: 'http://localhost:3000',
-  dev: 'http://36.110.117.58:8000',
+  // dev: 'http://36.110.117.58:8000',
+  dev: 'http://10.3.69.26:9000',
 };
 
 const { SERVE_ENV = 'local' } = process.env;
@@ -307,10 +308,15 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
-    '/api/': {
+    '/api/sinoapi': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/': '' },
+      pathRewrite: { '^/api/sinoapi/': '/sapi/sinoapi/' },
+    },
+    '/api/report': {
+      target: serveUrlMap[SERVE_ENV],
+      changeOrigin: true,
+      pathRewrite: { '^/api/report/': '/rapi/report/' },
     },
   },
 };
