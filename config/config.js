@@ -223,6 +223,19 @@ export default {
               ],
             },
             {
+              name: 'category.report',
+              icon: 'table',
+              path: '/report',
+              routes: [
+                {
+                  name: 'list.workloads-dev',
+                  icon: 'table',
+                  path: '/report/workloadsdev',
+                  component: './Report/WorkloadsDev',
+                },
+              ],
+            },
+            {
               component: './404',
             },
           ],
