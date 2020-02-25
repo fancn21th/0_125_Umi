@@ -230,6 +230,12 @@ export default {
                       path: '/config/email/sending',
                       component: './Configuration/Email/Sending',
                     },
+                    {
+                      name: 'receiving',
+                      icon: 'table',
+                      path: '/config/email/recipients',
+                      component: './Configuration/Email/Recipients',
+                    },
                   ],
                 },
               ],
