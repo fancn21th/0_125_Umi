@@ -246,6 +246,12 @@ export default {
                   path: '/report/cargobroken',
                   component: './Report/Cargobroken',
                 },
+                {
+                  name: 'list.cargo-status',
+                  icon: 'table',
+                  path: '/report/cargostatus',
+                  component: './Report/Cargostatus',
+                },
               ],
             },
             {
