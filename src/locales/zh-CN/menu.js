@@ -68,4 +68,5 @@ export default {
   'menu.config.email.receiving': '接收',
   'menu.category.report': '报表服务',
   'menu.category.report.list.workloads-staff': '人员工作量报表',
+  'menu.category.report.list.cargo-broken': '货物破损信息报表',
 };

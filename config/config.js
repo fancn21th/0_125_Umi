@@ -233,6 +233,12 @@ export default {
                   path: '/report/workloadsstaff',
                   component: './Report/WorkloadsStaff',
                 },
+                {
+                  name: 'list.cargo-broken',
+                  icon: 'table',
+                  path: '/report/cargobroken',
+                  component: './Report/Cargobroken',
+                },
               ],
             },
             {
