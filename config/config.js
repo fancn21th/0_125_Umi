@@ -74,6 +74,17 @@ const serveUrlMap = {
   dev: 'http://10.3.69.26:9000',
 };
 
+const rewriteMap = {
+  local: {
+    '/api/sinoapi': '/sinoapi/',
+    '/api/report': '/report/',
+  },
+  dev: {
+    '/api/sinoapi': '/sapi/sinoapi/',
+    '/api/report': '/rapi/report/',
+  },
+};
+
 const { SERVE_ENV = 'local' } = process.env;
 
 export default {
@@ -323,12 +334,12 @@ export default {
     '/api/sinoapi': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/sinoapi/': '/sapi/sinoapi/' },
+      pathRewrite: { '^/api/sinoapi/': rewriteMap[SERVE_ENV]['/api/sinoapi'] },
     },
     '/api/report': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/report/': '/rapi/report/' },
+      pathRewrite: { '^/api/report/': rewriteMap[SERVE_ENV]['/api/report'] },
     },
   },
 };
