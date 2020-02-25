@@ -62,4 +62,6 @@ export default {
   'menu.category.workloads.list.year-workloads': '年工作量',
   'menu.category.cargoinfo': '货物信息',
   'menu.category.cargoinfo.list.cargobroken-by-inorder': '货物破损',
+  'menu.category.report': '报表服务',
+  'menu.category.report.list.workloads-staff': '人员工作量报表',
 };
