@@ -6,3 +6,7 @@ export async function fakeSubmitForm(params) {
     data: params,
   });
 }
+
+export async function queryEmailSendConfig() {
+  return request('/api/report/emailSendConfig');
+}

@@ -1,20 +1,27 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Input, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
+// import { InfoCircleOutlined } from '@ant-design/icons';
+import {
+  Button,
+  message,
+  Card,
+  // DatePicker,
+  Input,
+  Form,
+  // InputNumber,
+  // Radio,
+  Select,
+  // Tooltip,
+} from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import styles from './style.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
 
 const BasicForm = props => {
-  const { submitting } = props;
+  const { submitting, sender } = props;
   const [form] = Form.useForm();
-  const [showPublicUsers, setShowPublicUsers] = React.useState(false);
   const formItemLayout = {
     labelCol: {
       xs: {
@@ -52,19 +59,16 @@ const BasicForm = props => {
   const onFinish = values => {
     const { dispatch } = props;
     dispatch({
-      type: 'formAndbasicForm/submitRegularForm',
+      type: 'emailSenderForm/submitRegularForm',
       payload: values,
     });
   };
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
+    message.error('Failed:', errorInfo);
   };
 
-  const onValuesChange = changedValues => {
-    const { publicType } = changedValues;
-    if (publicType) setShowPublicUsers(publicType === '2');
-  };
+  const onValuesChange = () => {};
 
   return (
     <PageHeaderWrapper
@@ -78,9 +82,7 @@ const BasicForm = props => {
           }}
           form={form}
           name="basic"
-          initialValues={{
-            public: '1',
-          }}
+          initialValues={sender}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           onValuesChange={onValuesChange}
@@ -88,7 +90,7 @@ const BasicForm = props => {
           <FormItem
             {...formItemLayout}
             label={<FormattedMessage id="email-sending-config-form.host.title" />}
-            name="host"
+            name="smtpHost"
             rules={[
               {
                 required: true,
@@ -108,7 +110,7 @@ const BasicForm = props => {
           <FormItem
             {...formItemLayout}
             label={<FormattedMessage id="email-sending-config-form.user.title" />}
-            name="user"
+            name="smtpFromEmail"
             rules={[
               {
                 required: true,
@@ -128,7 +130,7 @@ const BasicForm = props => {
           <FormItem
             {...formItemLayout}
             label={<FormattedMessage id="email-sending-config-form.password.title" />}
-            name="password"
+            name="smtpPassword"
             rules={[
               {
                 required: true,
@@ -148,7 +150,7 @@ const BasicForm = props => {
           <FormItem
             {...formItemLayout}
             label={<FormattedMessage id="email-sending-config-form.ssl.title" />}
-            name="ssl"
+            name="smtpSslEnable"
             rules={[
               {
                 required: true,
@@ -163,17 +165,57 @@ const BasicForm = props => {
                 id: 'email-sending-config-form.ssl.placeholder',
               })}
             >
-              <Option value="{true}">
+              <Option value>
                 {formatMessage({
                   id: 'email-sending-config-form.ssl.option.a',
                 })}
               </Option>
-              <Option value="{false}">
+              <Option value={false}>
                 {formatMessage({
                   id: 'email-sending-config-form.ssl.option.b',
                 })}
               </Option>
             </Select>
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="email-sending-config-form.port.title" />}
+            name="smtpPost"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.port.required',
+                }),
+              },
+            ]}
+          >
+            <Input
+              placeholder={formatMessage({
+                id: 'email-sending-config-form.port.placeholder',
+              })}
+            />
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="email-sending-config-form.sender.title" />}
+            name="smtpFromUserName"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.sender.required',
+                }),
+              },
+            ]}
+          >
+            <Input
+              placeholder={formatMessage({
+                id: 'email-sending-config-form.sender.placeholder',
+              })}
+            />
           </FormItem>
 
           <FormItem
@@ -185,13 +227,6 @@ const BasicForm = props => {
             <Button type="primary" htmlType="submit" loading={submitting}>
               <FormattedMessage id="email-sending-config-form.form.submit" />
             </Button>
-            <Button
-              style={{
-                marginLeft: 8,
-              }}
-            >
-              <FormattedMessage id="email-sending-config-form.form.save" />
-            </Button>
           </FormItem>
         </Form>
       </Card>
@@ -199,6 +234,7 @@ const BasicForm = props => {
   );
 };
 
-export default connect(({ loading }) => ({
-  submitting: loading.effects['formAndbasicForm/submitRegularForm'],
+export default connect(({ loading, emailSenderForm: { sender } }) => ({
+  submitting: loading.effects['emailSenderForm/submitRegularForm'],
+  sender,
 }))(BasicForm);
