@@ -107,12 +107,6 @@ export default {
               path: '/',
               redirect: '/cargo/cargolist',
             },
-            // {
-            //   path: '/welcome',
-            //   name: 'welcome',
-            //   icon: 'smile',
-            //   component: './Welcome',
-            // },
             {
               path: '/admin',
               name: 'admin',
@@ -120,12 +114,6 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
-            // {
-            //   name: 'list.table-list',
-            //   icon: 'table',
-            //   path: '/list',
-            //   component: './ListTableList',
-            // },
             {
               name: 'category.cargo',
               icon: 'table',
@@ -211,6 +199,26 @@ export default {
                   icon: 'table',
                   path: '/cargoinfo/cargobrokenbyinorder',
                   component: './CargobrokenByInorder',
+                },
+              ],
+            },
+            {
+              name: 'config',
+              icon: 'table',
+              path: '/config',
+              routes: [
+                {
+                  name: 'email',
+                  icon: 'table',
+                  path: '/config/email',
+                  routes: [
+                    {
+                      name: 'sending',
+                      icon: 'table',
+                      path: '/config/email/sending',
+                      component: './Configuration/Email/Sending',
+                    },
+                  ],
                 },
               ],
             },
