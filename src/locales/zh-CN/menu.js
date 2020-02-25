@@ -67,5 +67,6 @@ export default {
   'menu.config.email.sending': '发送',
   'menu.config.email.receiving': '接收',
   'menu.category.report': '报表服务',
+  'menu.category.report.list.workloads-staff': '人员工作量报表',
   'menu.category.report.list.workloads-dev': '叉车工作量报表',
 };

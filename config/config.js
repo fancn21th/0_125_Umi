@@ -228,6 +228,12 @@ export default {
               path: '/report',
               routes: [
                 {
+                  name: 'list.workloads-staff',
+                  icon: 'table',
+                  path: '/report/workloadsstaff',
+                  component: './Report/WorkloadsStaff',
+                },
+                {
                   name: 'list.workloads-dev',
                   icon: 'table',
                   path: '/report/workloadsdev',
