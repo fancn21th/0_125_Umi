@@ -18,3 +18,4 @@ export function ApiTransformToData(apidata) {
     data,
   };
 }
+
