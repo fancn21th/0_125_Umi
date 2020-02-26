@@ -2,7 +2,7 @@ import uuid from './uuid';
 
 export function ApiTransformToData(apidata) {
   const data = apidata.reduce((acc, val) => {
-    let { isbro: isbros } = val;
+    let { Isbro: isbros } = val;
     isbros = isbros.map(v => {
       return {
         ...v,
