@@ -5,6 +5,8 @@ import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { getWorkloads } from './service';
 import { columns } from '../../config/col-config-workloads';
+import data2ExcelJson from '../../utils/excel/data2ExcelJson';
+import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -46,7 +48,27 @@ const TableList = () => {
           return params;
         }}
         toolBarRender={(action, { selectedRows }) => [
-          <Button type="primary">导出表格</Button>,
+          <Button
+            type="primary"
+            onClick={() => {
+              const { dataSource } = action;
+              const body = data2ExcelJson(dataSource, columns);
+              const headerOrder = [
+                '员工',
+                '日期',
+                '收货任务数',
+                '入库任务数',
+                '拣货任务数',
+                '移库任务数',
+                '发运任务数',
+              ];
+              const sheetname = '日工作量';
+              const filename = '日工作量';
+              return exportJson2Sheet(body, headerOrder, sheetname, filename);
+            }}
+          >
+            导出表格
+          </Button>,
           <Text>日期：</Text>,
           <RangePicker
             format="YYYY-MM-DD"
@@ -86,22 +108,6 @@ const TableList = () => {
             style={{ width: 200 }}
           />,
         ]}
-        tableAlertRender={(selectedRowKeys, selectedRows) => (
-          <div>
-            已选择{' '}
-            <a
-              style={{
-                fontWeight: 600,
-              }}
-            >
-              {selectedRowKeys.length}
-            </a>{' '}
-            项&nbsp;&nbsp;
-            <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
-            </span>
-          </div>
-        )}
         request={params => getWorkloads(params)}
         columns={columns}
         pagination={{

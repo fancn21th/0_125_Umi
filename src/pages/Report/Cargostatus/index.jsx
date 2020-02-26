@@ -5,6 +5,9 @@ import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportcargostatus';
+import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
+import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
+
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
@@ -46,7 +49,37 @@ const TableList = () => {
             }}
           />,
           <Button type="primary">配置邮件信息</Button>,
-          <Button type="primary">导出报表</Button>,
+          <Button
+            type="primary"
+            onClick={() => {
+              const { dataSource } = action;
+              const body = data2ExcelJson(dataSource, columns);
+              const headerOrder = [
+                '单号',
+                '任务流水号',
+                '作业类型',
+                '作业人员',
+                '作业人员名称',
+                '作业设备',
+                '作业状态',
+                '任务下拨时间',
+                '要求完成时间',
+                '任务开始时间',
+                '任务结束时间',
+                '货物RFID标签',
+                '起始货位',
+                '目标货位',
+                '件数',
+                '物料名',
+                '同步状态',
+              ];
+              const sheetname = '货物状态信息报表';
+              const filename = '货物状态信息报表';
+              return exportJson2Sheet(body, headerOrder, sheetname, filename);
+            }}
+          >
+            导出报表
+          </Button>,
           <Button
             type="default"
             onClick={async () => {

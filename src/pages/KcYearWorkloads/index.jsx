@@ -5,6 +5,8 @@ import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { getWorkloads } from './service';
 import { columns } from '../../config/col-config-workloads';
+import data2ExcelJson from '../../utils/excel/data2ExcelJson';
+import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -46,7 +48,27 @@ const TableList = () => {
           keywords,
         }}
         toolBarRender={(action, { selectedRows }) => [
-          <Button type="primary">导出表格</Button>,
+          <Button
+            type="primary"
+            onClick={() => {
+              const { dataSource } = action;
+              const body = data2ExcelJson(dataSource, columns);
+              const headerOrder = [
+                '员工',
+                '日期',
+                '收货任务数',
+                '入库任务数',
+                '拣货任务数',
+                '移库任务数',
+                '发运任务数',
+              ];
+              const sheetname = '年工作量';
+              const filename = '年工作量';
+              return exportJson2Sheet(body, headerOrder, sheetname, filename);
+            }}
+          >
+            导出表格
+          </Button>,
           <Text>日期：</Text>,
           <RangePicker
             format="YYYY"
