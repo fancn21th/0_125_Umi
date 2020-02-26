@@ -1,6 +1,9 @@
-import { Input } from 'antd';
+import { DatePicker, Button, Card } from 'antd';
 import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import BarChart from './components/BarChart';
+
+const { RangePicker } = DatePicker;
 
 const ShelfUtilization = () => {
   const mainSearch = (
@@ -9,18 +12,17 @@ const ShelfUtilization = () => {
         textAlign: 'center',
       }}
     >
-      <Input.Search
-        placeholder="请输入"
-        enterButton="搜索"
-        size="large"
-        style={{
-          maxWidth: 522,
-          width: '100%',
-        }}
-      />
+      <RangePicker format="YYYY-MM-DD" placeholder={['开始日期', '结束日期']} />
+      <Button type="primary">搜索</Button>
     </div>
   );
-  return <PageHeaderWrapper content={mainSearch}></PageHeaderWrapper>;
+  return (
+    <PageHeaderWrapper content={mainSearch}>
+      <Card bordered={false}>
+        <BarChart />
+      </Card>
+    </PageHeaderWrapper>
+  );
 };
 
 export default ShelfUtilization;
