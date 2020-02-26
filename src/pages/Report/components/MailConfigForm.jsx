@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
+import moment from 'moment';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -9,19 +10,19 @@ const format = 'HH:mm';
 
 const fakeMailConfig = {
   content: '人员工作量日报表邮件',
-  daySendTime: null,
-  // id: 1,
-  monthSendTime: null,
+  daySendTime: 29,
+  id: 1,
+  monthSendTime: 12,
   recipients: [
     {
       email: '455637644@qq.com',
       id: 39,
       name: 'mark',
     },
-  ].map(({ id }) => id),
-  // sendTime: '09:33',
+  ],
+  sendTime: '09:33',
   subject: '人员工作量日报表邮件',
-  // type: 'DAY_REPORT',
+  type: 'DAY_REPORT',
 };
 
 const fakeRecipients = [
@@ -55,13 +56,22 @@ const fakeRecipients = [
   },
 ];
 
+const convertMailConfig = config => {
+  const { recipients, sendTime } = config;
+  return {
+    ...config,
+    recipients: recipients.map(({ id }) => id),
+    sendTime: moment(sendTime, format),
+  };
+};
+
 const MailConfigForm = props => {
   const [form] = Form.useForm();
   const {
     modalVisible,
     onSubmit: handleAdd,
     onCancel,
-    mailConfig = fakeMailConfig,
+    mailConfig = convertMailConfig(fakeMailConfig),
     recipients = fakeRecipients,
   } = props;
 
