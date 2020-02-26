@@ -10,7 +10,6 @@ const { Search } = Input;
 const { Text } = Typography;
 
 const TableList = () => {
-  const [sorter, setSorter] = useState({});
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
 
@@ -27,9 +26,6 @@ const TableList = () => {
           setKeywordsValue('');
           setKeywords('');
           return params;
-        }}
-        onChange={(_, _filter, _sorter) => {
-          setSorter(`${_sorter.field}_${_sorter.order}`);
         }}
         params={{ keywords }}
         toolBarRender={(action, { selectedRows }) => [

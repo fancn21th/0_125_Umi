@@ -9,19 +9,12 @@ import { columns } from '../../../config/col-config-cargobrokenbyinorder';
 const { Search } = Input;
 const { Text } = Typography;
 
-// 测试用默认入库单号
-const defaultNo = 'INS4211136251920190830000005';
-
 const TableList = () => {
-  const [sorter, setSorter] = useState({});
   const [imageModalVisibilyty, setImageModalVisibilyty] = useState(false);
   const [imgurls, setImgurls] = useState([]);
   const [modalIsLoading, setModalIsLoading] = useState(true);
-  const [searchText, setSearchText] = useState('');
-  const [tableparams, setTableparams] = useState({
-    sorter,
-    InOrderNo: defaultNo,
-  });
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
 
   const actionRef = useRef();
 
@@ -31,20 +24,23 @@ const TableList = () => {
         headerTitle="货物破损"
         actionRef={actionRef}
         rowKey="key"
-        search
-        onChange={(_, _filter, _sorter) => {
-          setSorter(`${_sorter.field}_${_sorter.order}`);
+        search={true}
+        beforeSearchSubmit={params => {
+          setKeywordsValue('');
+          setKeywords('');
+          return params;
         }}
-        params={tableparams}
+        params={{ keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Search
-            placeholder="search..."
+            placeholder="搜索..."
             onSearch={val => {
-              setTableparams({
-                ...tableparams,
-                InOrderNo: val,
-              });
+              setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}

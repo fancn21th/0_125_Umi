@@ -1,7 +1,8 @@
 import request from '@/utils/request';
 import { ApiTransformToData } from '../../utils/api-to-data-good';
+import { genAsyncSearch } from '../../utils/search/searchInCurPage';
 
-export async function queryCargos({ current, pageSize, sorter, InOrderNo, OutOrderNo }) {
+async function queryCargos2({ current, pageSize, sorter, InOrderNo, OutOrderNo }) {
   const cargos = await request('/api/sinoapi/getcargolist', {
     params: {
       pageindex: current - 1,
@@ -18,3 +19,4 @@ export async function queryCargos({ current, pageSize, sorter, InOrderNo, OutOrd
   });
   return ApiTransformToData(cargos, outcargos);
 }
+export const queryCargos = genAsyncSearch(queryCargos2);

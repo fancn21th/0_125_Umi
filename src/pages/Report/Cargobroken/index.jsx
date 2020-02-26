@@ -50,6 +50,7 @@ const TableList = () => {
             }}
           />,
           <Button type="primary">导出报表</Button>,
+          <Button type="primary">配置邮件信息</Button>,
           <Button
             type="default"
             onClick={async () => {

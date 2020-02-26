@@ -12,18 +12,19 @@ const { Option } = Select;
 const { Text } = Typography;
 
 const TableList = () => {
-  const [sorter, setSorter] = useState({});
   const [mode, setMode] = useState('day');
-  const [tableparams, setTableparams] = useState({
-    sorter,
-    mode,
-    startTime: moment()
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
+  const [startTime, setStartTime] = useState(
+    moment()
       .startOf(mode)
       .valueOf(),
-    endTime: moment()
+  );
+  const [endTime, setEndTime] = useState(
+    moment()
       .endOf(mode)
       .valueOf(),
-  });
+  );
 
   const actionRef = useRef();
 
@@ -34,10 +35,12 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
-        onChange={(_, _filter, _sorter) => {
-          setSorter(`${_sorter.field}_${_sorter.order}`);
+        beforeSearchSubmit={params => {
+          setKeywordsValue('');
+          setKeywords('');
+          return params;
         }}
-        params={tableparams}
+        params={{ mode, startTime, endTime, keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Text>周期：</Text>,
           <Select
@@ -45,16 +48,18 @@ const TableList = () => {
             style={{ width: 120 }}
             onChange={val => {
               setMode(val);
-              setTableparams({
-                ...tableparams,
-                mode: val,
-                startTime: moment()
+              setKeywordsValue('');
+              setKeywords('');
+              setStartTime(
+                moment()
                   .startOf(val)
                   .valueOf(),
-                endTime: moment()
+              );
+              setEndTime(
+                moment()
                   .endOf(val)
                   .valueOf(),
-              });
+              );
             }}
           >
             <Option value="day">日</Option>
@@ -69,11 +74,10 @@ const TableList = () => {
                 defaultValue={[moment().startOf('day'), moment().endOf('day')]}
                 onChange={date => {
                   if (date && date.length) {
-                    setTableparams({
-                      ...tableparams,
-                      startTime: date[0].valueOf(),
-                      endTime: date[1].valueOf(),
-                    });
+                    setKeywordsValue('');
+                    setKeywords('');
+                    setStartTime(date[0].valueOf());
+                    setEndTime(date[1].valueOf());
                   }
                 }}
               />
@@ -84,11 +88,10 @@ const TableList = () => {
                 defaultValue={[moment().startOf('month'), moment().endOf('month')]}
                 onChange={date => {
                   if (date && date.length) {
-                    setTableparams({
-                      ...tableparams,
-                      startTime: date[0].valueOf(),
-                      endTime: date[1].valueOf(),
-                    });
+                    setKeywordsValue('');
+                    setKeywords('');
+                    setStartTime(date[0].valueOf());
+                    setEndTime(date[1].valueOf());
                   }
                 }}
               />
@@ -99,11 +102,10 @@ const TableList = () => {
                 defaultValue={[moment().startOf('year'), moment().endOf('year')]}
                 onChange={date => {
                   if (date && date.length) {
-                    setTableparams({
-                      ...tableparams,
-                      startTime: date[0].valueOf(),
-                      endTime: date[1].valueOf(),
-                    });
+                    setKeywordsValue('');
+                    setKeywords('');
+                    setStartTime(date[0].valueOf());
+                    setEndTime(date[1].valueOf());
                   }
                 }}
               />
@@ -118,8 +120,8 @@ const TableList = () => {
               try {
                 await sendmail({
                   mode,
-                  startTime: tableparams['startTime'],
-                  endTime: tableparams['endTime'],
+                  startTime,
+                  endTime,
                 });
                 hide();
                 message.success('发送成功');
@@ -134,8 +136,12 @@ const TableList = () => {
           <Search
             placeholder="搜索..."
             onSearch={val => {
-              setTableparams({ InOrderNo: val });
+              setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}

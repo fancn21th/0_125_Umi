@@ -9,11 +9,8 @@ const { Search } = Input;
 const { Text } = Typography;
 
 const TableList = () => {
-  const [sorter, setSorter] = useState({});
-  const [searchText, setSearchText] = useState('');
-  const [tableparams, setTableparams] = useState({
-    sorter,
-  });
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
 
   const actionRef = useRef();
 
@@ -24,19 +21,22 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={true}
-        onChange={(_, _filter, _sorter) => {
-          setSorter(`${_sorter.field}_${_sorter.order}`);
+        beforeSearchSubmit={params => {
+          setKeywordsValue('');
+          setKeywords('');
+          return params;
         }}
-        params={tableparams}
+        params={{ keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Search
-            placeholder="search..."
+            placeholder="搜索..."
             onSearch={val => {
-              setTableparams({
-                ...tableparams,
-                InOrderNo: val,
-              });
+              setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}
