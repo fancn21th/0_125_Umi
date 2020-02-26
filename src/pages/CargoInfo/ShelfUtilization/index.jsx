@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { DatePicker, Button, Card } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
@@ -8,6 +8,7 @@ const { RangePicker } = DatePicker;
 
 const ShelfUtilization = props => {
   const { dispatch, data } = props;
+  const dateSpan = useRef(null);
 
   const onSearch = () => {
     if (dispatch) {
@@ -27,7 +28,7 @@ const ShelfUtilization = props => {
         textAlign: 'center',
       }}
     >
-      <RangePicker format="YYYY-MM-DD" placeholder={['开始日期', '结束日期']} />
+      <RangePicker ref={dateSpan} format="YYYY-MM-DD" placeholder={['开始日期', '结束日期']} />
       <Button type="primary" onClick={onSearch}>
         搜索
       </Button>
