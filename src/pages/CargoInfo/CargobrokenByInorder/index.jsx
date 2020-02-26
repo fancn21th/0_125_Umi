@@ -4,11 +4,12 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import ImageModal from './components/ImageModal';
 import { queryCargos } from './service';
-import { columns } from '../../config/col-config-cargobrokenbyinorder';
+import { columns } from '../../../config/col-config-cargobrokenbyinorder';
+
 const { Search } = Input;
 const { Text } = Typography;
 
-//测试用默认入库单号
+// 测试用默认入库单号
 const defaultNo = 'INS4211136251920190830000005';
 
 const TableList = () => {
@@ -30,7 +31,7 @@ const TableList = () => {
         headerTitle="货物破损"
         actionRef={actionRef}
         rowKey="key"
-        search={true}
+        search
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}

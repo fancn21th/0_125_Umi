@@ -202,19 +202,24 @@ export default {
               ],
             },
             {
-              name: 'category.cargoinfo',
+              name: 'cargoinfo',
               icon: 'table',
               path: '/cargoinfo',
               routes: [
                 {
-                  name: 'list.cargobroken-by-inorder',
+                  name: 'cargobroken-by-inorder',
                   icon: 'table',
                   path: '/cargoinfo/cargobrokenbyinorder',
-                  component: './CargobrokenByInorder',
+                  component: './Cargoinfo/CargobrokenByInorder',
+                },
+                {
+                  name: 'shelf-utilization',
+                  icon: 'table',
+                  path: '/cargoinfo/shelfutilization',
+                  component: './Cargoinfo/ShelfUtilization',
                 },
               ],
             },
-
             {
               name: 'category.report',
               icon: 'table',
