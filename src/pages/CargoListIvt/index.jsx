@@ -7,6 +7,8 @@ import { connect } from 'dva';
 import { queryCargoListIvt } from './service';
 import { columns } from '../../config/col-config-cargolistivt';
 import uuid from '../../utils/uuid';
+import data2ExcelJson from '../../utils/excel/data2ExcelJson';
+import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -59,6 +61,35 @@ const TableList = ({ ivtList }) => {
             >
               {mapStringsToOptions(ivtList)}
             </Select>,
+            <Button
+              type="primary"
+              onClick={() => {
+                const { dataSource } = action;
+                const body = data2ExcelJson(dataSource, columns);
+                const headerOrder = [
+                  '入库单号',
+                  '货物RFID',
+                  '货位号',
+                  '物料行数',
+                  '行号',
+                  '物料号',
+                  '物料名',
+                  '批次号',
+                  '应收',
+                  '实收',
+                  '包装',
+                  '危险等级',
+                  '货物状态',
+                  '盘点状态',
+                  '盘点时间',
+                ];
+                const sheetname = '盘库记录';
+                const filename = '库存盘点表';
+                return exportJson2Sheet(body, headerOrder, sheetname, filename);
+              }}
+            >
+              导出表格
+            </Button>,
             <Search
               placeholder="搜索..."
               onSearch={val => {

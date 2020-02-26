@@ -7,6 +7,8 @@ import moment from 'moment';
 import { queryCargos } from './service';
 import { columns } from '../../config/col-config-oplistbytime';
 import momentToTimestamp from '../../utils/moment-to-timestamp';
+import data2ExcelJson from '../../utils/excel/data2ExcelJson';
+import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -43,7 +45,30 @@ const TableList = () => {
           <Button
             type="primary"
             onClick={() => {
-              console.log(action);
+              const { dataSource } = action;
+              const body = data2ExcelJson(dataSource, columns);
+              const headerOrder = [
+                '操作类型',
+                '单号',
+                '货物RFID',
+                '物料名',
+                '件数',
+                '原货位',
+                '推荐货位',
+                '新货位',
+                '作业人员',
+                '人员姓名',
+                '作业设备',
+                '作业状态',
+                '下发时间',
+                '截止时间',
+                '开始时间',
+                '完成时间',
+                '同步状态',
+              ];
+              const sheetname = '操作流水';
+              const filename = '操作流水';
+              return exportJson2Sheet(body, headerOrder, sheetname, filename);
             }}
           >
             导出表格
