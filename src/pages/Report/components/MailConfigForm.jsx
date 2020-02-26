@@ -7,6 +7,7 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 const format = 'HH:mm';
+const format2 = 'HH:mm:ss';
 
 const fakeMailConfig = {
   content: '人员工作量日报表邮件',
@@ -65,11 +66,19 @@ const convertMailConfig = config => {
   };
 };
 
+const convertBackwardsMailConfig = config => {
+  const { sendTime } = config;
+  return {
+    ...config,
+    sendTime: moment(sendTime).format(format2),
+  };
+};
+
 const MailConfigForm = props => {
   const [form] = Form.useForm();
   const {
     modalVisible,
-    onSubmit: handleAdd,
+    onSubmit: handleUpdate,
     onCancel,
     mailConfig = convertMailConfig(fakeMailConfig),
     recipients = fakeRecipients,
@@ -77,8 +86,9 @@ const MailConfigForm = props => {
 
   const okHandle = async () => {
     const fieldsValue = await form.validateFields();
+    const convertedFieldsValue = convertBackwardsMailConfig(fieldsValue);
     form.resetFields();
-    handleAdd(fieldsValue);
+    handleUpdate(convertedFieldsValue);
   };
 
   const formItemLayout = {
@@ -96,7 +106,7 @@ const MailConfigForm = props => {
       onOk={okHandle}
       onCancel={() => onCancel()}
     >
-      <Form form={form} initialValues={mailConfig}>
+      <Form hideRequiredMark={false} form={form} initialValues={mailConfig}>
         <FormItem
           {...formItemLayout}
           label="邮件主题"

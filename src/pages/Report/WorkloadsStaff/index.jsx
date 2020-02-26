@@ -185,7 +185,10 @@ const TableList = () => {
         }}
       />
       <MailConfigForm
-        onSubmit={() => {}}
+        onSubmit={value => {
+          console.table(value);
+          setEmailConfigVisible(false);
+        }}
         onCancel={() => setEmailConfigVisible(false)}
         modalVisible={emailConfigVisible}
       />
