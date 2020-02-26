@@ -6,6 +6,9 @@ import moment from 'moment';
 import ImageModal from './components/ImageModal';
 import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportcargobroken';
+import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
+import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
+
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
@@ -49,7 +52,28 @@ const TableList = () => {
               }
             }}
           />,
-          <Button type="primary">导出报表</Button>,
+          <Button
+            type="primary"
+            onClick={() => {
+              const { dataSource } = action;
+              const body = data2ExcelJson(dataSource, columns);
+              const headerOrder = [
+                '货物RFID',
+                '入库单号',
+                '单行号',
+                '货主代码',
+                '物料名',
+                '件数',
+                '当前货位',
+                '破损情况',
+              ];
+              const sheetname = '货物破损信息报表';
+              const filename = '货物破损信息报表';
+              return exportJson2Sheet(body, headerOrder, sheetname, filename);
+            }}
+          >
+            导出报表
+          </Button>,
           <Button type="primary">配置邮件信息</Button>,
           <Button
             type="default"
