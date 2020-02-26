@@ -10,7 +10,7 @@ import request from '@/utils/request';
 export async function addEmailSendConfig(params) {
   const { smtpFromUserName } = params;
   return request('/api/report/emailSendConfig', {
-    method: 'POST',
+    method: 'PUT',
     data: { ...params, smtpUserName: smtpFromUserName },
   });
 }
