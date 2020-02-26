@@ -4,7 +4,8 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import ImageModal from './components/ImageModal';
 import { queryCargos } from './service';
-import { columns } from '../../config/col-config-cargobrokenbyinorder';
+import { columns } from '../../../config/col-config-cargobrokenbyinorder';
+
 const { Search } = Input;
 const { Text } = Typography;
 

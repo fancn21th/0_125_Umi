@@ -202,41 +202,21 @@ export default {
               ],
             },
             {
-              name: 'category.cargoinfo',
+              name: 'cargoinfo',
               icon: 'table',
               path: '/cargoinfo',
               routes: [
                 {
-                  name: 'list.cargobroken-by-inorder',
+                  name: 'cargobroken-by-inorder',
                   icon: 'table',
                   path: '/cargoinfo/cargobrokenbyinorder',
-                  component: './CargobrokenByInorder',
+                  component: './Cargoinfo/CargobrokenByInorder',
                 },
-              ],
-            },
-            {
-              name: 'config',
-              icon: 'table',
-              path: '/config',
-              routes: [
                 {
-                  name: 'email',
+                  name: 'shelf-utilization',
                   icon: 'table',
-                  path: '/config/email',
-                  routes: [
-                    {
-                      name: 'sending',
-                      icon: 'table',
-                      path: '/config/email/sending',
-                      component: './Configuration/Email/Sending',
-                    },
-                    {
-                      name: 'receiving',
-                      icon: 'table',
-                      path: '/config/email/recipients',
-                      component: './Configuration/Email/Recipients',
-                    },
-                  ],
+                  path: '/cargoinfo/shelfutilization',
+                  component: './Cargoinfo/ShelfUtilization',
                 },
               ],
             },
@@ -268,6 +248,32 @@ export default {
                   icon: 'table',
                   path: '/report/cargostatus',
                   component: './Report/Cargostatus',
+                },
+              ],
+            },
+            {
+              name: 'config',
+              icon: 'table',
+              path: '/config',
+              routes: [
+                {
+                  name: 'email',
+                  icon: 'table',
+                  path: '/config/email',
+                  routes: [
+                    {
+                      name: 'sending',
+                      icon: 'table',
+                      path: '/config/email/sending',
+                      component: './Configuration/Email/Sending',
+                    },
+                    {
+                      name: 'receiving',
+                      icon: 'table',
+                      path: '/config/email/recipients',
+                      component: './Configuration/Email/Recipients',
+                    },
+                  ],
                 },
               ],
             },
