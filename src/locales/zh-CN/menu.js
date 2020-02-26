@@ -62,7 +62,7 @@ export default {
   'menu.category.workloads.list.year-workloads': '年工作量',
   'menu.cargoinfo': '货物信息',
   'menu.cargoinfo.cargobroken-by-inorder': '货物破损',
-  'menu.cargoinfo.shelf-utilization': '货位信息',
+  'menu.cargoinfo.shelf-utilization': '货位利用率',
   'menu.config': '系统配置',
   'menu.config.email': '邮件',
   'menu.config.email.sending': '发送',
