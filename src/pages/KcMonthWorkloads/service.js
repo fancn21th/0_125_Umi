@@ -1,7 +1,8 @@
 import request from '@/utils/request';
 import { WorkloadsDataTranlate } from '../../utils/api-to-data-workloads';
+import { genAsyncSearch } from '../../utils/search/searchInCurPage';
 
-export async function getMonthWorkloads({ current, pageSize, sorter, type }) {
+async function getMonthWorkloads2({ current, pageSize, sorter, type }) {
   const url = type ? '/api/sinoapi/exportworkloaddev' : '/api/sinoapi/exportworkloadstaff';
   let params;
   if (type) {
@@ -28,3 +29,4 @@ export async function getMonthWorkloads({ current, pageSize, sorter, type }) {
   });
   return WorkloadsDataTranlate(data);
 }
+export const getMonthWorkloads = genAsyncSearch(getMonthWorkloads2);

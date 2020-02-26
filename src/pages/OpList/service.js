@@ -1,17 +1,19 @@
 import request from '@/utils/request';
 import { ApiTransformToData } from '../../utils/api-to-data-op';
 import { ApiTransformToData as ApiTransformToLogData } from '../../utils/api-to-data-loglist';
+import { genAsyncSearch } from '../../utils/search/searchInCurPage';
 
-export async function queryOpList({ current, pageSize, sorter, OrderNo }) {
+async function queryOpList2({ current, pageSize, orderno = '' }) {
   const data = await request('/api/sinoapi/getoplist', {
     params: {
       pageindex: current - 1,
       pageSize,
-      orderno: OrderNo || '',
+      orderno,
     },
   });
   return ApiTransformToData(data);
 }
+export const queryOpList = genAsyncSearch(queryOpList2);
 
 export async function queryUploadResultByInorder(inorder) {
   const data = await request('/api/sinoapi/getuploadresultbyinorder', {

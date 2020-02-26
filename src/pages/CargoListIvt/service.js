@@ -1,10 +1,11 @@
 import request from '@/utils/request';
 import { ApiTransformToData } from '../../utils/api-to-data-cargo';
+import { genAsyncSearch } from '../../utils/search/searchInCurPage';
 
 //测试用默认盘点编号
 // const defaultNo = '30000214-002';
 
-export async function queryCargoListIvt({ current, pageSize, sorter, inventoryno }) {
+async function queryCargoListIvt2({ current, pageSize, inventoryno }) {
   if (inventoryno) {
     const data = await request('/api/sinoapi/getcargolistivt', {
       params: {
@@ -30,3 +31,4 @@ export async function queryIvtList({ pageindex, pagesize }) {
     },
   });
 }
+export const queryCargoListIvt = genAsyncSearch(queryCargoListIvt2);

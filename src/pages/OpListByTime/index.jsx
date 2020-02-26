@@ -19,12 +19,10 @@ const defaultDate = [moment(1581436800000), moment(1581523199999)];
 // const defaultDate = [moment().startOf('day'), moment().endOf('day')];
 
 const TableList = () => {
-  const [sorter, setSorter] = useState({});
-  const [tableparams, setTableparams] = useState({
-    sorter,
-    begin: momentToTimestamp(defaultDate[0]),
-    end: momentToTimestamp(defaultDate[1]),
-  });
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
+  const [begin, setBegin] = useState(momentToTimestamp(defaultDate[0]));
+  const [end, setEnd] = useState(momentToTimestamp(defaultDate[1]));
 
   const actionRef = useRef();
 
@@ -35,10 +33,12 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
-        onChange={(_, _filter, _sorter) => {
-          setSorter(`${_sorter.field}_${_sorter.order}`);
+        beforeSearchSubmit={params => {
+          setKeywordsValue('');
+          setKeywords('');
+          return params;
         }}
-        params={tableparams}
+        params={{ begin, end, keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Button
             type="primary"
@@ -54,22 +54,20 @@ const TableList = () => {
             defaultValue={defaultDate}
             onChange={dates => {
               if (dates && dates.length) {
-                setTableparams({
-                  ...tableparams,
-                  begin: momentToTimestamp(dates[0]),
-                  end: momentToTimestamp(dates[1]),
-                });
+                setBegin(momentToTimestamp(dates[0]));
+                setEnd(momentToTimestamp(dates[1]));
               }
             }}
           />,
           <Search
-            placeholder="search..."
+            placeholder="搜索..."
             onSearch={val => {
-              setTableparams({
-                ...tableparams,
-                InOrderNo: val,
-              });
+              setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}
