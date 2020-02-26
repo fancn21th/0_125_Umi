@@ -60,8 +60,9 @@ export default {
   'menu.category.workloads.list.day-workloads': '日工作量',
   'menu.category.workloads.list.month-workloads': '月工作量',
   'menu.category.workloads.list.year-workloads': '年工作量',
-  'menu.category.cargoinfo': '货物信息',
-  'menu.category.cargoinfo.list.cargobroken-by-inorder': '货物破损',
+  'menu.cargoinfo': '货物信息',
+  'menu.cargoinfo.cargobroken-by-inorder': '货物破损',
+  'menu.cargoinfo.shelf-utilization': '货位信息',
   'menu.config': '系统配置',
   'menu.config.email': '邮件',
   'menu.config.email.sending': '发送',
@@ -70,4 +71,5 @@ export default {
   'menu.category.report.list.workloads-staff': '人员工作量报表',
   'menu.category.report.list.workloads-dev': '叉车工作量报表',
   'menu.category.report.list.cargo-broken': '货物破损信息报表',
+  'menu.category.report.list.cargo-status': '货物状态信息报表',
 };

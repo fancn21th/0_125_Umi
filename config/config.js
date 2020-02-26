@@ -74,6 +74,17 @@ const serveUrlMap = {
   dev: 'http://10.3.69.26:9000',
 };
 
+const rewriteMap = {
+  local: {
+    '/api/sinoapi': '/sinoapi/',
+    '/api/report': '/report/',
+  },
+  dev: {
+    '/api/sinoapi': '/sapi/sinoapi/',
+    '/api/report': '/rapi/report/',
+  },
+};
+
 const { SERVE_ENV = 'local' } = process.env;
 
 export default {
@@ -191,35 +202,21 @@ export default {
               ],
             },
             {
-              name: 'category.cargoinfo',
+              name: 'cargoinfo',
               icon: 'table',
               path: '/cargoinfo',
               routes: [
                 {
-                  name: 'list.cargobroken-by-inorder',
+                  name: 'cargobroken-by-inorder',
                   icon: 'table',
                   path: '/cargoinfo/cargobrokenbyinorder',
-                  component: './CargobrokenByInorder',
+                  component: './Cargoinfo/CargobrokenByInorder',
                 },
-              ],
-            },
-            {
-              name: 'config',
-              icon: 'table',
-              path: '/config',
-              routes: [
                 {
-                  name: 'email',
+                  name: 'shelf-utilization',
                   icon: 'table',
-                  path: '/config/email',
-                  routes: [
-                    {
-                      name: 'sending',
-                      icon: 'table',
-                      path: '/config/email/sending',
-                      component: './Configuration/Email/Sending',
-                    },
-                  ],
+                  path: '/cargoinfo/shelfutilization',
+                  component: './Cargoinfo/ShelfUtilization',
                 },
               ],
             },
@@ -245,6 +242,38 @@ export default {
                   icon: 'table',
                   path: '/report/cargobroken',
                   component: './Report/Cargobroken',
+                },
+                {
+                  name: 'list.cargo-status',
+                  icon: 'table',
+                  path: '/report/cargostatus',
+                  component: './Report/Cargostatus',
+                },
+              ],
+            },
+            {
+              name: 'config',
+              icon: 'table',
+              path: '/config',
+              routes: [
+                {
+                  name: 'email',
+                  icon: 'table',
+                  path: '/config/email',
+                  routes: [
+                    {
+                      name: 'sending',
+                      icon: 'table',
+                      path: '/config/email/sending',
+                      component: './Configuration/Email/Sending',
+                    },
+                    {
+                      name: 'receiving',
+                      icon: 'table',
+                      path: '/config/email/recipients',
+                      component: './Configuration/Email/Recipients',
+                    },
+                  ],
                 },
               ],
             },
@@ -317,12 +346,12 @@ export default {
     '/api/sinoapi': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/sinoapi/': '/sapi/sinoapi/' },
+      pathRewrite: { '^/api/sinoapi/': rewriteMap[SERVE_ENV]['/api/sinoapi'] },
     },
     '/api/report': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/report/': '/rapi/report/' },
+      pathRewrite: { '^/api/report/': rewriteMap[SERVE_ENV]['/api/report'] },
     },
   },
 };

@@ -1,20 +1,27 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Input, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
+// import { InfoCircleOutlined } from '@ant-design/icons';
+import {
+  Button,
+  message,
+  Card,
+  // DatePicker,
+  Input,
+  Form,
+  // InputNumber,
+  // Radio,
+  Select,
+  // Tooltip,
+} from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import styles from './style.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
 
 const BasicForm = props => {
-  const { submitting } = props;
+  const { submitting, sender } = props;
   const [form] = Form.useForm();
-  const [showPublicUsers, setShowPublicUsers] = React.useState(false);
   const formItemLayout = {
     labelCol: {
       xs: {
@@ -52,240 +59,170 @@ const BasicForm = props => {
   const onFinish = values => {
     const { dispatch } = props;
     dispatch({
-      type: 'formAndbasicForm/submitRegularForm',
+      type: 'emailSenderForm/submitRegularForm',
       payload: values,
     });
   };
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
+    message.error('Failed:', errorInfo);
   };
 
-  const onValuesChange = changedValues => {
-    const { publicType } = changedValues;
-    if (publicType) setShowPublicUsers(publicType === '2');
-  };
+  const onValuesChange = () => {};
+
+  // 坑: https://blog.csdn.net/weixin_33736649/article/details/91392178
+  useEffect(() => {
+    form.resetFields();
+  }, [sender]);
 
   return (
-    <PageHeaderWrapper content={<FormattedMessage id="formandbasic-form.basic.description" />}>
+    <PageHeaderWrapper
+      content={<FormattedMessage id="email-sending-config-form.basic.description" />}
+    >
       <Card bordered={false}>
         <Form
-          hideRequiredMark
+          hideRequiredMark={false}
           style={{
             marginTop: 8,
           }}
           form={form}
           name="basic"
-          initialValues={{
-            public: '1',
-          }}
+          initialValues={sender}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           onValuesChange={onValuesChange}
         >
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.title.label" />}
-            name="title"
+            label={<FormattedMessage id="email-sending-config-form.host.title" />}
+            name="smtpHost"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.title.required',
+                  id: 'email-sending-config-form.host.required',
                 }),
               },
             ]}
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.title.placeholder',
+                id: 'email-sending-config-form.host.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.date.label" />}
-            name="date"
+            label={<FormattedMessage id="email-sending-config-form.user.title" />}
+            name="smtpFromEmail"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.date.required',
+                  id: 'email-sending-config-form.user.required',
                 }),
               },
             ]}
-          >
-            <RangePicker
-              style={{
-                width: '100%',
-              }}
-              placeholder={[
-                formatMessage({
-                  id: 'formandbasic-form.placeholder.start',
-                }),
-                formatMessage({
-                  id: 'formandbasic-form.placeholder.end',
-                }),
-              ]}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.goal.label" />}
-            name="goal"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'formandbasic-form.goal.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'formandbasic-form.goal.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.standard.label" />}
-            name="standard"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'formandbasic-form.standard.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'formandbasic-form.standard.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.client.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                  <Tooltip title={<FormattedMessage id="formandbasic-form.label.tooltip" />}>
-                    <InfoCircleOutlined
-                      style={{
-                        marginRight: 4,
-                      }}
-                    />
-                  </Tooltip>
-                </em>
-              </span>
-            }
-            name="client"
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.client.placeholder',
+                id: 'email-sending-config-form.user.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.invites.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="invites"
+            label={<FormattedMessage id="email-sending-config-form.password.title" />}
+            name="smtpPassword"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.password.required',
+                }),
+              },
+            ]}
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.invites.placeholder',
+                id: 'email-sending-config-form.password.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.weight.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="weight"
+            label={<FormattedMessage id="email-sending-config-form.ssl.title" />}
+            name="smtpSslEnable"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.ssl.required',
+                }),
+              },
+            ]}
           >
-            <InputNumber
+            <Select
               placeholder={formatMessage({
-                id: 'formandbasic-form.weight.placeholder',
+                id: 'email-sending-config-form.ssl.placeholder',
               })}
-              min={0}
-              max={100}
-            />
-            <span className="ant-form-text">%</span>
+            >
+              <Option value>
+                {formatMessage({
+                  id: 'email-sending-config-form.ssl.option.a',
+                })}
+              </Option>
+              <Option value={false}>
+                {formatMessage({
+                  id: 'email-sending-config-form.ssl.option.b',
+                })}
+              </Option>
+            </Select>
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.public.label" />}
-            help={<FormattedMessage id="formandbasic-form.label.help" />}
-            name="publicType"
+            label={<FormattedMessage id="email-sending-config-form.port.title" />}
+            name="smtpPost"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.port.required',
+                }),
+              },
+            ]}
           >
-            <div>
-              <Radio.Group>
-                <Radio value="1">
-                  <FormattedMessage id="formandbasic-form.radio.public" />
-                </Radio>
-                <Radio value="2">
-                  <FormattedMessage id="formandbasic-form.radio.partially-public" />
-                </Radio>
-                <Radio value="3">
-                  <FormattedMessage id="formandbasic-form.radio.private" />
-                </Radio>
-              </Radio.Group>
-              <FormItem
-                style={{
-                  marginBottom: 0,
-                }}
-                name="publicUsers"
-              >
-                <Select
-                  mode="multiple"
-                  placeholder={formatMessage({
-                    id: 'formandbasic-form.publicUsers.placeholder',
-                  })}
-                  style={{
-                    margin: '8px 0',
-                    display: showPublicUsers ? 'block' : 'none',
-                  }}
-                >
-                  <Option value="1">
-                    <FormattedMessage id="formandbasic-form.option.A" />
-                  </Option>
-                  <Option value="2">
-                    <FormattedMessage id="formandbasic-form.option.B" />
-                  </Option>
-                  <Option value="3">
-                    <FormattedMessage id="formandbasic-form.option.C" />
-                  </Option>
-                </Select>
-              </FormItem>
-            </div>
+            <Input
+              placeholder={formatMessage({
+                id: 'email-sending-config-form.port.placeholder',
+              })}
+            />
           </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="email-sending-config-form.sender.title" />}
+            name="smtpFromUserName"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'email-sending-config-form.sender.required',
+                }),
+              },
+            ]}
+          >
+            <Input
+              placeholder={formatMessage({
+                id: 'email-sending-config-form.sender.placeholder',
+              })}
+            />
+          </FormItem>
+
           <FormItem
             {...submitFormLayout}
             style={{
@@ -293,14 +230,7 @@ const BasicForm = props => {
             }}
           >
             <Button type="primary" htmlType="submit" loading={submitting}>
-              <FormattedMessage id="formandbasic-form.form.submit" />
-            </Button>
-            <Button
-              style={{
-                marginLeft: 8,
-              }}
-            >
-              <FormattedMessage id="formandbasic-form.form.save" />
+              <FormattedMessage id="email-sending-config-form.form.submit" />
             </Button>
           </FormItem>
         </Form>
@@ -309,6 +239,7 @@ const BasicForm = props => {
   );
 };
 
-export default connect(({ loading }) => ({
-  submitting: loading.effects['formAndbasicForm/submitRegularForm'],
+export default connect(({ loading, emailSenderForm: { sender } }) => ({
+  submitting: loading.effects['emailSenderForm/submitRegularForm'],
+  sender,
 }))(BasicForm);

@@ -3,9 +3,8 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
-import ImageModal from './components/ImageModal';
 import { queryCargos, sendmail } from './service';
-import { columns } from '../../../config/col-config-reportcargobroken';
+import { columns } from '../../../config/col-config-reportcargostatus';
 import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
 import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
 
@@ -14,9 +13,6 @@ const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
 const TableList = () => {
-  const [imageModalVisibilyty, setImageModalVisibilyty] = useState(false);
-  const [modalIsLoading, setModalIsLoading] = useState(true);
-  const [imgurls, setImgurls] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [tableparams, setTableparams] = useState({
     startTime: moment()
@@ -32,7 +28,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="货物破损信息报表"
+        headerTitle="货物状态信息报表"
         actionRef={actionRef}
         rowKey="key"
         search={false}
@@ -52,29 +48,38 @@ const TableList = () => {
               }
             }}
           />,
+          <Button type="primary">配置邮件信息</Button>,
           <Button
             type="primary"
             onClick={() => {
               const { dataSource } = action;
               const body = data2ExcelJson(dataSource, columns);
               const headerOrder = [
-                '货物RFID',
-                '入库单号',
-                '单行号',
-                '货主代码',
-                '物料名',
+                '单号',
+                '任务流水号',
+                '作业类型',
+                '作业人员',
+                '作业人员名称',
+                '作业设备',
+                '作业状态',
+                '任务下拨时间',
+                '要求完成时间',
+                '任务开始时间',
+                '任务结束时间',
+                '货物RFID标签',
+                '起始货位',
+                '目标货位',
                 '件数',
-                '当前货位',
-                '破损情况',
+                '物料名',
+                '同步状态',
               ];
-              const sheetname = '货物破损信息报表';
-              const filename = '货物破损信息报表';
+              const sheetname = '货物状态信息报表';
+              const filename = '货物状态信息报表';
               return exportJson2Sheet(body, headerOrder, sheetname, filename);
             }}
           >
             导出报表
           </Button>,
-          <Button type="primary">配置邮件信息</Button>,
           <Button
             type="default"
             onClick={async () => {
@@ -101,39 +106,8 @@ const TableList = () => {
           pageSize: 10,
           current: 1,
         }}
-        columns={[
-          ...columns,
-          {
-            title: '拍照信息',
-            dataIndex: 'option',
-            valueType: 'option',
-            render: (_, record) => (
-              <>
-                <a
-                  onClick={() => {
-                    const { Img } = record;
-                    const imgs = Img.map(img => ({ url: img }));
-                    setImgurls(imgs);
-                    setModalIsLoading(false);
-                    setImageModalVisibilyty(true);
-                  }}
-                >
-                  查看
-                </a>
-              </>
-            ),
-          },
-        ]}
+        columns={columns}
       />
-      <ImageModal
-        modalVisible={imageModalVisibilyty}
-        onCancel={() => {
-          setModalIsLoading(true);
-          setImageModalVisibilyty(false);
-        }}
-        imgurls={imgurls}
-        loading={modalIsLoading}
-      ></ImageModal>
     </PageHeaderWrapper>
   );
 };

@@ -20,12 +20,11 @@ const validate = ono => {
 };
 
 const TableList = () => {
-  const [sorter, setSorter] = useState({});
-  const [searchText, setSearchText] = useState('');
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
+  const [ordernoValue, setOrdernoValue] = useState('');
   const [orderno, setOrderno] = useState('');
-  const [opTableparams, setOpTableparams] = useState({
-    sorter,
-  });
+
   const [logData, setLogData] = useState({});
   const [logModalVisibility, setLogModalVisibility] = useState(false);
 
@@ -38,27 +37,28 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
-        onChange={(_, _filter, _sorter) => {
-          setSorter(`${_sorter.field}_${_sorter.order}`);
+        beforeSearchSubmit={params => {
+          setKeywordsValue('');
+          setKeywords('');
+          return params;
         }}
-        params={opTableparams}
+        params={{ orderno, keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Text>单号：</Text>,
           <Input
             placeholder="请输入单号"
-            value={orderno}
+            value={ordernoValue}
             onChange={e => {
-              setOrderno(e.target.value);
+              setOrdernoValue(e.target.value);
             }}
           ></Input>,
           <Button
             type="primary"
             onClick={() => {
-              if (validate(orderno)) {
-                setOpTableparams({
-                  ...opTableparams,
-                  OrderNo: orderno,
-                });
+              if (validate(ordernoValue)) {
+                setKeywordsValue('');
+                setKeywords('');
+                setOrderno(ordernoValue);
               } else {
                 message.warning('请输入合规单号，示例前缀：IN、WV、OU');
               }
@@ -69,11 +69,10 @@ const TableList = () => {
           <Button
             type="default"
             onClick={() => {
+              setOrdernoValue('');
               setOrderno('');
-              setOpTableparams({
-                ...opTableparams,
-                OrderNo: '',
-              });
+              setKeywordsValue('');
+              setKeywords('');
             }}
           >
             重置
@@ -81,10 +80,10 @@ const TableList = () => {
           <Button
             type="primary"
             onClick={async e => {
-              if (validate(orderno)) {
+              if (validate(ordernoValue)) {
                 const hide = message.loading('正在查询...');
                 try {
-                  const data = await queryUploadResultByInorder(orderno);
+                  const data = await queryUploadResultByInorder(ordernoValue);
                   hide();
                   message.success('查询成功');
                   await setLogData(data);
@@ -102,13 +101,14 @@ const TableList = () => {
             查询日志
           </Button>,
           <Search
-            placeholder="search..."
+            placeholder="搜索..."
             onSearch={val => {
-              setOpTableparams({
-                ...opTableparams,
-                OrderNo: val,
-              });
+              setKeywords(val);
             }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
             style={{ width: 200 }}
           />,
         ]}
