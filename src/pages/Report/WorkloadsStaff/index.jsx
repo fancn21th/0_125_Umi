@@ -1,4 +1,4 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+// import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, DatePicker, Input, Typography, Select } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -8,6 +8,7 @@ import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportworkloads';
 import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
 import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
+import MailConfigForm from '../components/MailConfigForm';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
@@ -15,6 +16,7 @@ const { Option } = Select;
 const { Text } = Typography;
 
 const TableList = () => {
+  const [emailConfigVisible, setEmailConfigVisible] = useState(false);
   const [mode, setMode] = useState('day');
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
@@ -30,6 +32,10 @@ const TableList = () => {
   );
 
   const actionRef = useRef();
+
+  const onEmailConfigClick = () => {
+    setEmailConfigVisible(true);
+  };
 
   return (
     <PageHeaderWrapper>
@@ -114,7 +120,9 @@ const TableList = () => {
               />
             ) : null}
           </>,
-          <Button type="primary">配置邮件信息</Button>,
+          <Button type="primary" onClick={onEmailConfigClick}>
+            配置邮件信息
+          </Button>,
           <Button
             type="primary"
             onClick={() => {
@@ -175,6 +183,11 @@ const TableList = () => {
           pageSize: 10,
           current: 1,
         }}
+      />
+      <MailConfigForm
+        onSubmit={() => {}}
+        onCancel={() => setEmailConfigVisible(false)}
+        modalVisible={emailConfigVisible}
       />
     </PageHeaderWrapper>
   );
