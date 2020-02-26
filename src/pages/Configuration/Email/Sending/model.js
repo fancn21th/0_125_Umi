@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { fakeSubmitForm, queryEmailSendConfig } from './service';
+import { addEmailSendConfig, queryEmailSendConfig } from './service';
 
 const Model = {
   namespace: 'emailSenderForm',
@@ -13,7 +13,7 @@ const Model = {
   },
   effects: {
     *submitRegularForm({ payload }, { call }) {
-      yield call(fakeSubmitForm, payload);
+      yield call(addEmailSendConfig, payload);
       message.success('提交成功');
     },
     *fetchEmailSendConfig({ payload }, { call, put }) {
