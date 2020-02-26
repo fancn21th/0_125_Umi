@@ -214,32 +214,7 @@ export default {
                 },
               ],
             },
-            {
-              name: 'config',
-              icon: 'table',
-              path: '/config',
-              routes: [
-                {
-                  name: 'email',
-                  icon: 'table',
-                  path: '/config/email',
-                  routes: [
-                    {
-                      name: 'sending',
-                      icon: 'table',
-                      path: '/config/email/sending',
-                      component: './Configuration/Email/Sending',
-                    },
-                    {
-                      name: 'receiving',
-                      icon: 'table',
-                      path: '/config/email/recipients',
-                      component: './Configuration/Email/Recipients',
-                    },
-                  ],
-                },
-              ],
-            },
+
             {
               name: 'category.report',
               icon: 'table',
@@ -268,6 +243,32 @@ export default {
                   icon: 'table',
                   path: '/report/cargostatus',
                   component: './Report/Cargostatus',
+                },
+              ],
+            },
+            {
+              name: 'config',
+              icon: 'table',
+              path: '/config',
+              routes: [
+                {
+                  name: 'email',
+                  icon: 'table',
+                  path: '/config/email',
+                  routes: [
+                    {
+                      name: 'sending',
+                      icon: 'table',
+                      path: '/config/email/sending',
+                      component: './Configuration/Email/Sending',
+                    },
+                    {
+                      name: 'receiving',
+                      icon: 'table',
+                      path: '/config/email/recipients',
+                      component: './Configuration/Email/Recipients',
+                    },
+                  ],
                 },
               ],
             },
