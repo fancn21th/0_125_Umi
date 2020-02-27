@@ -9,8 +9,8 @@ import request from '@/utils/request';
 
 export async function addEmailSendConfig(params) {
   const { smtpFromUserName } = params;
-  return request('/api/report/emailSendConf', {
-    method: 'POST',
+  return request('/api/report/emailSendConfig', {
+    method: 'PUT',
     data: { ...params, smtpUserName: smtpFromUserName },
   });
 }
