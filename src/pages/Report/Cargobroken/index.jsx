@@ -4,19 +4,25 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import ImageModal from './components/ImageModal';
+import { queryRecipients } from '@/services/recipients';
+import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
 import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportcargobroken';
 import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
 import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
+import MailConfigForm from '../components/MailConfigForm';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
 const TableList = () => {
+  const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
   const [imageModalVisibilyty, setImageModalVisibilyty] = useState(false);
   const [modalIsLoading, setModalIsLoading] = useState(true);
   const [imgurls, setImgurls] = useState([]);
+  const [recipients, setRecipients] = useState([]);
+  const [mailConfig, setMailConfig] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [tableparams, setTableparams] = useState({
     startTime: moment()
@@ -28,6 +34,48 @@ const TableList = () => {
   });
 
   const actionRef = useRef();
+
+  // 点击邮件配置按钮回调
+  const onEmailConfigClick = async () => {
+    const hide = message.loading('正在加载邮件配置');
+
+    try {
+      const { data: recipientsRes } = await queryRecipients();
+      setRecipients(recipientsRes);
+      const emailSettingRes = await queryEmailSetting({
+        category: 'broken',
+        mode: 'day',
+      });
+      setMailConfig(emailSettingRes);
+      setEmailModalConfigVisible(true);
+      hide();
+      return true;
+    } catch (error) {
+      hide();
+      message.error('获取常用联系人失败');
+      return false;
+    }
+  };
+  // 更新邮件配置回调
+  const onUpdateMailConfig = async data => {
+    const hide = message.loading('正在更新');
+    try {
+      await updateEmailSetting({
+        category: 'broken',
+        mode: 'day',
+        data,
+      });
+      hide();
+      message.success('添加成功');
+
+      setEmailModalConfigVisible(false);
+      return true;
+    } catch (error) {
+      hide();
+      message.error('添加失败请重试！');
+      return false;
+    }
+  };
 
   return (
     <PageHeaderWrapper>
@@ -52,6 +100,9 @@ const TableList = () => {
               }
             }}
           />,
+          <Button type="primary" onClick={onEmailConfigClick}>
+            配置邮件信息
+          </Button>,
           <Button
             type="primary"
             onClick={() => {
@@ -74,7 +125,7 @@ const TableList = () => {
           >
             导出报表
           </Button>,
-          <Button type="primary">配置邮件信息</Button>,
+
           <Button
             type="default"
             onClick={async () => {
@@ -134,6 +185,14 @@ const TableList = () => {
         imgurls={imgurls}
         loading={modalIsLoading}
       ></ImageModal>
+      <MailConfigForm
+        mode={'day'}
+        recipients={recipients}
+        mailConfig={mailConfig}
+        onSubmit={onUpdateMailConfig}
+        onCancel={() => setEmailModalConfigVisible(false)}
+        modalVisible={emailConfigModalVisible}
+      />
     </PageHeaderWrapper>
   );
 };
