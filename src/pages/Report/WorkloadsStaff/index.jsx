@@ -4,6 +4,8 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
+import { queryRecipients } from '@/services/recipients';
+import { queryEmailSetting } from '@/services/emailConfig';
 import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportworkloads';
 import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
@@ -16,8 +18,10 @@ const { Option } = Select;
 const { Text } = Typography;
 
 const TableList = () => {
-  const [emailConfigVisible, setEmailConfigVisible] = useState(false);
+  const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
   const [mode, setMode] = useState('day');
+  const [recipients, setRecipients] = useState([]);
+  const [mailConfig, setMailConfig] = useState(null);
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
   const [startTime, setStartTime] = useState(
@@ -33,8 +37,24 @@ const TableList = () => {
 
   const actionRef = useRef();
 
-  const onEmailConfigClick = () => {
-    setEmailConfigVisible(true);
+  const onEmailConfigClick = async () => {
+    const hide = message.loading('正在添加');
+
+    try {
+      const { data: recipientsRes } = await queryRecipients();
+      setRecipients(recipientsRes);
+      const emailSettingRes = await queryEmailSetting({
+        mode,
+      });
+      setMailConfig(emailSettingRes);
+      setEmailModalConfigVisible(true);
+      hide();
+      return true;
+    } catch (error) {
+      hide();
+      message.error('获取常用联系人失败');
+      return false;
+    }
   };
 
   return (
@@ -185,12 +205,15 @@ const TableList = () => {
         }}
       />
       <MailConfigForm
+        mode={mode}
+        recipients={recipients}
+        mailConfig={mailConfig}
         onSubmit={value => {
           console.table(value);
-          setEmailConfigVisible(false);
+          setEmailModalConfigVisible(false);
         }}
-        onCancel={() => setEmailConfigVisible(false)}
-        modalVisible={emailConfigVisible}
+        onCancel={() => setEmailModalConfigVisible(false)}
+        modalVisible={emailConfigModalVisible}
       />
     </PageHeaderWrapper>
   );

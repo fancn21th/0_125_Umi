@@ -9,55 +9,56 @@ const { Option } = Select;
 const format = 'HH:mm';
 const format2 = 'HH:mm:ss';
 
-const fakeMailConfig = {
-  content: '人员工作量日报表邮件',
-  daySendTime: 29,
-  id: 1,
-  monthSendTime: 12,
-  recipients: [
-    {
-      email: '455637644@qq.com',
-      id: 39,
-      name: 'mark',
-    },
-  ],
-  sendTime: '09:33',
-  subject: '人员工作量日报表邮件',
-  type: 'DAY_REPORT',
-};
+// const fakeMailConfig = {
+//   content: '人员工作量日报表邮件',
+//   daySendTime: 29,
+//   id: 1,
+//   monthSendTime: 12,
+//   recipients: [
+//     {
+//       email: '455637644@qq.com',
+//       id: 39,
+//       name: 'mark',
+//     },
+//   ],
+//   sendTime: '09:33',
+//   subject: '人员工作量日报表邮件',
+//   type: 'DAY_REPORT',
+// };
 
-const fakeRecipients = [
-  {
-    createTime: 1581749583000,
-    email: '455637644@qq.com',
-    id: 39,
-    name: 'mark',
-    updateTime: 1582680130000,
-  },
-  {
-    createTime: 1581749891000,
-    email: 'bcd@qq.com',
-    id: 40,
-    name: 'bcdd',
-    updateTime: 1581750303000,
-  },
-  {
-    createTime: 1581750242000,
-    email: 'aaa@qq.com',
-    id: 41,
-    name: 'aaa1',
-    updateTime: 1582712440000,
-  },
-  {
-    createTime: 1582720380000,
-    email: 'xiaozl1@digitalchina.com',
-    id: 46,
-    name: 'tad',
-    updateTime: 1582720380000,
-  },
-];
+// const fakeRecipients = [
+//   {
+//     createTime: 1581749583000,
+//     email: '455637644@qq.com',
+//     id: 39,
+//     name: 'mark',
+//     updateTime: 1582680130000,
+//   },
+//   {
+//     createTime: 1581749891000,
+//     email: 'bcd@qq.com',
+//     id: 40,
+//     name: 'bcdd',
+//     updateTime: 1581750303000,
+//   },
+//   {
+//     createTime: 1581750242000,
+//     email: 'aaa@qq.com',
+//     id: 41,
+//     name: 'aaa1',
+//     updateTime: 1582712440000,
+//   },
+//   {
+//     createTime: 1582720380000,
+//     email: 'xiaozl1@digitalchina.com',
+//     id: 46,
+//     name: 'tad',
+//     updateTime: 1582720380000,
+//   },
+// ];
 
 const convertMailConfig = config => {
+  if (!config) return null;
   const { recipients, sendTime } = config;
   return {
     ...config,
@@ -76,13 +77,7 @@ const convertBackwardsMailConfig = config => {
 
 const MailConfigForm = props => {
   const [form] = Form.useForm();
-  const {
-    modalVisible,
-    onSubmit: handleUpdate,
-    onCancel,
-    mailConfig = convertMailConfig(fakeMailConfig),
-    recipients = fakeRecipients,
-  } = props;
+  const { modalVisible, onSubmit: handleUpdate, onCancel, mailConfig, recipients } = props;
 
   const okHandle = async () => {
     const fieldsValue = await form.validateFields();
@@ -106,7 +101,7 @@ const MailConfigForm = props => {
       onOk={okHandle}
       onCancel={() => onCancel()}
     >
-      <Form hideRequiredMark={false} form={form} initialValues={mailConfig}>
+      <Form hideRequiredMark={false} form={form} initialValues={convertMailConfig(mailConfig)}>
         <FormItem
           {...formItemLayout}
           label="邮件主题"
