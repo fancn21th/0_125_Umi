@@ -62,13 +62,13 @@ const TableList = () => {
         data,
       });
       hide();
-      message.success('添加成功');
+      message.success('邮件配置更新成功');
 
       setEmailModalConfigVisible(false);
       return true;
     } catch (error) {
       hide();
-      message.error('添加失败请重试！');
+      message.error('邮件配置更新失败,请重试');
       return false;
     }
   };
@@ -136,8 +136,8 @@ const TableList = () => {
               const hide = message.loading('正在发送...');
               try {
                 await sendmail({
-                  startTime: tableparams['startTime'],
-                  endTime: tableparams['endTime'],
+                  startTime: tableparams.startTime,
+                  endTime: tableparams.endTime,
                 });
                 hide();
                 message.success('发送成功');
@@ -159,7 +159,7 @@ const TableList = () => {
         columns={columns}
       />
       <MailConfigForm
-        mode={'day'}
+        mode="day"
         recipients={recipients}
         mailConfig={mailConfig}
         onSubmit={onUpdateMailConfig}

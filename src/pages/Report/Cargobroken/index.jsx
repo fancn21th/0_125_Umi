@@ -3,9 +3,9 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
-import ImageModal from './components/ImageModal';
 import { queryRecipients } from '@/services/recipients';
 import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
+import ImageModal from './components/ImageModal';
 import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportcargobroken';
 import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
@@ -66,13 +66,13 @@ const TableList = () => {
         data,
       });
       hide();
-      message.success('添加成功');
+      message.success('邮件配置更新成功');
 
       setEmailModalConfigVisible(false);
       return true;
     } catch (error) {
       hide();
-      message.error('添加失败请重试！');
+      message.error('邮件配置更新失败,请重试');
       return false;
     }
   };
@@ -132,8 +132,8 @@ const TableList = () => {
               const hide = message.loading('正在发送...');
               try {
                 await sendmail({
-                  startTime: tableparams['startTime'],
-                  endTime: tableparams['endTime'],
+                  startTime: tableparams.startTime,
+                  endTime: tableparams.endTime,
                 });
                 hide();
                 message.success('发送成功');
@@ -186,7 +186,7 @@ const TableList = () => {
         loading={modalIsLoading}
       ></ImageModal>
       <MailConfigForm
-        mode={'day'}
+        mode="day"
         recipients={recipients}
         mailConfig={mailConfig}
         onSubmit={onUpdateMailConfig}
