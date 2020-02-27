@@ -5,7 +5,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { queryRecipients } from '@/services/recipients';
-import { queryEmailSetting } from '@/services/emailConfig';
+import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
 import { queryCargos, sendmail } from './service';
 import { columns } from '../../../config/col-config-reportworkloads';
 import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
@@ -37,13 +37,15 @@ const TableList = () => {
 
   const actionRef = useRef();
 
+  // 点击邮件配置按钮回调
   const onEmailConfigClick = async () => {
-    const hide = message.loading('正在添加');
+    const hide = message.loading('正在加载邮件配置');
 
     try {
       const { data: recipientsRes } = await queryRecipients();
       setRecipients(recipientsRes);
       const emailSettingRes = await queryEmailSetting({
+        category: 'human',
         mode,
       });
       setMailConfig(emailSettingRes);
@@ -53,6 +55,27 @@ const TableList = () => {
     } catch (error) {
       hide();
       message.error('获取常用联系人失败');
+      return false;
+    }
+  };
+
+  // 更新邮件配置回调
+  const onUpdateMailConfig = async data => {
+    const hide = message.loading('正在更新');
+    try {
+      await updateEmailSetting({
+        category: 'human',
+        mode,
+        data,
+      });
+      hide();
+      message.success('添加成功');
+
+      setEmailModalConfigVisible(false);
+      return true;
+    } catch (error) {
+      hide();
+      message.error('添加失败请重试！');
       return false;
     }
   };
@@ -208,10 +231,7 @@ const TableList = () => {
         mode={mode}
         recipients={recipients}
         mailConfig={mailConfig}
-        onSubmit={value => {
-          console.table(value);
-          setEmailModalConfigVisible(false);
-        }}
+        onSubmit={onUpdateMailConfig}
         onCancel={() => setEmailModalConfigVisible(false)}
         modalVisible={emailConfigModalVisible}
       />

@@ -77,7 +77,7 @@ const convertBackwardsMailConfig = config => {
 
 const MailConfigForm = props => {
   const [form] = Form.useForm();
-  const { modalVisible, onSubmit: handleUpdate, onCancel, mailConfig, recipients } = props;
+  const { modalVisible, onSubmit: handleUpdate, onCancel, mailConfig, recipients, mode } = props;
 
   const okHandle = async () => {
     const fieldsValue = await form.validateFields();
@@ -92,6 +92,26 @@ const MailConfigForm = props => {
       span: 15,
     },
   };
+
+  const monthRule =
+    mode === 'year'
+      ? [
+          {
+            required: true,
+            message: '请选择月',
+          },
+        ]
+      : null;
+
+  const dayRule =
+    mode === 'year' || mode === 'month'
+      ? [
+          {
+            required: true,
+            message: '请选择日',
+          },
+        ]
+      : null;
 
   return (
     <Modal
@@ -136,32 +156,14 @@ const MailConfigForm = props => {
 
         <Form.Item {...formItemLayout} label="发送时间">
           <Input.Group>
-            <Form.Item
-              noStyle
-              name="monthSendTime"
-              rules={[
-                {
-                  required: true,
-                  message: '请选择月',
-                },
-              ]}
-            >
+            <Form.Item noStyle name="monthSendTime" rules={monthRule}>
               <Select placeholder="请选择月">
                 {[...new Array(12)].map((val, index) => (
                   <Option key="{index}" value={index + 1}>{`${index + 1} 月`}</Option>
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item
-              noStyle
-              name="daySendTime"
-              rules={[
-                {
-                  required: true,
-                  message: '请选择日',
-                },
-              ]}
-            >
+            <Form.Item noStyle name="daySendTime" rules={dayRule}>
               <Select placeholder="请选择日">
                 {[...new Array(29)].map((val, index) =>
                   index === 28 ? (
