@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
   // G2,
   Chart,
@@ -18,7 +19,7 @@ import {
 const BarChart = ({ data }) => {
   // const { data } = props;
   const cols = {
-    Time: { alias: '日期' },
+    Time: { alias: '日期', type: 'timeCat', mask: 'YYYY-MM-DD' },
     Cp: { alias: '空闲率' },
   };
   return (
