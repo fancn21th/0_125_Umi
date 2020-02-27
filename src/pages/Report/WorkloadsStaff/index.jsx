@@ -69,13 +69,13 @@ const TableList = () => {
         data,
       });
       hide();
-      message.success('添加成功');
+      message.success('邮件配置更新成功');
 
       setEmailModalConfigVisible(false);
       return true;
     } catch (error) {
       hide();
-      message.error('添加失败请重试！');
+      message.error('邮件配置更新失败,请重试');
       return false;
     }
   };
