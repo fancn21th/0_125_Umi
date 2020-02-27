@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
 import moment from 'moment';
 
@@ -156,26 +156,30 @@ const MailConfigForm = props => {
 
         <Form.Item {...formItemLayout} label="发送时间">
           <Input.Group>
-            <Form.Item noStyle name="monthSendTime" rules={monthRule}>
-              <Select placeholder="请选择月">
-                {[...new Array(12)].map((val, index) => (
-                  <Option key="{index}" value={index + 1}>{`${index + 1} 月`}</Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item noStyle name="daySendTime" rules={dayRule}>
-              <Select placeholder="请选择日">
-                {[...new Array(29)].map((val, index) =>
-                  index === 28 ? (
-                    <Option key="{index}" value={index + 1}>
-                      每月最后一日
-                    </Option>
-                  ) : (
-                    <Option key="{index}" value={index + 1}>{`${index + 1} 日`}</Option>
-                  ),
-                )}
-              </Select>
-            </Form.Item>
+            {mode === 'year' ? (
+              <Form.Item noStyle name="monthSendTime" rules={monthRule}>
+                <Select placeholder="请选择月">
+                  {[...new Array(12)].map((val, index) => (
+                    <Option key="{index}" value={index + 1}>{`${index + 1} 月`}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            ) : null}
+            {mode !== 'day' ? (
+              <Form.Item noStyle name="daySendTime" rules={dayRule}>
+                <Select placeholder="请选择日">
+                  {[...new Array(29)].map((val, index) =>
+                    index === 28 ? (
+                      <Option key="{index}" value={index + 1}>
+                        每月最后一日
+                      </Option>
+                    ) : (
+                      <Option key="{index}" value={index + 1}>{`${index + 1} 日`}</Option>
+                    ),
+                  )}
+                </Select>
+              </Form.Item>
+            ) : null}
             <Form.Item
               noStyle
               name="sendTime"
