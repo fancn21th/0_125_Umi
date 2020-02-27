@@ -1,4 +1,4 @@
-import islocal from './islocal-cargo';
+import islocal from './islocal-total';
 
 export function ApiTransformToData(apidata) {
   if (islocal(apidata)) {
@@ -21,7 +21,7 @@ export function ApiTransformToData(apidata) {
       data,
     };
   } else {
-    const { data: apiarr } = apidata;
+    const { total, data: apiarr } = apidata;
     const data = apiarr.reduce((acc, val) => {
       let { Cargos: cargos } = val;
       cargos = cargos.map(v => {
@@ -36,7 +36,7 @@ export function ApiTransformToData(apidata) {
       return [...acc, ...cargos];
     }, []);
     return {
-      total: data.length,
+      total,
       success: true,
       data,
     };
