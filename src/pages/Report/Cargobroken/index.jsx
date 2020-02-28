@@ -83,6 +83,7 @@ const TableList = () => {
         headerTitle="货物破损信息报表"
         actionRef={actionRef}
         rowKey="key"
+        options={{ fullScreen: false, reload: true, setting: true }}
         search={false}
         params={tableparams}
         toolBarRender={(action, { selectedRows }) => [

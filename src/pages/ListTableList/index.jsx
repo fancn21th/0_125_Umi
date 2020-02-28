@@ -24,6 +24,7 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={true}
+        options={{ fullScreen: false, reload: true, setting: true }}
         onChange={(_, _filter, _sorter) => {
           setSorter(`${_sorter.field}_${_sorter.order}`);
         }}

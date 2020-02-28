@@ -22,6 +22,7 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search
+        options={{ fullScreen: false, reload: true, setting: true }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');
           setKeywords('');
