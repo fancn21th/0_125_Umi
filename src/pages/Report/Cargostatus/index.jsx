@@ -132,16 +132,15 @@ const TableList = () => {
         type="default"
         onClick={async () => {
           const hide = message.loading('正在发送...');
-          try {
-            await sendmail({
-              startTime: tableparams.startTime,
-              endTime: tableparams.endTime,
-            });
-            hide();
+          const res = await sendmail({
+            startTime: tableparams.startTime,
+            endTime: tableparams.endTime,
+          });
+          hide();
+          if (res) {
+            message.error('发送失败');
+          } else {
             message.success('发送成功');
-          } catch (error) {
-            hide();
-            message.error(`发送失败,原因：${error.message}`);
           }
         }}
       >

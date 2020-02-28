@@ -21,7 +21,7 @@ async function queryCargos2({ current, pageSize, sorter, mode, startTime, endTim
 export const queryCargos = genAsyncSearch(queryCargos2);
 
 export async function sendmail({ mode, startTime, endTime, keywords = '' }) {
-  return request('http://10.3.69.26:9097/api/report/emailSetting/selfSend?', {
+  return request('/api/report/emailSetting/selfSend?', {
     params: {
       type: typeMap[mode],
       startTime,
