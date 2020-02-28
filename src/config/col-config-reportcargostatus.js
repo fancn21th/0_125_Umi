@@ -12,6 +12,7 @@ export const columns = [
   {
     title: '作业类型',
     dataIndex: 'opType',
+    filters: false,
     sorter: false,
     valueEnum: {
       receipt: {
@@ -52,6 +53,7 @@ export const columns = [
   {
     title: '作业状态',
     dataIndex: 'opSta',
+    filters: false,
     sorter: false,
     valueEnum: {
       undo: {
@@ -117,6 +119,7 @@ export const columns = [
   {
     title: '同步状态',
     dataIndex: 'syncStatus',
+    filters: false,
     sorter: false,
     valueEnum: {
       '0': {

@@ -3,6 +3,7 @@ export const columns = [
     title: '操作类型',
     dataIndex: 'OpType',
     sorter: false,
+    filters: false,
     hideInSearch: true,
     valueEnum: {
       'receipt': {
@@ -88,6 +89,7 @@ export const columns = [
   {
     title: '作业状态',
     dataIndex: 'OpSta',
+    filters: false,
     sorter: false,
     hideInSearch: true,
     valueEnum: {
@@ -129,6 +131,7 @@ export const columns = [
   {
     title: '同步状态',
     dataIndex: 'SyncStatus',
+    filters: false,
     sorter: false,
     hideInSearch: true,
     valueEnum: {
