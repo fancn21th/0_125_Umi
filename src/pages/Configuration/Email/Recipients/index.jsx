@@ -17,19 +17,17 @@ const { Text } = Typography;
 
 const handleAdd = async fields => {
   const hide = message.loading('正在新增');
-
-  try {
-    await add({
-      name: fields.name,
-      email: fields.email,
-    });
-    hide();
+  const res = await add({
+    name: fields.name,
+    email: fields.email,
+  });
+  hide();
+  if (res && res.status == 500) {
+    message.error(`the email already exists.`);
+    return false;
+  } else {
     message.success('新增成功');
     return true;
-  } catch (error) {
-    hide();
-    message.error('新增失败请重试！');
-    return false;
   }
 };
 /**
@@ -39,19 +37,18 @@ const handleAdd = async fields => {
 
 const handleUpdate = async fields => {
   const hide = message.loading('正在编辑');
-  try {
-    await update({
-      id: fields.id,
-      name: fields.name,
-      email: fields.email,
-    });
-    hide();
+  const res = await update({
+    id: fields.id,
+    name: fields.name,
+    email: fields.email,
+  });
+  hide();
+  if (res) {
+    message.error(`the email already exists.`);
+    return false;
+  } else {
     message.success('编辑成功');
     return true;
-  } catch (error) {
-    hide();
-    message.error('编辑失败请重试！');
-    return false;
   }
 };
 /**
