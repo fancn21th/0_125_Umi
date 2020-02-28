@@ -63,9 +63,13 @@ const TableList = ({ ivtList }) => {
             </Select>,
             <Button
               type="primary"
-              onClick={() => {
-                const { dataSource } = action;
-                const body = data2ExcelJson(dataSource, columns);
+              onClick={async () => {
+                const { data } = await queryCargoListIvt({
+                  current: 1,
+                  pageSize: 10000000,
+                  inventoryno,
+                });
+                const body = data2ExcelJson(data, columns);
                 const headerOrder = [
                   '入库单号',
                   '货物RFID',
