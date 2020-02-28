@@ -89,6 +89,7 @@ const TableList = () => {
         rowKey="key"
         search={false}
         params={{}}
+        options={{ fullScreen: false, reload: true, setting: true }}
         toolBarRender={(action, { selectedRows }) => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
             新增收件人

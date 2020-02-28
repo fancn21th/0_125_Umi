@@ -45,6 +45,7 @@ const TableList = ({ ivtList }) => {
           actionRef={actionRef}
           rowKey="key"
           search={false}
+          options={{ fullScreen: false, reload: true, setting: true }}
           beforeSearchSubmit={params => {
             setKeywordsValue('');
             setKeywords('');
@@ -124,6 +125,7 @@ const TableList = ({ ivtList }) => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
+        options={{ fullScreen: false, reload: true, setting: true }}
         params={{ keywords, inventoryno }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');

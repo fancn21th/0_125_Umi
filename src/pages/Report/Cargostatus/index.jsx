@@ -80,6 +80,7 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
+        options={{ fullScreen: false, reload: true, setting: true }}
         params={tableparams}
         toolBarRender={(action, { selectedRows }) => [
           <Text>选择日期：</Text>,
