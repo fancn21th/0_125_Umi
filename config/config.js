@@ -80,8 +80,8 @@ const rewriteMap = {
     '/api/report': '/report/',
   },
   dev: {
-    '/api/sinoapi': '/sapi/sinoapi/',
-    '/api/report': '/rapi/report/',
+    '/api/sinoapi': '/sinoapi/',
+    '/api/report': '/report/',
   },
 };
 
