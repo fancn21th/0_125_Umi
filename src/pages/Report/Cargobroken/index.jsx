@@ -17,6 +17,7 @@ const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
 const TableList = () => {
+  const [datasource, setDatasource] = useState(null);
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
   const [imageModalVisibilyty, setImageModalVisibilyty] = useState(false);
   const [modalIsLoading, setModalIsLoading] = useState(true);
@@ -76,9 +77,77 @@ const TableList = () => {
       return false;
     }
   };
+  const headerContent = (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+    >
+      <Text>选择日期：</Text>
+      <RangePicker
+        format="YYYY-MM-DD"
+        defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+        onChange={date => {
+          if (date && date.length) {
+            setTableparams({
+              ...tableparams,
+              startTime: date[0].valueOf(),
+              endTime: date[1].valueOf(),
+            });
+          }
+        }}
+      />
+      <Button type="primary" onClick={onEmailConfigClick}>
+        配置邮件信息
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          const body = data2ExcelJson(datasource, columns);
+          const headerOrder = [
+            '货物RFID',
+            '入库单号',
+            '单行号',
+            '货主代码',
+            '物料名',
+            '件数',
+            '当前货位',
+            '破损情况',
+          ];
+          const sheetname = '货物破损信息报表';
+          const filename = '货物破损信息报表';
+          return exportJson2Sheet(body, headerOrder, sheetname, filename);
+        }}
+      >
+        导出报表
+      </Button>
+      <Button
+        type="default"
+        onClick={async () => {
+          const hide = message.loading('正在发送...');
+          try {
+            await sendmail({
+              startTime: tableparams.startTime,
+              endTime: tableparams.endTime,
+            });
+            hide();
+            message.success('发送成功');
+          } catch (error) {
+            hide();
+            message.error(`发送失败,原因：${error.message}`);
+          }
+        }}
+      >
+        手动发送
+      </Button>
+    </div>
+  );
 
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper content={headerContent}>
       <ProTable
         headerTitle="货物破损信息报表"
         actionRef={actionRef}
@@ -86,68 +155,12 @@ const TableList = () => {
         options={{ fullScreen: false, reload: true, setting: true }}
         search={false}
         params={tableparams}
-        toolBarRender={(action, { selectedRows }) => [
-          <Text>选择日期：</Text>,
-          <RangePicker
-            format="YYYY-MM-DD"
-            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
-            onChange={date => {
-              if (date && date.length) {
-                setTableparams({
-                  ...tableparams,
-                  startTime: date[0].valueOf(),
-                  endTime: date[1].valueOf(),
-                });
-              }
-            }}
-          />,
-          <Button type="primary" onClick={onEmailConfigClick}>
-            配置邮件信息
-          </Button>,
-          <Button
-            type="primary"
-            onClick={() => {
-              const { dataSource } = action;
-              const body = data2ExcelJson(dataSource, columns);
-              const headerOrder = [
-                '货物RFID',
-                '入库单号',
-                '单行号',
-                '货主代码',
-                '物料名',
-                '件数',
-                '当前货位',
-                '破损情况',
-              ];
-              const sheetname = '货物破损信息报表';
-              const filename = '货物破损信息报表';
-              return exportJson2Sheet(body, headerOrder, sheetname, filename);
-            }}
-          >
-            导出报表
-          </Button>,
-
-          <Button
-            type="default"
-            onClick={async () => {
-              const hide = message.loading('正在发送...');
-              try {
-                await sendmail({
-                  startTime: tableparams.startTime,
-                  endTime: tableparams.endTime,
-                });
-                hide();
-                message.success('发送成功');
-              } catch (error) {
-                hide();
-                message.error(`发送失败,原因：${error.message}`);
-              }
-            }}
-          >
-            手动发送
-          </Button>,
-        ]}
-        request={params => queryCargos(params)}
+        request={async params => {
+          const data = await queryCargos(params);
+          const { data: datasource } = data;
+          await setDatasource(datasource);
+          return data;
+        }}
         pagination={{
           showSizeChanger: true,
           pageSize: 10,
