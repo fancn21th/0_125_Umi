@@ -78,6 +78,7 @@ export const columns = [
   {
     title: '货物状态',
     dataIndex: 'CargoStatus',
+    filters: false,
     sorter: false,
     hideInSearch: true,
     valueEnum: {
@@ -116,6 +117,7 @@ export const columns = [
   {
     title: '同步状态',
     dataIndex: 'SyncStatus',
+    filters: false,
     sorter: false,
     hideInSearch: true,
     valueEnum: {

@@ -76,6 +76,7 @@ export const columns = [
     dataIndex: 'CargoStatus',
     sorter: false,
     hideInSearch: true,
+    filters: false,
     valueEnum: {
       '0': {
         text: '待收货',
@@ -113,6 +114,7 @@ export const columns = [
     title: '盘点状态',
     dataIndex: 'IvtStatus',
     sorter: false,
+    filters: false,
     hideInSearch: true,
     valueEnum: {
       '0': {
@@ -131,6 +133,7 @@ export const columns = [
     dataIndex: 'Timestamp',
     sorter: false,
     hideInSearch: true,
+    filters: false,
     valueType: 'dateTime',
   },
 ];
