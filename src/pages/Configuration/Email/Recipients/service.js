@@ -23,7 +23,7 @@ export async function add({ name, email }) {
   });
 }
 export async function update({ id, name, email }) {
-  return request(`/report/recipients/${id}`, {
+  return request(`/api/report/recipients/${id}`, {
     method: 'PUT',
     data: { name, email },
   });
