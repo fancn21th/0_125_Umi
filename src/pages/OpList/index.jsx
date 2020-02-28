@@ -154,6 +154,7 @@ const TableList = () => {
                   try {
                     const { OpSN: id } = row;
                     await updateStatus(id, status[key]);
+                    actionRef.current.reload();
                     hide();
                     message.success('同步成功');
                   } catch (error) {
