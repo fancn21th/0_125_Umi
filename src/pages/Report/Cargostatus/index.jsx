@@ -16,6 +16,7 @@ const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
 const TableList = () => {
+  const [datasource, setDatasource] = useState(null);
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [recipients, setRecipients] = useState([]);
@@ -34,7 +35,6 @@ const TableList = () => {
   // 点击邮件配置按钮回调
   const onEmailConfigClick = async () => {
     const hide = message.loading('正在加载邮件配置');
-
     try {
       const { data: recipientsRes } = await queryRecipients();
       setRecipients(recipientsRes);
@@ -72,9 +72,85 @@ const TableList = () => {
       return false;
     }
   };
-
+  const headerContent = (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+    >
+      <Text>选择日期：</Text>
+      <RangePicker
+        format="YYYY-MM-DD"
+        defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+        onChange={date => {
+          if (date && date.length) {
+            setTableparams({
+              ...tableparams,
+              startTime: date[0].valueOf(),
+              endTime: date[1].valueOf(),
+            });
+          }
+        }}
+      />
+      <Button type="primary" onClick={onEmailConfigClick}>
+        配置邮件信息
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          const body = data2ExcelJson(datasource, columns);
+          const headerOrder = [
+            '单号',
+            '任务流水号',
+            '作业类型',
+            '作业人员',
+            '作业人员名称',
+            '作业设备',
+            '作业状态',
+            '任务下拨时间',
+            '要求完成时间',
+            '任务开始时间',
+            '任务结束时间',
+            '货物RFID标签',
+            '起始货位',
+            '目标货位',
+            '件数',
+            '物料名',
+            '同步状态',
+          ];
+          const sheetname = '货物状态信息报表';
+          const filename = '货物状态信息报表';
+          return exportJson2Sheet(body, headerOrder, sheetname, filename);
+        }}
+      >
+        导出报表
+      </Button>
+      <Button
+        type="default"
+        onClick={async () => {
+          const hide = message.loading('正在发送...');
+          try {
+            await sendmail({
+              startTime: tableparams.startTime,
+              endTime: tableparams.endTime,
+            });
+            hide();
+            message.success('发送成功');
+          } catch (error) {
+            hide();
+            message.error(`发送失败,原因：${error.message}`);
+          }
+        }}
+      >
+        手动发送
+      </Button>
+    </div>
+  );
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper content={headerContent}>
       <ProTable
         headerTitle="货物状态信息报表"
         actionRef={actionRef}
@@ -82,76 +158,12 @@ const TableList = () => {
         search={false}
         options={{ fullScreen: false, reload: true, setting: true }}
         params={tableparams}
-        toolBarRender={(action, { selectedRows }) => [
-          <Text>选择日期：</Text>,
-          <RangePicker
-            format="YYYY-MM-DD"
-            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
-            onChange={date => {
-              if (date && date.length) {
-                setTableparams({
-                  ...tableparams,
-                  startTime: date[0].valueOf(),
-                  endTime: date[1].valueOf(),
-                });
-              }
-            }}
-          />,
-          <Button type="primary" onClick={onEmailConfigClick}>
-            配置邮件信息
-          </Button>,
-          <Button
-            type="primary"
-            onClick={() => {
-              const { dataSource } = action;
-              const body = data2ExcelJson(dataSource, columns);
-              const headerOrder = [
-                '单号',
-                '任务流水号',
-                '作业类型',
-                '作业人员',
-                '作业人员名称',
-                '作业设备',
-                '作业状态',
-                '任务下拨时间',
-                '要求完成时间',
-                '任务开始时间',
-                '任务结束时间',
-                '货物RFID标签',
-                '起始货位',
-                '目标货位',
-                '件数',
-                '物料名',
-                '同步状态',
-              ];
-              const sheetname = '货物状态信息报表';
-              const filename = '货物状态信息报表';
-              return exportJson2Sheet(body, headerOrder, sheetname, filename);
-            }}
-          >
-            导出报表
-          </Button>,
-          <Button
-            type="default"
-            onClick={async () => {
-              const hide = message.loading('正在发送...');
-              try {
-                await sendmail({
-                  startTime: tableparams.startTime,
-                  endTime: tableparams.endTime,
-                });
-                hide();
-                message.success('发送成功');
-              } catch (error) {
-                hide();
-                message.error(`发送失败,原因：${error.message}`);
-              }
-            }}
-          >
-            手动发送
-          </Button>,
-        ]}
-        request={params => queryCargos(params)}
+        request={async params => {
+          const data = await queryCargos(params);
+          const { data: datasource } = data;
+          await setDatasource(datasource);
+          return data;
+        }}
         pagination={{
           showSizeChanger: true,
           pageSize: 10,

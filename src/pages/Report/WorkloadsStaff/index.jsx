@@ -208,7 +208,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper content={headerContent}>
       <ProTable
-        headerTitle=""
+        headerTitle="人员工作量报表"
         actionRef={actionRef}
         rowKey="key"
         options={{ fullScreen: false, reload: true, setting: true }}
