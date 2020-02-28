@@ -80,8 +80,133 @@ const TableList = () => {
     }
   };
 
+  const headerContent = (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+    >
+      <Text>周期：</Text>
+      <Select
+        defaultValue="day"
+        style={{ width: 120 }}
+        onChange={val => {
+          setMode(val);
+          setKeywordsValue('');
+          setKeywords('');
+          setStartTime(
+            moment()
+              .startOf(val)
+              .valueOf(),
+          );
+          setEndTime(
+            moment()
+              .endOf(val)
+              .valueOf(),
+          );
+        }}
+      >
+        <Option value="day">日</Option>
+        <Option value="month">月</Option>
+        <Option value="year">年</Option>
+      </Select>
+      <Text>日期：</Text>
+      <>
+        {mode === 'day' ? (
+          <RangePicker
+            format="YYYY-MM-DD"
+            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+            onChange={date => {
+              if (date && date.length) {
+                setKeywordsValue('');
+                setKeywords('');
+                setStartTime(date[0].valueOf());
+                setEndTime(date[1].valueOf());
+              }
+            }}
+          />
+        ) : null}
+        {mode === 'month' ? (
+          <RangePicker
+            format="YYYY-MM"
+            defaultValue={[moment().startOf('month'), moment().endOf('month')]}
+            onChange={date => {
+              if (date && date.length) {
+                setKeywordsValue('');
+                setKeywords('');
+                setStartTime(date[0].valueOf());
+                setEndTime(date[1].valueOf());
+              }
+            }}
+          />
+        ) : null}
+        {mode === 'year' ? (
+          <RangePicker
+            format="YYYY"
+            defaultValue={[moment().startOf('year'), moment().endOf('year')]}
+            onChange={date => {
+              if (date && date.length) {
+                setKeywordsValue('');
+                setKeywords('');
+                setStartTime(date[0].valueOf());
+                setEndTime(date[1].valueOf());
+              }
+            }}
+          />
+        ) : null}
+      </>
+      <Button type="primary" onClick={onEmailConfigClick}>
+        配置邮件信息
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          // const { dataSource } = action;
+          // const body = data2ExcelJson(dataSource, columns);
+          // const headerOrder = [
+          //   '员工',
+          //   '日期',
+          //   '收货任务数',
+          //   '入库任务数',
+          //   '拣货任务数',
+          //   '移库任务数',
+          //   '发运任务数',
+          // ];
+          // const sheetname = '人员工作量报表';
+          // const filename = '人员工作量报表';
+          // return exportJson2Sheet(body, headerOrder, sheetname, filename);
+        }}
+      >
+        导出报表
+      </Button>
+      <Button
+        type="default"
+        onClick={async () => {
+          const hide = message.loading('正在发送...');
+          try {
+            await sendmail({
+              mode,
+              startTime,
+              endTime,
+            });
+            hide();
+            message.success('发送成功');
+          } catch (error) {
+            hide();
+            message.error(`发送失败,原因：${error.message}`);
+          }
+        }}
+      >
+        手动发送
+      </Button>
+    </div>
+  );
+
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper content={headerContent}>
       <ProTable
         headerTitle=""
         actionRef={actionRef}
@@ -93,120 +218,7 @@ const TableList = () => {
           return params;
         }}
         params={{ mode, startTime, endTime, keywords }}
-        toolBarRender={(action, { selectedRows }) => [
-          <Text>周期：</Text>,
-          <Select
-            defaultValue="day"
-            style={{ width: 120 }}
-            onChange={val => {
-              setMode(val);
-              setKeywordsValue('');
-              setKeywords('');
-              setStartTime(
-                moment()
-                  .startOf(val)
-                  .valueOf(),
-              );
-              setEndTime(
-                moment()
-                  .endOf(val)
-                  .valueOf(),
-              );
-            }}
-          >
-            <Option value="day">日</Option>
-            <Option value="month">月</Option>
-            <Option value="year">年</Option>
-          </Select>,
-          <Text>日期：</Text>,
-          <>
-            {mode === 'day' ? (
-              <RangePicker
-                format="YYYY-MM-DD"
-                defaultValue={[moment().startOf('day'), moment().endOf('day')]}
-                onChange={date => {
-                  if (date && date.length) {
-                    setKeywordsValue('');
-                    setKeywords('');
-                    setStartTime(date[0].valueOf());
-                    setEndTime(date[1].valueOf());
-                  }
-                }}
-              />
-            ) : null}
-            {mode === 'month' ? (
-              <RangePicker
-                format="YYYY-MM"
-                defaultValue={[moment().startOf('month'), moment().endOf('month')]}
-                onChange={date => {
-                  if (date && date.length) {
-                    setKeywordsValue('');
-                    setKeywords('');
-                    setStartTime(date[0].valueOf());
-                    setEndTime(date[1].valueOf());
-                  }
-                }}
-              />
-            ) : null}
-            {mode === 'year' ? (
-              <RangePicker
-                format="YYYY"
-                defaultValue={[moment().startOf('year'), moment().endOf('year')]}
-                onChange={date => {
-                  if (date && date.length) {
-                    setKeywordsValue('');
-                    setKeywords('');
-                    setStartTime(date[0].valueOf());
-                    setEndTime(date[1].valueOf());
-                  }
-                }}
-              />
-            ) : null}
-          </>,
-          <Button type="primary" onClick={onEmailConfigClick}>
-            配置邮件信息
-          </Button>,
-          <Button
-            type="primary"
-            onClick={() => {
-              const { dataSource } = action;
-              const body = data2ExcelJson(dataSource, columns);
-              const headerOrder = [
-                '员工',
-                '日期',
-                '收货任务数',
-                '入库任务数',
-                '拣货任务数',
-                '移库任务数',
-                '发运任务数',
-              ];
-              const sheetname = '人员工作量报表';
-              const filename = '人员工作量报表';
-              return exportJson2Sheet(body, headerOrder, sheetname, filename);
-            }}
-          >
-            导出报表
-          </Button>,
-          <Button
-            type="default"
-            onClick={async () => {
-              const hide = message.loading('正在发送...');
-              try {
-                await sendmail({
-                  mode,
-                  startTime,
-                  endTime,
-                });
-                hide();
-                message.success('发送成功');
-              } catch (error) {
-                hide();
-                message.error(`发送失败,原因：${error.message}`);
-              }
-            }}
-          >
-            手动发送
-          </Button>,
+        toolBarRender={action => [
           <Search
             placeholder="搜索..."
             onSearch={val => {
