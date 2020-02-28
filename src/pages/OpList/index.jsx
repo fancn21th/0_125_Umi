@@ -1,4 +1,4 @@
-import { Button, Divider, Dropdown, Menu, message, Input, Typography } from 'antd';
+import { Button, message, Input, Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
@@ -11,6 +11,7 @@ import {
 } from './service';
 import { columns } from '../../config/col-config-oplist';
 import { columns as logColumns } from '../../config/col-config-loglist';
+
 const { Search } = Input;
 const { Text } = Typography;
 
@@ -24,10 +25,8 @@ const TableList = () => {
   const [keywords, setKeywords] = useState('');
   const [ordernoValue, setOrdernoValue] = useState('');
   const [orderno, setOrderno] = useState('');
-
   const [logData, setLogData] = useState({});
   const [logModalVisibility, setLogModalVisibility] = useState(false);
-
   const actionRef = useRef();
 
   return (
@@ -80,7 +79,7 @@ const TableList = () => {
           </Button>,
           <Button
             type="primary"
-            onClick={async e => {
+            onClick={async () => {
               if (validate(ordernoValue)) {
                 const hide = message.loading('正在查询...');
                 try {
