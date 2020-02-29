@@ -2,24 +2,24 @@ import islocal from './islocal-total';
 import uuid from './uuid';
 
 export function ApiTransformToData(apicargos, apioutcargos) {
-  let sum = 0;
+  // let sum = 0;
   let cargodata = apicargos;
   let outcargodata = apioutcargos;
   if (!islocal(apicargos)) {
     const { total, data } = apicargos;
-    sum += total;
+    // sum += total;
     cargodata = data;
   }
   if (!islocal(apioutcargos)) {
     const { total, data } = apicargos;
-    sum += total;
+    // sum += total;
     outcargodata = data;
   }
   const cargos = ApiTransformToArray(cargodata);
   const outcargos = ApiTransformToArray(outcargodata);
   const data = [...cargos, ...outcargos];
   return {
-    total: sum ? sum : data.length,
+    total: data.length,
     success: true,
     data,
   };
