@@ -1,10 +1,10 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+// import { QuestionCircleOutlined } from '@ant-design/icons';
+// import { Tooltip } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
-import SelectLang from '../SelectLang';
+// import SelectLang from '../SelectLang';
 import styles from './index.less';
 
 const GlobalHeaderRight = props => {
@@ -42,18 +42,7 @@ const GlobalHeaderRight = props => {
         //   //console.log('input', value);
         // }}
       />
-      <Tooltip title="使用文档">
-        <a
-          target="_blank"
-          href="https://pro.ant.design/docs/getting-started"
-          rel="noopener noreferrer"
-          className={styles.action}
-        >
-          <QuestionCircleOutlined />
-        </a>
-      </Tooltip>
       <Avatar />
-      {/* <SelectLang className={styles.action} /> */}
     </div>
   );
 };
