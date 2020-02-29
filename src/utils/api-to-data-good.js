@@ -11,7 +11,7 @@ export function ApiTransformToData(apicargos, apioutcargos) {
     cargodata = data;
   }
   if (!islocal(apioutcargos)) {
-    const { total, data } = apicargos;
+    const { total, data } = apioutcargos;
     // sum += total;
     outcargodata = data;
   }
