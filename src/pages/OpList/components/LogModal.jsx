@@ -3,7 +3,6 @@ import { Button, Modal, Table } from 'antd';
 
 const LogModal = props => {
   const { modalVisible, onCancel, title, logData, columns } = props;
-
   return (
     <Modal
       width={1200}
@@ -16,7 +15,9 @@ const LogModal = props => {
         </Button>,
       ]}
     >
-      <Table columns={columns} dataSource={logData} pagination={false} rowKey="key" />
+      {logData.length ? (
+        <Table columns={columns} dataSource={logData} pagination={false} rowKey="key" />
+      ) : null}
     </Modal>
   );
 };
