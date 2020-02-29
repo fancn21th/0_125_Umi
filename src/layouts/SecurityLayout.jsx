@@ -13,14 +13,11 @@ class SecurityLayout extends React.Component {
     this.setState({
       isReady: true,
     });
-    const { dispatch, loginid } = this.props;
+    const { dispatch } = this.props;
 
     if (dispatch) {
       dispatch({
         type: 'user/fetchCurrent',
-        payload: {
-          id: loginid,
-        },
       });
     }
   }
@@ -49,8 +46,7 @@ class SecurityLayout extends React.Component {
   }
 }
 
-export default connect(({ user, loading, login: { id } }) => ({
+export default connect(({ user, loading }) => ({
   currentUser: user.currentUser,
   loading: loading.models.user,
-  loginid: id,
 }))(SecurityLayout);

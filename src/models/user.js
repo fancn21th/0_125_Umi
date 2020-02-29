@@ -14,11 +14,14 @@ const UserModel = {
       });
     },
 
-    *fetchCurrent({ payload: { id } }, { call, put }) {
-      const response = yield call(queryCurrent, { id });
+    *fetchCurrent(_, { call, put }) {
+      const response = yield call(queryCurrent);
       yield put({
         type: 'saveCurrentUser',
-        payload: response,
+        payload: {
+          ...response,
+          avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        },
       });
     },
   },

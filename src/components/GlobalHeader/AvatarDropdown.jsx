@@ -34,7 +34,8 @@ class AvatarDropdown extends React.Component {
       menu,
     } = this.props;
 
-    currentUser.name = currentUser.realname || currentUser.username;
+    // adapt to real login api
+    currentUser.name = currentUser.username || currentUser.name;
 
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>

@@ -76,10 +76,10 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       const {
-        userInfo: { role, id },
+        userInfo: { role },
       } = payload;
       setAuthority(rbacMap[role]);
-      return { ...state, id, status: payload.status, type: payload.type };
+      return { ...state, status: payload.status, type: payload.type };
     },
   },
 };

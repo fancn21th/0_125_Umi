@@ -80,12 +80,10 @@ const rewriteMap = {
   local: {
     '/api/sinoapi': '/sinoapi/',
     '/api/report': '/report/',
-    '/api/userManager': '/userManager/',
   },
   dev: {
     '/api/sinoapi': '/sinoapi/',
     '/api/report': '/report/',
-    '/api/userManager': '/uapi/userManager/',
   },
 };
 
@@ -348,15 +346,10 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
-    // '/api/currentUser': {
-    //   target: serveUrlMap['local'],
-    //   changeOrigin: true,
-    //   pathRewrite: { '^/api/': '' },
-    // },
-    '/api/userManager': {
+    '/api/currentUser': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/userManager/': rewriteMap[SERVE_ENV]['/api/userManager'] },
+      pathRewrite: { '^/api/': '' },
     },
     '/api/sinoapi': {
       target: serveUrlMap[SERVE_ENV],
