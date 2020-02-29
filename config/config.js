@@ -109,12 +109,11 @@ export default {
     {
       path: '/',
       component: '../layouts/SecurityLayout',
-      Routes: ['src/pages/Authorized'],
       routes: [
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               path: '/',
@@ -345,7 +344,12 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
-    '/api/currentUser': {
+    // '/api/currentUser': {
+    //   target: serveUrlMap['local'],
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/': '' },
+    // },
+    '/api/userManager/user': {
       target: serveUrlMap['local'],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },

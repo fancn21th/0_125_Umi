@@ -26,8 +26,8 @@ const Model = {
         yield call(setToken, response.token);
         response = {
           ...response,
-          status: 'ok',
-          type: 'account',
+          status: 'ok', // TODO: hardcoded prop to be removed
+          type: 'account', // TODO: hardcoded prop to be removed
         };
       }
 
@@ -76,10 +76,10 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       const {
-        userInfo: { role },
+        userInfo: { role, id },
       } = payload;
       setAuthority(rbacMap[role]);
-      return { ...state, status: payload.status, type: payload.type };
+      return { ...state, id, status: payload.status, type: payload.type };
     },
   },
 };

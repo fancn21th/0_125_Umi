@@ -13,11 +13,14 @@ class SecurityLayout extends React.Component {
     this.setState({
       isReady: true,
     });
-    const { dispatch } = this.props;
+    const { dispatch, loginid } = this.props;
 
     if (dispatch) {
       dispatch({
         type: 'user/fetchCurrent',
+        payload: {
+          id: loginid,
+        },
       });
     }
   }
@@ -27,7 +30,9 @@ class SecurityLayout extends React.Component {
     const { children, loading, currentUser } = this.props; // You can replace it to your authentication rule (such as check token exists)
     // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
 
-    const isLogin = currentUser && currentUser.userid;
+    // const isLogin = currentUser && currentUser.userid;
+    const isLogin = currentUser && currentUser.id;
+
     const queryString = stringify({
       redirect: window.location.href,
     });
@@ -44,7 +49,8 @@ class SecurityLayout extends React.Component {
   }
 }
 
-export default connect(({ user, loading }) => ({
+export default connect(({ user, loading, login: { id } }) => ({
   currentUser: user.currentUser,
   loading: loading.models.user,
+  loginid: id,
 }))(SecurityLayout);
