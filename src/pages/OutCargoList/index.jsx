@@ -20,7 +20,7 @@ const TableList = () => {
         headerTitle="出库记录"
         actionRef={actionRef}
         rowKey="key"
-        search={true}
+        search={false}
         options={{ fullScreen: false, reload: true, setting: true }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');

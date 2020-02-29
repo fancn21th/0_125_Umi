@@ -2,7 +2,6 @@ export const columns = [
   {
     title: '操作',
     dataIndex: 'OpType',
-    filters: false,
     sorter: false,
     valueEnum: {
       receipt: {
