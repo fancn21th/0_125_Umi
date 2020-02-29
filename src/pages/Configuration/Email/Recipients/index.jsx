@@ -1,4 +1,4 @@
-import { Button, Divider, Dropdown, Menu, message, Input, Typography } from 'antd';
+import { Button, Divider, Modal, message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -6,9 +6,6 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { queryCargos, update, add, remove } from './service';
 import { columns } from '../../../../config/col-config-reportrecipients';
-
-const { Search } = Input;
-const { Text } = Typography;
 
 /**
  * 添加节点
@@ -25,10 +22,9 @@ const handleAdd = async fields => {
   if (res && res.status == 500) {
     message.error(`the email already exists.`);
     return false;
-  } else {
-    message.success('新增成功');
-    return true;
   }
+  message.success('新增成功');
+  return true;
 };
 /**
  * 更新节点
@@ -46,31 +42,39 @@ const handleUpdate = async fields => {
   if (res) {
     message.error(`the email already exists.`);
     return false;
-  } else {
-    message.success('编辑成功');
-    return true;
   }
+  message.success('编辑成功');
+  return true;
 };
 /**
  *  删除节点
  * @param id
  */
 
-const handleRemove = async id => {
-  const hide = message.loading('正在删除');
-  try {
-    await remove({
-      id,
+const handleRemove = async id =>
+  new Promise((resolve, reject) => {
+    Modal.confirm({
+      title: '删除任务',
+      content: '确定删除该任务吗？',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: async () => {
+        const hide = message.loading('正在删除');
+        try {
+          await remove({
+            id,
+          });
+          hide();
+          message.success('删除成功，即将刷新');
+          resolve(true);
+        } catch (error) {
+          hide();
+          message.error('删除失败，请重试');
+          reject(new Error('删除失败'));
+        }
+      },
     });
-    hide();
-    message.success('删除成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
+  });
 
 const TableList = () => {
   const [createModalVisible, handleModalVisible] = useState(false);
