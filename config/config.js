@@ -67,7 +67,9 @@ if (isAntDesignProPreview) {
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
-// api server endpoint
+/*
+  local dev proxy
+*/
 const serveUrlMap = {
   local: 'http://localhost:3000',
   // dev: 'http://36.110.117.58:8000',
@@ -78,10 +80,12 @@ const rewriteMap = {
   local: {
     '/api/sinoapi': '/sinoapi/',
     '/api/report': '/report/',
+    '/api/userManager': '/userManager/',
   },
   dev: {
     '/api/sinoapi': '/sinoapi/',
     '/api/report': '/report/',
+    '/api/userManager': '/uapi/userManager/',
   },
 };
 
@@ -349,10 +353,10 @@ export default {
     //   changeOrigin: true,
     //   pathRewrite: { '^/api/': '' },
     // },
-    '/api/userManager/user': {
-      target: serveUrlMap['local'],
+    '/api/userManager': {
+      target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
-      pathRewrite: { '^/api/': '' },
+      pathRewrite: { '^/api/userManager/': rewriteMap[SERVE_ENV]['/api/userManager'] },
     },
     '/api/sinoapi': {
       target: serveUrlMap[SERVE_ENV],
