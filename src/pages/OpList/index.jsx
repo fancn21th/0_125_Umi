@@ -25,7 +25,7 @@ const TableList = () => {
   const [keywords, setKeywords] = useState('');
   const [ordernoValue, setOrdernoValue] = useState('');
   const [orderno, setOrderno] = useState('');
-  const [logData, setLogData] = useState({});
+  const [logData, setLogData] = useState([]);
   const [logModalVisibility, setLogModalVisibility] = useState(false);
   const actionRef = useRef();
 
@@ -85,8 +85,12 @@ const TableList = () => {
                 try {
                   const data = await queryUploadResultByInorder(ordernoValue);
                   hide();
-                  message.success('查询成功');
                   await setLogData(data);
+                  if (data.length) {
+                    message.success('查询成功');
+                  } else {
+                    message.success('数据为空，请检查单号是否输入正确');
+                  }
                   return setLogModalVisibility(true);
                 } catch (error) {
                   hide();
