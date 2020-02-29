@@ -1,6 +1,7 @@
 import { Button, message, Input, Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import moment from 'moment';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import LogModal from './components/LogModal';
 import {
@@ -18,6 +19,27 @@ const { Text } = Typography;
 const validate = ono => {
   const reg = /^(IN|WV|OU)[_a-zA-Z0-9]+/g;
   return ono !== '' && reg.test(ono);
+};
+
+const transformDatetime = (data, col) => {
+  return data.map(val => {
+    return Object.keys(val).reduce((acc, cur) => {
+      const v = val[cur];
+      const config = col.filter(c => {
+        const { dataIndex } = c;
+        return dataIndex == cur;
+      });
+      let isNeedTransform = false;
+      if (config.length) {
+        const { valueType } = config[0];
+        isNeedTransform = valueType === 'dateTime';
+      }
+      return {
+        ...acc,
+        [cur]: isNeedTransform ? moment(v).format('YYYY-MM-DD HH:mm:ss') : v,
+      };
+    }, {});
+  });
 };
 
 const TableList = () => {
@@ -85,7 +107,7 @@ const TableList = () => {
                 try {
                   const data = await queryUploadResultByInorder(ordernoValue);
                   hide();
-                  await setLogData(data);
+                  await setLogData(transformDatetime(data, logColumns));
                   if (data.length) {
                     message.success('查询成功');
                   } else {
@@ -137,7 +159,7 @@ const TableList = () => {
                     const data = await queryUploadResult(id);
                     hide();
                     message.success('查询成功');
-                    await setLogData(data);
+                    await setLogData(transformDatetime(data, logColumns));
                     return setLogModalVisibility(true);
                   } catch (error) {
                     hide();
