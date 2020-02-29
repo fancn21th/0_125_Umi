@@ -61,9 +61,10 @@ const Model = {
       }
     },
 
-    logout() {
+    *logout(_, { call }) {
       const { redirect } = getPageQuery(); // Note: There may be security issues, please note
-
+      yield call(setTokenInStorage, '');
+      yield call(setToken, '');
       if (window.location.pathname !== '/user/login' && !redirect) {
         router.replace({
           pathname: '/user/login',
