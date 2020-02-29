@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Modal } from 'antd';
+
 const FormItem = Form.Item;
 
 const CreateForm = props => {
@@ -54,6 +55,10 @@ const CreateForm = props => {
               required: true,
               message: '请输入至少一个字符！',
               min: 1,
+            },
+            {
+              type: 'email',
+              message: '请输入正确的邮箱！',
             },
           ]}
         >
