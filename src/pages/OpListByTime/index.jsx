@@ -41,12 +41,17 @@ const TableList = () => {
           setKeywords('');
           return params;
         }}
-        params={{ begin, end, keywords }}
+        params={{ current: 1, pageSize: 10, begin, end, keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Button
             type="primary"
-            onClick={() => {
-              const { dataSource } = action;
+            onClick={async () => {
+              const { data: dataSource } = await queryCargos({
+                current: 1,
+                pageSize: 100000,
+                begin,
+                end,
+              });
               const body = data2ExcelJson(dataSource, columns);
               const headerOrder = [
                 '操作类型',
