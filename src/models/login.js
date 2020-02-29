@@ -18,7 +18,17 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(accountLogin, payload);
+      let response = yield call(accountLogin, payload);
+
+      // convert real login api response
+      if (response.token) {
+        response = {
+          ...response,
+          status: 'ok',
+          type: 'account',
+        };
+      }
+
       yield put({
         type: 'changeLoginStatus',
         payload: response,

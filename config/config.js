@@ -109,6 +109,7 @@ export default {
     {
       path: '/',
       component: '../layouts/SecurityLayout',
+      Routes: ['src/pages/Authorized'],
       routes: [
         {
           path: '/',
@@ -119,13 +120,13 @@ export default {
               path: '/',
               redirect: '/cargo/cargolist',
             },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-            },
+            // {
+            //   path: '/admin',
+            //   name: 'admin',
+            //   icon: 'crown',
+            //   component: './Admin',
+            //   authority: ['admin'],
+            // },
             {
               name: 'category.cargo',
               icon: 'table',
@@ -255,6 +256,7 @@ export default {
               name: 'config',
               icon: 'table',
               path: '/config',
+              authority: ['super', 'admin'],
               routes: [
                 {
                   name: 'email',
@@ -339,7 +341,7 @@ export default {
     //   pathRewrite: { '^/api/': '' },
     // },
     '/api/auth/authenticate': {
-      target: serveUrlMap['local'],
+      target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
