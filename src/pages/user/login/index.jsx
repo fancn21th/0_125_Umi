@@ -99,6 +99,7 @@ const Login = props => {
             自动登录
           </Checkbox>
           <a
+            disabled
             style={{
               float: 'right',
             }}
