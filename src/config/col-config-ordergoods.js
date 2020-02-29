@@ -2,6 +2,7 @@ export const columns = [
   {
     title: '出库单号',
     dataIndex: 'OutOrderNo',
+    hideInSearch: true,
     sorter: false,
   },
   {
