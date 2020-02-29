@@ -54,8 +54,8 @@ const handleUpdate = async fields => {
 const handleRemove = async id =>
   new Promise((resolve, reject) => {
     Modal.confirm({
-      title: '删除任务',
-      content: '确定删除该任务吗？',
+      title: '删除收件人',
+      content: '确定删除该收件人吗？',
       okText: '确认',
       cancelText: '取消',
       onOk: async () => {
