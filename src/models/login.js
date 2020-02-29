@@ -3,6 +3,7 @@ import { router } from 'umi';
 import { accountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { setToken } from '@/utils/request';
 
 const rbacMap = {
   SUPERADMIN: 'super',
@@ -22,6 +23,7 @@ const Model = {
 
       // convert real login api response
       if (response.token) {
+        yield call(setToken, response.token);
         response = {
           ...response,
           status: 'ok',
