@@ -333,7 +333,12 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   proxy: {
-    '/api/login/account': {
+    // '/api/login/account': {
+    //   target: serveUrlMap['local'],
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/': '' },
+    // },
+    '/api/auth/authenticate': {
       target: serveUrlMap['local'],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
