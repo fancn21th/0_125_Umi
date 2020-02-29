@@ -161,8 +161,7 @@ const TableList = () => {
       <Button
         type="primary"
         onClick={() => {
-          const { dataSource } = action;
-          const body = data2ExcelJson(dataSource, columns);
+          const body = data2ExcelJson(datasource, columns);
           const headerOrder = [
             '设备ID',
             '收货任务数',
