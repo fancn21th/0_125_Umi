@@ -55,6 +55,10 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+/**
+ * 扩展request,增加token
+ */
+
 export const setToken = token => {
   request.extendOptions({
     headers: {
