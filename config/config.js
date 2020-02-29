@@ -115,7 +115,7 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['super', 'admin', 'user'],
+          authority: ['super', 'admin', 'user', 'guest'],
           routes: [
             {
               path: '/',

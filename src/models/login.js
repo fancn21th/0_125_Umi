@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { stringify } from 'querystring';
 import { router } from 'umi';
 import { accountLogin } from '@/services/login';
@@ -20,9 +21,11 @@ const Model = {
   effects: {
     *login({ payload }, { call, put }) {
       let response = yield call(accountLogin, payload);
+
       const { token } = response;
-      // convert real login api response
+
       if (token) {
+        // convert real login api response
         yield call(setTokenInStorage, token);
         yield call(setToken, token);
         response = {
@@ -30,34 +33,36 @@ const Model = {
           status: 'ok', // TODO: hardcoded prop to be removed
           type: 'account', // TODO: hardcoded prop to be removed
         };
-      }
 
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      }); // Login successfully
+        yield put({
+          type: 'changeLoginStatus',
+          payload: response,
+        }); // Login successfully
 
-      if (response.status === 'ok') {
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        let { redirect } = params;
+        if (response.status === 'ok') {
+          const urlParams = new URL(window.location.href);
+          const params = getPageQuery();
+          let { redirect } = params;
 
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
+          if (redirect) {
+            const redirectUrlParams = new URL(redirect);
 
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
+            if (redirectUrlParams.origin === urlParams.origin) {
+              redirect = redirect.substr(urlParams.origin.length);
 
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
+              if (redirect.match(/^\/.*#/)) {
+                redirect = redirect.substr(redirect.indexOf('#') + 1);
+              }
+            } else {
+              window.location.href = '/';
+              return;
             }
-          } else {
-            window.location.href = '/';
-            return;
           }
-        }
 
-        router.replace(redirect || '/');
+          router.replace(redirect || '/');
+        }
+      } else {
+        message.error('登陆失败,请检查用户名或密码是否输入正确');
       }
     },
 
