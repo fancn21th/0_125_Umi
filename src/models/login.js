@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
 import { accountLogin } from '@/services/login';
-import { setAuthority } from '@/utils/authority';
+import { setAuthority, setToken as setTokenInStorage } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { setToken } from '@/utils/request';
 
@@ -20,10 +20,11 @@ const Model = {
   effects: {
     *login({ payload }, { call, put }) {
       let response = yield call(accountLogin, payload);
-
+      const { token } = response;
       // convert real login api response
-      if (response.token) {
-        yield call(setToken, response.token);
+      if (token) {
+        yield call(setTokenInStorage, token);
+        yield call(setToken, token);
         response = {
           ...response,
           status: 'ok', // TODO: hardcoded prop to be removed
