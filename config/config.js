@@ -67,7 +67,9 @@ if (isAntDesignProPreview) {
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
-// api server endpoint
+/*
+  local dev proxy
+*/
 const serveUrlMap = {
   local: 'http://localhost:3000',
   // dev: 'http://36.110.117.58:8000',
@@ -113,19 +115,19 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               path: '/',
               redirect: '/cargo/cargolist',
             },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-            },
+            // {
+            //   path: '/admin',
+            //   name: 'admin',
+            //   icon: 'crown',
+            //   component: './Admin',
+            //   authority: ['admin'],
+            // },
             {
               name: 'category.cargo',
               icon: 'table',
@@ -255,6 +257,7 @@ export default {
               name: 'config',
               icon: 'table',
               path: '/config',
+              authority: ['super', 'admin'],
               routes: [
                 {
                   name: 'email',
@@ -333,13 +336,18 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   proxy: {
-    '/api/login/account': {
-      target: serveUrlMap['local'],
+    // '/api/login/account': {
+    //   target: serveUrlMap['local'],
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/': '' },
+    // },
+    '/api/auth/authenticate': {
+      target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },
     '/api/currentUser': {
-      target: serveUrlMap['local'],
+      target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },

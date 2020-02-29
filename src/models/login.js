@@ -1,8 +1,17 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { fakeAccountLogin } from '@/services/login';
+import { accountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { setToken } from '@/utils/request';
+
+const rbacMap = {
+  SUPERADMIN: 'super',
+  ADMIN: 'admin',
+  NORMAL: 'user',
+  GUEST: 'guest',
+};
+
 const Model = {
   namespace: 'login',
   state: {
@@ -10,7 +19,18 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      let response = yield call(accountLogin, payload);
+
+      // convert real login api response
+      if (response.token) {
+        yield call(setToken, response.token);
+        response = {
+          ...response,
+          status: 'ok', // TODO: hardcoded prop to be removed
+          type: 'account', // TODO: hardcoded prop to be removed
+        };
+      }
+
       yield put({
         type: 'changeLoginStatus',
         payload: response,
@@ -55,7 +75,10 @@ const Model = {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      const {
+        userInfo: { role },
+      } = payload;
+      setAuthority(rbacMap[role]);
       return { ...state, status: payload.status, type: payload.type };
     },
   },
