@@ -1,4 +1,5 @@
 import islocal from './islocal-total';
+import uuid from './uuid';
 
 export function ApiTransformToData(apicargos, apioutcargos) {
   let sum = 0;
@@ -25,17 +26,19 @@ export function ApiTransformToData(apicargos, apioutcargos) {
 }
 
 function ApiTransformToArray(data) {
-  return data.reduce((acc, val) => {
-    let { Cargos: cargos } = val;
-    cargos = cargos.map(v => {
-      const cargo = {
-        ...v,
-        ...val,
-        Cargos: cargos.length,
-        key: Date.now().toString(36),
+  return data.map(item => {
+    let { Cargos } = item;
+    Cargos = Cargos.map(i => {
+      return {
+        ...i,
+        key: uuid(),
       };
-      return cargo;
     });
-    return [...acc, ...cargos];
-  }, []);
+    return {
+      ...item,
+      lineLen: Cargos.length,
+      Cargos,
+      key: uuid(),
+    };
+  });
 }

@@ -1,20 +1,23 @@
 import islocal from './islocal-total';
+import uuid from './uuid';
 
 export function ApiTransformToData(apidata) {
   if (islocal(apidata)) {
-    const data = apidata.reduce((acc, val) => {
-      let { Cargos: cargos } = val;
-      cargos = cargos.map(v => {
-        const cargo = {
-          ...v,
-          ...val,
-          Cargos: cargos.length,
-          key: Date.now().toString(36),
+    const data = apidata.map(item => {
+      let { Cargos } = item;
+      Cargos = Cargos.map(i => {
+        return {
+          ...i,
+          key: uuid(),
         };
-        return cargo;
       });
-      return [...acc, ...cargos];
-    }, []);
+      return {
+        ...item,
+        lineLen: Cargos.length,
+        Cargos,
+        key: uuid(),
+      };
+    });
     return {
       total: data.length,
       success: true,
@@ -22,19 +25,21 @@ export function ApiTransformToData(apidata) {
     };
   } else {
     const { total, data: apiarr } = apidata;
-    const data = apiarr.reduce((acc, val) => {
-      let { Cargos: cargos } = val;
-      cargos = cargos.map(v => {
-        const cargo = {
-          ...v,
-          ...val,
-          Cargos: cargos.length,
-          key: Date.now().toString(36),
+    const data = apiarr.map(item => {
+      let { Cargos } = item;
+      Cargos = Cargos.map(i => {
+        return {
+          ...i,
+          key: uuid(),
         };
-        return cargo;
       });
-      return [...acc, ...cargos];
-    }, []);
+      return {
+        ...item,
+        lineLen: Cargos.length,
+        Cargos,
+        key: uuid(),
+      };
+    });
     return {
       total,
       success: true,
