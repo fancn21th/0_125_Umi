@@ -1,8 +1,8 @@
 import request from '@/utils/request';
 
-export async function fakeSubmitForm(params) {
-  return request('/api/forms', {
+export async function addSinoUser(params) {
+  return request('/api/sinoapi/rigister', {
     method: 'POST',
-    data: params,
+    data: { ...params },
   });
 }
