@@ -112,7 +112,7 @@ export default {
       path: '/',
       component: '../layouts/BasicLayout',
       Routes: ['src/pages/Authorized'],
-      authority: ['super', 'admin', 'user'],
+      authority: ['super', 'admin', 'user', 'guest'],
       routes: [
         {
           path: '/',
@@ -129,6 +129,7 @@ export default {
           name: 'category.cargo',
           icon: 'table',
           path: '/cargo',
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               name: 'list.cargo-list',
@@ -154,6 +155,7 @@ export default {
           name: 'category.order',
           icon: 'table',
           path: '/order',
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               name: 'list.order-goods',
@@ -204,6 +206,7 @@ export default {
           name: 'cargoinfo',
           icon: 'table',
           path: '/cargoinfo',
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               name: 'cargobroken-by-inorder',
@@ -223,6 +226,7 @@ export default {
           name: 'category.report',
           icon: 'table',
           path: '/report',
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               name: 'list.workloads-staff',
