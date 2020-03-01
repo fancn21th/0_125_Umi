@@ -76,16 +76,16 @@ const serveUrlMap = {
   dev: 'http://10.3.69.26:9000',
 };
 
-const rewriteMap = {
-  local: {
-    '/api/sinoapi': '/sinoapi/',
-    '/api/report': '/report/',
-  },
-  dev: {
-    '/api/sinoapi': '/sinoapi/',
-    '/api/report': '/report/',
-  },
-};
+// const rewriteMap = {
+//   local: {
+//     '/api/sinoapi': '/sinoapi/',
+//     '/api/report': '/report/',
+//   },
+//   dev: {
+//     '/api/sinoapi': '/sinoapi/',
+//     '/api/report': '/report/',
+//   },
+// };
 
 const { SERVE_ENV = 'local' } = process.env;
 
@@ -342,30 +342,30 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   proxy: {
-    // '/api/login/account': {
-    //   target: serveUrlMap['local'],
+    // '/api/auth/authenticate': {
+    //   target: serveUrlMap[SERVE_ENV],
     //   changeOrigin: true,
     //   pathRewrite: { '^/api/': '' },
     // },
-    '/api/auth/authenticate': {
+    // '/api/currentUser': {
+    //   target: serveUrlMap[SERVE_ENV],
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/': '' },
+    // },
+    // '/api/sinoapi': {
+    //   target: serveUrlMap[SERVE_ENV],
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/sinoapi/': '' },
+    // },
+    // '/api/report': {
+    //   target: serveUrlMap[SERVE_ENV],
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/report/': '' },
+    // },
+    '/api/': {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
-    },
-    '/api/currentUser': {
-      target: serveUrlMap[SERVE_ENV],
-      changeOrigin: true,
-      pathRewrite: { '^/api/': '' },
-    },
-    '/api/sinoapi': {
-      target: serveUrlMap[SERVE_ENV],
-      changeOrigin: true,
-      pathRewrite: { '^/api/sinoapi/': rewriteMap[SERVE_ENV]['/api/sinoapi'] },
-    },
-    '/api/report': {
-      target: serveUrlMap[SERVE_ENV],
-      changeOrigin: true,
-      pathRewrite: { '^/api/report/': rewriteMap[SERVE_ENV]['/api/report'] },
     },
   },
 };
