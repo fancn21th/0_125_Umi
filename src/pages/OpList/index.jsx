@@ -80,6 +80,7 @@ const TableList = () => {
               if (validate(ordernoValue)) {
                 setKeywordsValue('');
                 setKeywords('');
+                action.resetPageIndex(1);
                 setOrderno(ordernoValue);
               } else {
                 message.warning('请输入合规单号，示例前缀：IN、WV、OU');
@@ -141,8 +142,8 @@ const TableList = () => {
         request={params => queryOpList(params)}
         pagination={{
           showSizeChanger: true,
-          pageSize: 10,
-          current: 1,
+          defaultPageSize: 10,
+          defaultCurrent: 1,
         }}
         columns={[
           ...columns,
