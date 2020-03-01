@@ -4,6 +4,8 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import { getToken } from '@/utils/authority';
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -52,5 +54,21 @@ const request = extend({
   errorHandler,
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
+  headers: {
+    xtoken: getToken(),
+  },
 });
+
+/**
+ * 扩展request,增加token
+ */
+
+export const setToken = token => {
+  request.extendOptions({
+    headers: {
+      xtoken: token,
+    },
+  });
+};
+
 export default request;

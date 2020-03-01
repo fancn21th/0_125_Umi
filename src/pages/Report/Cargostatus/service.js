@@ -18,7 +18,7 @@ export async function sendmail({
   type = 'CARGO_STATUS_REPORT',
   keywords = '',
 }) {
-  return request('http://10.3.69.26:9097/api/report/emailSetting/selfSend', {
+  return request('/api/report/emailSetting/selfSend', {
     params: {
       type,
       startTime,

@@ -11,17 +11,16 @@ async function getWorkloads2({ current, pageSize, sorter, type }) {
       end: sorter[1],
       devtype: type,
       mode: 'day',
-      // pageindex: current,
-      // pageSize,
+      pageindex: current - 1,
+      pageSize,
     };
   } else {
     params = {
       begin: sorter[0],
       end: sorter[1],
       mode: 'day',
-      // devType: type,
-      // pageindex: current,
-      // pageSize,
+      pageindex: current - 1,
+      pageSize,
     };
   }
   const data = await request(url, {

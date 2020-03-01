@@ -3,11 +3,13 @@ export const columns = [
     title: '出库单号',
     dataIndex: 'OutOrderNo',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '入库单号',
     dataIndex: 'InOrderNo',
     sorter: false,
+    hideInSearch: true,
   },
   {
     title: '货物RFID',
@@ -23,61 +25,14 @@ export const columns = [
   },
   {
     title: '物料行数',
-    dataIndex: 'Cargos',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '行号',
-    dataIndex: 'InOrderItemNo',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '物料号',
-    dataIndex: 'CargoNo',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '物料名',
-    dataIndex: 'CargoName',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '批次号',
-    dataIndex: 'CargoBatchNo',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '应收',
-    dataIndex: 'Quantity',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '实收',
-    dataIndex: 'QuantityReal',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '包装',
-    dataIndex: 'Package',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '危险等级',
-    dataIndex: 'DagLvl',
+    dataIndex: 'lineLen',
     sorter: false,
     hideInSearch: true,
   },
   {
     title: '货物状态',
     dataIndex: 'CargoStatus',
+    filters: false,
     sorter: false,
     hideInSearch: true,
     valueEnum: {
@@ -116,6 +71,7 @@ export const columns = [
   {
     title: '同步状态',
     dataIndex: 'SyncStatus',
+    filters: false,
     sorter: false,
     hideInSearch: true,
     valueEnum: {

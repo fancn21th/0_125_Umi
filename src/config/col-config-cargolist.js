@@ -18,55 +18,7 @@ export const columns = [
   },
   {
     title: '物料行数',
-    dataIndex: 'Cargos',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '行号',
-    dataIndex: 'InOrderItemNo',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '物料号',
-    dataIndex: 'CargoNo',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '物料名',
-    dataIndex: 'CargoName',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '批次号',
-    dataIndex: 'CargoBatchNo',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '应收',
-    dataIndex: 'Quantity',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '实收',
-    dataIndex: 'QuantityReal',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '包装',
-    dataIndex: 'Package',
-    sorter: false,
-    hideInSearch: true,
-  },
-  {
-    title: '危险等级',
-    dataIndex: 'DagLvl',
+    dataIndex: 'lineLen',
     sorter: false,
     hideInSearch: true,
   },
@@ -75,6 +27,7 @@ export const columns = [
     dataIndex: 'CargoStatus',
     sorter: false,
     hideInSearch: true,
+    filters: false,
     valueEnum: {
       '0': {
         text: '待收货',
@@ -113,6 +66,7 @@ export const columns = [
     dataIndex: 'SyncStatus',
     sorter: false,
     hideInSearch: true,
+    filters: false,
     valueEnum: {
       '0': {
         text: '未同步',

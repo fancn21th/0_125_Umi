@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Modal, Table } from 'antd';
 
-const LogModal = props => {
-  const { modalVisible, onCancel, title, logData, columns } = props;
+const CargoModal = props => {
+  const { modalVisible, onCancel, title, data, columns } = props;
   return (
     <Modal
       width={1200}
@@ -15,11 +15,11 @@ const LogModal = props => {
         </Button>,
       ]}
     >
-      {logData.length ? (
-        <Table columns={columns} dataSource={logData} pagination={false} rowKey="key" />
+      {data.length ? (
+        <Table columns={columns} dataSource={data} pagination={false} rowKey="key" />
       ) : null}
     </Modal>
   );
 };
 
-export default LogModal;
+export default CargoModal;

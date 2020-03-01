@@ -6,6 +6,8 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'dva';
 import { queryCargoListIvt } from './service';
 import { columns } from '../../config/col-config-cargolistivt';
+import { columns as cargoColumns } from '../../config/col-config-cargos';
+import CargoModal from './components/CargoModal';
 import uuid from '../../utils/uuid';
 import data2ExcelJson from '../../utils/excel/data2ExcelJson';
 import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
@@ -30,6 +32,8 @@ const TableList = ({ ivtList }) => {
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
   const [inventoryno, setInventoryno] = useState('');
+  const [cargoData, setCargoData] = useState([]);
+  const [cargoModalVisibility, setCargoModalVisibility] = useState(false);
 
   const actionRef = useRef();
   const hasNoData = () => new Promise(resolve => resolve([]));
@@ -45,6 +49,7 @@ const TableList = ({ ivtList }) => {
           actionRef={actionRef}
           rowKey="key"
           search={false}
+          options={{ fullScreen: false, reload: true, setting: true }}
           beforeSearchSubmit={params => {
             setKeywordsValue('');
             setKeywords('');
@@ -63,9 +68,13 @@ const TableList = ({ ivtList }) => {
             </Select>,
             <Button
               type="primary"
-              onClick={() => {
-                const { dataSource } = action;
-                const body = data2ExcelJson(dataSource, columns);
+              onClick={async () => {
+                const { data } = await queryCargoListIvt({
+                  current: 1,
+                  pageSize: 10000000,
+                  inventoryno,
+                });
+                const body = data2ExcelJson(data, columns);
                 const headerOrder = [
                   '入库单号',
                   '货物RFID',
@@ -103,13 +112,42 @@ const TableList = ({ ivtList }) => {
             />,
           ]}
           request={hasData}
-          columns={columns}
+          columns={[
+            ...columns,
+            {
+              title: '操作',
+              dataIndex: 'option',
+              valueType: 'option',
+              render: (text, row) => [
+                <a
+                  onClick={async () => {
+                    const { Cargos } = row;
+                    if (Cargos.length > 0) {
+                      await setCargoData([...Cargos]);
+                      return setCargoModalVisibility(true);
+                    }
+                    message.warning('货物详情为空');
+                    return setCargoModalVisibility(false);
+                  }}
+                >
+                  货物详情
+                </a>,
+              ],
+            },
+          ]}
           pagination={{
             showSizeChanger: true,
             pageSize: 10,
             current: 1,
           }}
         />
+        <CargoModal
+          columns={cargoColumns}
+          data={cargoData}
+          modalVisible={cargoModalVisibility}
+          title="货物详情"
+          onCancel={() => setCargoModalVisibility(false)}
+        ></CargoModal>
       </PageHeaderWrapper>
     );
   }
@@ -120,6 +158,7 @@ const TableList = ({ ivtList }) => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
+        options={{ fullScreen: false, reload: true, setting: true }}
         params={{ keywords, inventoryno }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');
@@ -144,13 +183,42 @@ const TableList = ({ ivtList }) => {
           />,
         ]}
         request={hasNoData}
-        columns={columns}
+        columns={[
+          ...columns,
+          {
+            title: '操作',
+            dataIndex: 'option',
+            valueType: 'option',
+            render: (text, row) => [
+              <a
+                onClick={async () => {
+                  const { Cargos } = row;
+                  if (Cargos.length > 0) {
+                    await setCargoData([...Cargos]);
+                    return setCargoModalVisibility(true);
+                  }
+                  message.warning('货物详情为空');
+                  return setCargoModalVisibility(false);
+                }}
+              >
+                货物详情
+              </a>,
+            ],
+          },
+        ]}
         pagination={{
           showSizeChanger: true,
           pageSize: 10,
           current: 1,
         }}
       />
+      <CargoModal
+        columns={cargoColumns}
+        data={cargoData}
+        modalVisible={cargoModalVisibility}
+        title="货物详情"
+        onCancel={() => setCargoModalVisibility(false)}
+      ></CargoModal>
     </PageHeaderWrapper>
   );
 };

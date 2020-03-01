@@ -1,8 +1,18 @@
+import { message } from 'antd';
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { fakeAccountLogin } from '@/services/login';
-import { setAuthority } from '@/utils/authority';
+import { accountLogin } from '@/services/login';
+import { setAuthority, setToken as setTokenInStorage } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { setToken } from '@/utils/request';
+
+const rbacMap = {
+  SUPERADMIN: 'super',
+  ADMIN: 'admin',
+  NORMAL: 'user',
+  GUEST: 'guest',
+};
+
 const Model = {
   namespace: 'login',
   state: {
@@ -10,39 +20,56 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      }); // Login successfully
+      let response = yield call(accountLogin, payload);
 
-      if (response.status === 'ok') {
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        let { redirect } = params;
+      const { token } = response;
 
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
+      if (token) {
+        // convert real login api response
+        yield call(setTokenInStorage, token);
+        yield call(setToken, token);
+        response = {
+          ...response,
+          status: 'ok', // TODO: hardcoded prop to be removed
+          type: 'account', // TODO: hardcoded prop to be removed
+        };
 
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
+        yield put({
+          type: 'changeLoginStatus',
+          payload: response,
+        }); // Login successfully
 
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
+        if (response.status === 'ok') {
+          const urlParams = new URL(window.location.href);
+          const params = getPageQuery();
+          let { redirect } = params;
+
+          if (redirect) {
+            const redirectUrlParams = new URL(redirect);
+
+            if (redirectUrlParams.origin === urlParams.origin) {
+              redirect = redirect.substr(urlParams.origin.length);
+
+              if (redirect.match(/^\/.*#/)) {
+                redirect = redirect.substr(redirect.indexOf('#') + 1);
+              }
+            } else {
+              window.location.href = '/';
+              return;
             }
-          } else {
-            window.location.href = '/';
-            return;
           }
-        }
 
-        router.replace(redirect || '/');
+          router.replace(redirect || '/');
+        }
+      } else {
+        message.error('登陆失败,请检查用户名或密码是否输入正确');
       }
     },
 
-    logout() {
+    *logout(_, { call }) {
       const { redirect } = getPageQuery(); // Note: There may be security issues, please note
-
+      yield call(setTokenInStorage, '');
+      yield call(setToken, '');
       if (window.location.pathname !== '/user/login' && !redirect) {
         router.replace({
           pathname: '/user/login',
@@ -55,7 +82,10 @@ const Model = {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      const {
+        userInfo: { role },
+      } = payload;
+      setAuthority(rbacMap[role]);
       return { ...state, status: payload.status, type: payload.type };
     },
   },
