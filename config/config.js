@@ -112,7 +112,7 @@ export default {
       path: '/',
       component: '../layouts/BasicLayout',
       Routes: ['src/pages/Authorized'],
-      authority: ['super', 'admin', 'user', 'guest'],
+      authority: ['super', 'admin', 'user'],
       routes: [
         {
           path: '/',
