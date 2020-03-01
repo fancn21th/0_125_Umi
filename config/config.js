@@ -134,19 +134,19 @@ export default {
               routes: [
                 {
                   name: 'list.cargo-list',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/cargo/cargolist',
                   component: './CargoList',
                 },
                 {
                   name: 'list.out-cargo-list',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/cargo/outcargolist',
                   component: './OutCargoList',
                 },
                 {
                   name: 'list.cargo-list-ivt',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/cargo/cargolistivt',
                   component: './CargoListIvt',
                 },
@@ -160,19 +160,19 @@ export default {
               routes: [
                 {
                   name: 'list.order-goods',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/order/ordergoods',
                   component: './OrderGoods',
                 },
                 {
                   name: 'list.op-list',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/order/oplist',
                   component: './OpList',
                 },
                 {
                   name: 'list.op-list-by-time',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/order/oplistbytime',
                   component: './OpListByTime',
                 },
@@ -180,25 +180,25 @@ export default {
             },
             {
               name: 'category.workloads',
-              icon: 'table',
+              icon: 'HistoryOutlined',
               path: '/workloads',
               authority: ['super', 'admin', 'user'],
               routes: [
                 {
                   name: 'list.day-workloads',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/workloads/dayworkloads',
                   component: './KcWorkloads',
                 },
                 {
                   name: 'list.month-workloads',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/workloads/monthworkloads',
                   component: './KcMonthWorkloads',
                 },
                 {
                   name: 'list.year-workloads',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/workloads/yearworkloads',
                   component: './KcYearWorkloads',
                 },
@@ -212,13 +212,13 @@ export default {
               routes: [
                 {
                   name: 'cargobroken-by-inorder',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/cargoinfo/cargobrokenbyinorder',
                   component: './Cargoinfo/CargobrokenByInorder',
                 },
                 {
                   name: 'shelf-utilization',
-                  icon: 'table',
+                  icon: 'BarChartOutlined',
                   path: '/cargoinfo/shelfutilization',
                   component: './Cargoinfo/ShelfUtilization',
                 },
@@ -232,25 +232,25 @@ export default {
               routes: [
                 {
                   name: 'list.workloads-staff',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/report/workloadsstaff',
                   component: './Report/WorkloadsStaff',
                 },
                 {
                   name: 'list.workloads-dev',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/report/workloadsdev',
                   component: './Report/WorkloadsDev',
                 },
                 {
                   name: 'list.cargo-broken',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/report/cargobroken',
                   component: './Report/Cargobroken',
                 },
                 {
                   name: 'list.cargo-status',
-                  icon: 'table',
+                  icon: 'UnorderedListOutlined',
                   path: '/report/cargostatus',
                   component: './Report/Cargostatus',
                 },
@@ -258,24 +258,24 @@ export default {
             },
             {
               name: 'config',
-              icon: 'table',
+              icon: 'UserOutlined',
               path: '/config',
               authority: ['super', 'admin'],
               routes: [
                 {
                   name: 'email',
-                  icon: 'table',
+                  icon: 'MailOutlined',
                   path: '/config/email',
                   routes: [
                     {
                       name: 'sending',
-                      icon: 'table',
+                      icon: 'SendOutlined',
                       path: '/config/email/sending',
                       component: './Configuration/Email/Sending',
                     },
                     {
                       name: 'receiving',
-                      icon: 'table',
+                      icon: 'UsergroupAddOutlined',
                       path: '/config/email/recipients',
                       component: './Configuration/Email/Recipients',
                     },
@@ -283,13 +283,13 @@ export default {
                 },
                 {
                   name: 'sino-user',
-                  icon: 'table',
+                  icon: 'UserOutlined',
                   path: '/config/sinouser',
                   component: './Configuration/SinoUser',
                 },
                 {
                   name: 'account',
-                  icon: 'table',
+                  icon: 'UsergroupAddOutlined',
                   path: '/config/account',
                   component: './Configuration/Account',
                 },
