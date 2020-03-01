@@ -284,6 +284,12 @@ export default {
                   path: '/config/sinouser',
                   component: './Configuration/SinoUser',
                 },
+                {
+                  name: 'account',
+                  icon: 'table',
+                  path: '/config/account',
+                  component: './Configuration/Account',
+                },
               ],
             },
             {
