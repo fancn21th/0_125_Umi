@@ -14,17 +14,24 @@ const setLast = (params, data) => {
   };
 };
 
+const containInString = (keywords, str) => str.includes(keywords);
+const containInArray = (keywords, array) =>
+  array.filter(item =>
+    Object.keys(item).some(
+      // 只比较字符串类型
+      key =>
+        item[key] &&
+        ((typeof item[key] === 'string' && containInString(keywords, item[key])) ||
+          (Array.isArray(item[key]) && containInArray(keywords, item[key])).length > 0),
+    ),
+  );
+
 const searchInLast = (keywords, data) => {
   const { data: innerData } = data;
   if (data) {
     return {
       ...data,
-      data: innerData.filter(item =>
-        Object.keys(item).some(
-          // 只比较字符串类型
-          key => item[key] && typeof item[key] === 'string' && item[key].includes(keywords),
-        ),
-      ),
+      data: containInArray(keywords, innerData),
     };
   }
   return null;
