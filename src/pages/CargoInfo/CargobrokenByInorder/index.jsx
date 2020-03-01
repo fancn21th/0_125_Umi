@@ -61,7 +61,6 @@ const TableList = () => {
               <>
                 <a
                   onClick={() => {
-                    console.log(record);
                     const { Img } = record;
                     const imgs = Img.map(img => ({ url: img }));
                     setImgurls(imgs);

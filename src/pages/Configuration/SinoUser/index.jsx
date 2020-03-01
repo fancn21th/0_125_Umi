@@ -1,7 +1,7 @@
 // import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, Input, Form } from 'antd';
+import { Button, Card, Input, Form, message } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 // import styles from './style.less';
@@ -12,7 +12,7 @@ const FormItem = Form.Item;
 const { Password } = Input;
 
 const BasicForm = props => {
-  const { submitting } = props;
+  const { submitting, isCreated } = props;
   const [form] = Form.useForm();
   const formItemLayout = {
     labelCol: {
@@ -57,10 +57,14 @@ const BasicForm = props => {
   };
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
+    message.error('Failed:', errorInfo);
   };
 
   const onValuesChange = () => {};
+
+  useEffect(() => {
+    if (isCreated) form.resetFields();
+  }, [isCreated]);
 
   return (
     <PageHeaderWrapper content={<FormattedMessage id="sino-user-form.basic.description" />}>
@@ -152,6 +156,7 @@ const BasicForm = props => {
   );
 };
 
-export default connect(({ loading }) => ({
+export default connect(({ loading, sinoUserForm: { isCreated } }) => ({
   submitting: loading.effects['sinoUserForm/submitRegularForm'],
+  isCreated,
 }))(BasicForm);
