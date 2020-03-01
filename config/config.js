@@ -98,203 +98,233 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
-      path: '/user',
-      component: '../layouts/UserLayout',
+      path: '/',
+      component: '../layouts/BlankLayout',
       routes: [
         {
-          name: 'login',
-          path: '/user/login',
-          component: './user/login',
+          path: '/user',
+          component: '../layouts/UserLayout',
+          routes: [
+            {
+              path: '/user',
+              redirect: '/user/login',
+            },
+            {
+              name: 'login',
+              path: '/user/login',
+              component: './user/login',
+            },
+          ],
         },
-      ],
-    },
-    {
-      path: '/',
-      component: '../layouts/BasicLayout',
-      Routes: ['src/pages/Authorized'],
-      authority: ['super', 'admin', 'user', 'guest'],
-      routes: [
         {
           path: '/',
-          redirect: '/cargo/cargolist',
-        },
-        // {
-        //   path: '/admin',
-        //   name: 'admin',
-        //   icon: 'crown',
-        //   component: './Admin',
-        //   authority: ['admin'],
-        // },
-        {
-          name: 'category.cargo',
-          icon: 'table',
-          path: '/cargo',
+          component: '../layouts/BasicLayout',
+          Routes: ['src/pages/Authorized'],
           authority: ['super', 'admin', 'user'],
           routes: [
             {
-              name: 'list.cargo-list',
-              icon: 'table',
-              path: '/cargo/cargolist',
-              component: './CargoList',
+              path: '/',
+              redirect: '/cargo/cargolist',
             },
             {
-              name: 'list.out-cargo-list',
+              name: 'category.cargo',
               icon: 'table',
-              path: '/cargo/outcargolist',
-              component: './OutCargoList',
-            },
-            {
-              name: 'list.cargo-list-ivt',
-              icon: 'table',
-              path: '/cargo/cargolistivt',
-              component: './CargoListIvt',
-            },
-          ],
-        },
-        {
-          name: 'category.order',
-          icon: 'table',
-          path: '/order',
-          authority: ['super', 'admin', 'user'],
-          routes: [
-            {
-              name: 'list.order-goods',
-              icon: 'table',
-              path: '/order/ordergoods',
-              component: './OrderGoods',
-            },
-            {
-              name: 'list.op-list',
-              icon: 'table',
-              path: '/order/oplist',
-              component: './OpList',
-            },
-            {
-              name: 'list.op-list-by-time',
-              icon: 'table',
-              path: '/order/oplistbytime',
-              component: './OpListByTime',
-            },
-          ],
-        },
-        {
-          name: 'category.workloads',
-          icon: 'table',
-          path: '/workloads',
-          routes: [
-            {
-              name: 'list.day-workloads',
-              icon: 'table',
-              path: '/workloads/dayworkloads',
-              component: './KcWorkloads',
-            },
-            {
-              name: 'list.month-workloads',
-              icon: 'table',
-              path: '/workloads/monthworkloads',
-              component: './KcMonthWorkloads',
-            },
-            {
-              name: 'list.year-workloads',
-              icon: 'table',
-              path: '/workloads/yearworkloads',
-              component: './KcYearWorkloads',
-            },
-          ],
-        },
-        {
-          name: 'cargoinfo',
-          icon: 'table',
-          path: '/cargoinfo',
-          authority: ['super', 'admin', 'user'],
-          routes: [
-            {
-              name: 'cargobroken-by-inorder',
-              icon: 'table',
-              path: '/cargoinfo/cargobrokenbyinorder',
-              component: './Cargoinfo/CargobrokenByInorder',
-            },
-            {
-              name: 'shelf-utilization',
-              icon: 'table',
-              path: '/cargoinfo/shelfutilization',
-              component: './Cargoinfo/ShelfUtilization',
-            },
-          ],
-        },
-        {
-          name: 'category.report',
-          icon: 'table',
-          path: '/report',
-          authority: ['super', 'admin', 'user'],
-          routes: [
-            {
-              name: 'list.workloads-staff',
-              icon: 'table',
-              path: '/report/workloadsstaff',
-              component: './Report/WorkloadsStaff',
-            },
-            {
-              name: 'list.workloads-dev',
-              icon: 'table',
-              path: '/report/workloadsdev',
-              component: './Report/WorkloadsDev',
-            },
-            {
-              name: 'list.cargo-broken',
-              icon: 'table',
-              path: '/report/cargobroken',
-              component: './Report/Cargobroken',
-            },
-            {
-              name: 'list.cargo-status',
-              icon: 'table',
-              path: '/report/cargostatus',
-              component: './Report/Cargostatus',
-            },
-          ],
-        },
-        {
-          name: 'config',
-          icon: 'table',
-          path: '/config',
-          authority: ['super', 'admin'],
-          routes: [
-            {
-              name: 'email',
-              icon: 'table',
-              path: '/config/email',
+              path: '/cargo',
+              authority: ['super', 'admin', 'user'],
               routes: [
                 {
-                  name: 'sending',
+                  name: 'list.cargo-list',
                   icon: 'table',
-                  path: '/config/email/sending',
-                  component: './Configuration/Email/Sending',
+                  path: '/cargo/cargolist',
+                  component: './CargoList',
                 },
                 {
-                  name: 'receiving',
+                  name: 'list.out-cargo-list',
                   icon: 'table',
-                  path: '/config/email/recipients',
-                  component: './Configuration/Email/Recipients',
+                  path: '/cargo/outcargolist',
+                  component: './OutCargoList',
+                },
+                {
+                  name: 'list.cargo-list-ivt',
+                  icon: 'table',
+                  path: '/cargo/cargolistivt',
+                  component: './CargoListIvt',
                 },
               ],
             },
             {
-              name: 'sino-user',
+              name: 'category.order',
               icon: 'table',
-              path: '/config/sinouser',
-              component: './Configuration/SinoUser',
+              path: '/order',
+              authority: ['super', 'admin', 'user'],
+              routes: [
+                {
+                  name: 'list.order-goods',
+                  icon: 'table',
+                  path: '/order/ordergoods',
+                  component: './OrderGoods',
+                },
+                {
+                  name: 'list.op-list',
+                  icon: 'table',
+                  path: '/order/oplist',
+                  component: './OpList',
+                },
+                {
+                  name: 'list.op-list-by-time',
+                  icon: 'table',
+                  path: '/order/oplistbytime',
+                  component: './OpListByTime',
+                },
+              ],
             },
             {
-              name: 'account',
+              name: 'category.workloads',
               icon: 'table',
-              path: '/config/account',
-              component: './Configuration/Account',
+              path: '/workloads',
+              authority: ['super', 'admin', 'user'],
+              routes: [
+                {
+                  name: 'list.day-workloads',
+                  icon: 'table',
+                  path: '/workloads/dayworkloads',
+                  component: './KcWorkloads',
+                },
+                {
+                  name: 'list.month-workloads',
+                  icon: 'table',
+                  path: '/workloads/monthworkloads',
+                  component: './KcMonthWorkloads',
+                },
+                {
+                  name: 'list.year-workloads',
+                  icon: 'table',
+                  path: '/workloads/yearworkloads',
+                  component: './KcYearWorkloads',
+                },
+              ],
+            },
+            {
+              name: 'cargoinfo',
+              icon: 'table',
+              path: '/cargoinfo',
+              authority: ['super', 'admin', 'user'],
+              routes: [
+                {
+                  name: 'cargobroken-by-inorder',
+                  icon: 'table',
+                  path: '/cargoinfo/cargobrokenbyinorder',
+                  component: './Cargoinfo/CargobrokenByInorder',
+                },
+                {
+                  name: 'shelf-utilization',
+                  icon: 'table',
+                  path: '/cargoinfo/shelfutilization',
+                  component: './Cargoinfo/ShelfUtilization',
+                },
+              ],
+            },
+            {
+              name: 'category.report',
+              icon: 'table',
+              path: '/report',
+              authority: ['super', 'admin', 'user'],
+              routes: [
+                {
+                  name: 'list.workloads-staff',
+                  icon: 'table',
+                  path: '/report/workloadsstaff',
+                  component: './Report/WorkloadsStaff',
+                },
+                {
+                  name: 'list.workloads-dev',
+                  icon: 'table',
+                  path: '/report/workloadsdev',
+                  component: './Report/WorkloadsDev',
+                },
+                {
+                  name: 'list.cargo-broken',
+                  icon: 'table',
+                  path: '/report/cargobroken',
+                  component: './Report/Cargobroken',
+                },
+                {
+                  name: 'list.cargo-status',
+                  icon: 'table',
+                  path: '/report/cargostatus',
+                  component: './Report/Cargostatus',
+                },
+              ],
+            },
+            {
+              name: 'config',
+              icon: 'table',
+              path: '/config',
+              authority: ['super', 'admin'],
+              routes: [
+                {
+                  name: 'email',
+                  icon: 'table',
+                  path: '/config/email',
+                  routes: [
+                    {
+                      name: 'sending',
+                      icon: 'table',
+                      path: '/config/email/sending',
+                      component: './Configuration/Email/Sending',
+                    },
+                    {
+                      name: 'receiving',
+                      icon: 'table',
+                      path: '/config/email/recipients',
+                      component: './Configuration/Email/Recipients',
+                    },
+                  ],
+                },
+                {
+                  name: 'sino-user',
+                  icon: 'table',
+                  path: '/config/sinouser',
+                  component: './Configuration/SinoUser',
+                },
+                {
+                  name: 'account',
+                  icon: 'table',
+                  path: '/config/account',
+                  component: './Configuration/Account',
+                },
+              ],
+            },
+            {
+              name: 'exception',
+              icon: 'warning',
+              path: '/exception',
+              hideInMenu: true,
+              routes: [
+                {
+                  name: '403',
+                  icon: 'smile',
+                  path: '/exception/403',
+                  component: './exception/403',
+                },
+                {
+                  name: '404',
+                  icon: 'smile',
+                  path: '/exception/404',
+                  component: './exception/404',
+                },
+                {
+                  name: '500',
+                  icon: 'smile',
+                  path: '/exception/500',
+                  component: './exception/500',
+                },
+              ],
+            },
+            {
+              component: './404',
             },
           ],
-        },
-        {
-          component: './404',
         },
       ],
     },
