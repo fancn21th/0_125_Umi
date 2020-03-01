@@ -11,7 +11,7 @@ export const columns = [
   },
   {
     title: '角色',
-    dataIndex: 'rolecode',
+    dataIndex: 'roleCode',
     sorter: false,
   },
   {

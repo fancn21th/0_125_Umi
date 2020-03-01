@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal, Select } from 'antd';
 
+const { Option } = Select;
 const FormItem = Form.Item;
+
+const parseCode2Id = (code, roles) => {
+  const match = roles.filter(item => item.roleCode === code);
+  if (match.length) {
+    return match[0]['id'];
+  }
+  return code;
+};
 
 const UpdateForm = props => {
   const [form] = Form.useForm();
-  const { updateModalVisible, onSubmit: handleEdit, onCancel } = props;
+  const { updateModalVisible, onSubmit: handleEdit, onCancel, roles } = props;
   const [formVals, setFormVals] = useState({
-    name: props.values.name,
+    username: props.values.username,
     email: props.values.email,
+    roleId: parseCode2Id(props.values.roleCode, roles),
+    realname: props.values.realname,
+    phone: props.values.phone,
     id: props.values.id,
   });
   const okHandle = async () => {
@@ -20,7 +32,7 @@ const UpdateForm = props => {
   return (
     <Modal
       destroyOnClose
-      title="编辑收件人"
+      title="编辑信息"
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => onCancel()}
@@ -28,8 +40,10 @@ const UpdateForm = props => {
       <Form
         form={form}
         initialValues={{
-          name: formVals.name,
-          email: formVals.email,
+          username: formVals.username,
+          realname: formVals.realname,
+          roleId: formVals.roleId,
+          phone: formVals.phone,
         }}
       >
         <FormItem
@@ -39,17 +53,20 @@ const UpdateForm = props => {
           wrapperCol={{
             span: 15,
           }}
-          label="姓名"
-          name="name"
+          label="角色"
+          name="roleId"
           rules={[
             {
               required: true,
-              message: '请输入至少一个字符！',
-              min: 1,
+              message: '角色不能为空！',
             },
           ]}
         >
-          <Input placeholder="请输入姓名" />
+          <Select placeholder="请选择角色">
+            {roles.map(({ id, roleCode }) => (
+              <Option key={id} value={id}>{`${roleCode}`}</Option>
+            ))}
+          </Select>
         </FormItem>
         <FormItem
           labelCol={{
@@ -58,21 +75,47 @@ const UpdateForm = props => {
           wrapperCol={{
             span: 15,
           }}
-          label="邮箱"
-          name="email"
+          label="用户名"
+          name="username"
           rules={[
             {
               required: true,
-              message: '请输入至少一个字符！',
-              min: 1,
-            },
-            {
-              type: 'email',
-              message: '请输入正确的邮箱！',
+              message: '输入不能为空！',
             },
           ]}
         >
-          <Input placeholder="请输入邮箱" />
+          <Input disabled={true} />
+        </FormItem>
+        <FormItem
+          labelCol={{
+            span: 5,
+          }}
+          wrapperCol={{
+            span: 15,
+          }}
+          label="姓名"
+          name="realname"
+          rules={[
+            {
+              required: true,
+              message: '输入不能为空！',
+            },
+          ]}
+        >
+          <Input placeholder="请输入中文姓名" />
+        </FormItem>
+        <FormItem
+          labelCol={{
+            span: 5,
+          }}
+          wrapperCol={{
+            span: 15,
+          }}
+          label="电话"
+          name="phone"
+          rules={[]}
+        >
+          <Input placeholder="请输入电话号码" />
         </FormItem>
       </Form>
     </Modal>

@@ -1,12 +1,13 @@
-import { Button, Divider, Modal, message } from 'antd';
+import { Button, Divider, Modal, message, Input } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { queryCargos, update, add, remove } from './service';
-import { columns } from '../../../config/col-config-reportrecipients';
-
+import UpdatePasswordForm from './components/UpdatePasswordForm';
+import { queryCargos, update, add, remove, queryRoles, updatePassword } from './service';
+import { columns } from '../../../config/col-config-account';
+const { Search } = Input;
 /**
  * 添加节点
  * @param fields
@@ -15,12 +16,18 @@ import { columns } from '../../../config/col-config-reportrecipients';
 const handleAdd = async fields => {
   const hide = message.loading('正在新增');
   const res = await add({
-    name: fields.name,
+    username: fields.username,
+    realname: fields.realname,
+    phone: fields.phone,
+    roleId: fields.roleId,
     email: fields.email,
+    password: fields.password,
+    confirmPassword: fields.confirmPassword,
   });
   hide();
   if (res && res.status == 500) {
-    message.error(`the email already exists.`);
+    const body = await res.json();
+    message.error(`新增失败，原因：${body.errorMsg}`);
     return false;
   }
   message.success('新增成功');
@@ -35,15 +42,40 @@ const handleUpdate = async fields => {
   const hide = message.loading('正在编辑');
   const res = await update({
     id: fields.id,
-    name: fields.name,
+    realname: fields.realname,
+    phone: fields.phone,
+    roleId: +fields.roleId,
     email: fields.email,
   });
   hide();
-  if (res) {
-    message.error(`the email already exists.`);
+  if (res && res.status == 500) {
+    const body = await res.json();
+    message.error(`编辑失败，原因：${body.errorMsg}`);
     return false;
   }
   message.success('编辑成功');
+  return true;
+};
+
+/**
+ * 更新密码
+ * @param fields
+ */
+
+const handleUpdatePassword = async fields => {
+  const hide = message.loading('正在修改');
+  const res = await updatePassword({
+    id: fields.id,
+    password: fields.password,
+    confirmPassword: fields.confirmPassword,
+  });
+  hide();
+  if (res && res.status == 500) {
+    const body = await res.json();
+    message.error(`修改失败，原因：${body.errorMsg}`);
+    return false;
+  }
+  message.success('修改成功');
   return true;
 };
 /**
@@ -79,7 +111,12 @@ const handleRemove = async id =>
 const TableList = () => {
   const [createModalVisible, handleModalVisible] = useState(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
+  const [updatePasswordModalVisible, handleUpdatePasswordModalVisible] = useState(false);
   const [eidtFormValues, setEidtFormValues] = useState({});
+  const [passwordFormValues, setPasswordFormValues] = useState({});
+  const [roleSelect, setRoleSelect] = useState([]);
+  const [keywordsValue, setKeywordsValue] = useState('');
+  const [keywords, setKeywords] = useState('');
   const actionRef = useRef();
 
   return (
@@ -89,11 +126,29 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
-        params={{}}
+        params={{ keywords }}
         options={{ fullScreen: false, reload: true, setting: true }}
         toolBarRender={(action, { selectedRows }) => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            新增收件人
+          <Search
+            placeholder="搜索..."
+            onSearch={val => {
+              setKeywords(val);
+            }}
+            onChange={e => {
+              setKeywordsValue(e.target.value);
+            }}
+            value={keywordsValue}
+            style={{ width: 200 }}
+          />,
+          <Button
+            type="primary"
+            onClick={async () => {
+              const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
+              await setRoleSelect(roles);
+              return handleModalVisible(true);
+            }}
+          >
+            添加用户
           </Button>,
         ]}
         request={params => queryCargos(params)}
@@ -106,12 +161,23 @@ const TableList = () => {
             render: (_, record) => (
               <>
                 <a
-                  onClick={() => {
+                  onClick={async () => {
+                    const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
+                    await setRoleSelect(roles);
+                    await setEidtFormValues(record);
                     handleUpdateModalVisible(true);
-                    setEidtFormValues(record);
                   }}
                 >
                   编辑
+                </a>
+                <Divider type="vertical" />
+                <a
+                  onClick={async () => {
+                    await setPasswordFormValues({ id: record.id });
+                    handleUpdatePasswordModalVisible(true);
+                  }}
+                >
+                  修改密码
                 </a>
                 <Divider type="vertical" />
                 <a
@@ -136,6 +202,7 @@ const TableList = () => {
         }}
       />
       <CreateForm
+        roles={roleSelect}
         onSubmit={async value => {
           const success = await handleAdd(value);
 
@@ -152,6 +219,7 @@ const TableList = () => {
       />
       {eidtFormValues && Object.keys(eidtFormValues).length ? (
         <UpdateForm
+          roles={roleSelect}
           onSubmit={async value => {
             const success = await handleUpdate(value);
 
@@ -170,6 +238,27 @@ const TableList = () => {
           }}
           updateModalVisible={updateModalVisible}
           values={eidtFormValues}
+        />
+      ) : null}
+      {passwordFormValues && Object.keys(passwordFormValues).length ? (
+        <UpdatePasswordForm
+          values={passwordFormValues}
+          onSubmit={async value => {
+            const success = await handleUpdatePassword(value);
+
+            if (success) {
+              handleUpdatePasswordModalVisible(false);
+              setPasswordFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleUpdatePasswordModalVisible(false);
+            setPasswordFormValues({});
+          }}
+          updateModalVisible={updatePasswordModalVisible}
         />
       ) : null}
     </PageHeaderWrapper>

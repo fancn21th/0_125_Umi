@@ -6,7 +6,10 @@ export function ApiTransformToData(apidata) {
     const data = apidata.map(item => ({ ...item, key: uuid() }));
     return { total: data.length, data, success: true };
   }
-  const { data: apiarr } = apidata;
+  const {
+    data: apiarr,
+    paging: { totalSize: total },
+  } = apidata;
   const data = apiarr.map(item => ({ ...item, key: uuid() }));
-  return { total: data.length, data, success: true };
+  return { total, data, success: true };
 }
