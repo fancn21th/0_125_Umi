@@ -25,9 +25,6 @@ const Model = {
       const { token } = response;
 
       if (token) {
-        // convert real login api response
-        yield call(setTokenInStorage, token);
-        yield call(setToken, token);
         response = {
           ...response,
           status: 'ok', // TODO: hardcoded prop to be removed
@@ -70,6 +67,7 @@ const Model = {
       const { redirect } = getPageQuery(); // Note: There may be security issues, please note
       yield call(setTokenInStorage, '');
       yield call(setToken, '');
+      yield call(setAuthority, '');
       if (window.location.pathname !== '/user/login' && !redirect) {
         router.replace({
           pathname: '/user/login',
@@ -83,8 +81,12 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       const {
+        token,
         userInfo: { role },
       } = payload;
+
+      setTokenInStorage(token);
+      setToken(token);
       setAuthority(rbacMap[role]);
       return { ...state, status: payload.status, type: payload.type };
     },
