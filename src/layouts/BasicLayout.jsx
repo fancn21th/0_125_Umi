@@ -91,17 +91,13 @@ const BasicLayout = props => {
    * constructor
    */
 
-  // 重复获取用户信息
-  // useEffect(() => {
-  //   if (dispatch) {
-  //     dispatch({
-  //       type: 'user/fetchCurrent',
-  //       payload: {
-  //         id: 17,
-  //       },
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: 'user/fetchCurrent',
+      });
+    }
+  }, []);
 
   /**
    * init variables

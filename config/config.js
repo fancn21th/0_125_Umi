@@ -110,173 +110,168 @@ export default {
     },
     {
       path: '/',
-      component: '../layouts/SecurityLayout',
+      component: '../layouts/BasicLayout',
+      Routes: ['src/pages/Authorized'],
+      authority: ['super', 'admin', 'user', 'guest'],
       routes: [
         {
           path: '/',
-          component: '../layouts/BasicLayout',
-          authority: ['super', 'admin', 'user', 'guest'],
+          redirect: '/cargo/cargolist',
+        },
+        // {
+        //   path: '/admin',
+        //   name: 'admin',
+        //   icon: 'crown',
+        //   component: './Admin',
+        //   authority: ['admin'],
+        // },
+        {
+          name: 'category.cargo',
+          icon: 'table',
+          path: '/cargo',
           routes: [
             {
-              path: '/',
-              redirect: '/cargo/cargolist',
-            },
-            // {
-            //   path: '/admin',
-            //   name: 'admin',
-            //   icon: 'crown',
-            //   component: './Admin',
-            //   authority: ['admin'],
-            // },
-            {
-              name: 'category.cargo',
+              name: 'list.cargo-list',
               icon: 'table',
-              path: '/cargo',
-              routes: [
-                {
-                  name: 'list.cargo-list',
-                  icon: 'table',
-                  path: '/cargo/cargolist',
-                  component: './CargoList',
-                },
-                {
-                  name: 'list.out-cargo-list',
-                  icon: 'table',
-                  path: '/cargo/outcargolist',
-                  component: './OutCargoList',
-                },
-                {
-                  name: 'list.cargo-list-ivt',
-                  icon: 'table',
-                  path: '/cargo/cargolistivt',
-                  component: './CargoListIvt',
-                },
-              ],
+              path: '/cargo/cargolist',
+              component: './CargoList',
             },
             {
-              name: 'category.order',
+              name: 'list.out-cargo-list',
               icon: 'table',
-              path: '/order',
-              routes: [
-                {
-                  name: 'list.order-goods',
-                  icon: 'table',
-                  path: '/order/ordergoods',
-                  component: './OrderGoods',
-                },
-                {
-                  name: 'list.op-list',
-                  icon: 'table',
-                  path: '/order/oplist',
-                  component: './OpList',
-                },
-                {
-                  name: 'list.op-list-by-time',
-                  icon: 'table',
-                  path: '/order/oplistbytime',
-                  component: './OpListByTime',
-                },
-              ],
+              path: '/cargo/outcargolist',
+              component: './OutCargoList',
             },
             {
-              name: 'category.workloads',
+              name: 'list.cargo-list-ivt',
               icon: 'table',
-              path: '/workloads',
-              routes: [
-                {
-                  name: 'list.day-workloads',
-                  icon: 'table',
-                  path: '/workloads/dayworkloads',
-                  component: './KcWorkloads',
-                },
-                {
-                  name: 'list.month-workloads',
-                  icon: 'table',
-                  path: '/workloads/monthworkloads',
-                  component: './KcMonthWorkloads',
-                },
-                {
-                  name: 'list.year-workloads',
-                  icon: 'table',
-                  path: '/workloads/yearworkloads',
-                  component: './KcYearWorkloads',
-                },
-              ],
+              path: '/cargo/cargolistivt',
+              component: './CargoListIvt',
+            },
+          ],
+        },
+        {
+          name: 'category.order',
+          icon: 'table',
+          path: '/order',
+          routes: [
+            {
+              name: 'list.order-goods',
+              icon: 'table',
+              path: '/order/ordergoods',
+              component: './OrderGoods',
             },
             {
-              name: 'cargoinfo',
+              name: 'list.op-list',
               icon: 'table',
-              path: '/cargoinfo',
-              routes: [
-                {
-                  name: 'cargobroken-by-inorder',
-                  icon: 'table',
-                  path: '/cargoinfo/cargobrokenbyinorder',
-                  component: './Cargoinfo/CargobrokenByInorder',
-                },
-                {
-                  name: 'shelf-utilization',
-                  icon: 'table',
-                  path: '/cargoinfo/shelfutilization',
-                  component: './Cargoinfo/ShelfUtilization',
-                },
-              ],
+              path: '/order/oplist',
+              component: './OpList',
             },
             {
-              name: 'category.report',
+              name: 'list.op-list-by-time',
               icon: 'table',
-              path: '/report',
-              routes: [
-                {
-                  name: 'list.workloads-staff',
-                  icon: 'table',
-                  path: '/report/workloadsstaff',
-                  component: './Report/WorkloadsStaff',
-                },
-                {
-                  name: 'list.workloads-dev',
-                  icon: 'table',
-                  path: '/report/workloadsdev',
-                  component: './Report/WorkloadsDev',
-                },
-                {
-                  name: 'list.cargo-broken',
-                  icon: 'table',
-                  path: '/report/cargobroken',
-                  component: './Report/Cargobroken',
-                },
-                {
-                  name: 'list.cargo-status',
-                  icon: 'table',
-                  path: '/report/cargostatus',
-                  component: './Report/Cargostatus',
-                },
-              ],
+              path: '/order/oplistbytime',
+              component: './OpListByTime',
+            },
+          ],
+        },
+        {
+          name: 'category.workloads',
+          icon: 'table',
+          path: '/workloads',
+          routes: [
+            {
+              name: 'list.day-workloads',
+              icon: 'table',
+              path: '/workloads/dayworkloads',
+              component: './KcWorkloads',
             },
             {
-              name: 'config',
+              name: 'list.month-workloads',
               icon: 'table',
-              path: '/config',
-              authority: ['super', 'admin'],
+              path: '/workloads/monthworkloads',
+              component: './KcMonthWorkloads',
+            },
+            {
+              name: 'list.year-workloads',
+              icon: 'table',
+              path: '/workloads/yearworkloads',
+              component: './KcYearWorkloads',
+            },
+          ],
+        },
+        {
+          name: 'cargoinfo',
+          icon: 'table',
+          path: '/cargoinfo',
+          routes: [
+            {
+              name: 'cargobroken-by-inorder',
+              icon: 'table',
+              path: '/cargoinfo/cargobrokenbyinorder',
+              component: './Cargoinfo/CargobrokenByInorder',
+            },
+            {
+              name: 'shelf-utilization',
+              icon: 'table',
+              path: '/cargoinfo/shelfutilization',
+              component: './Cargoinfo/ShelfUtilization',
+            },
+          ],
+        },
+        {
+          name: 'category.report',
+          icon: 'table',
+          path: '/report',
+          routes: [
+            {
+              name: 'list.workloads-staff',
+              icon: 'table',
+              path: '/report/workloadsstaff',
+              component: './Report/WorkloadsStaff',
+            },
+            {
+              name: 'list.workloads-dev',
+              icon: 'table',
+              path: '/report/workloadsdev',
+              component: './Report/WorkloadsDev',
+            },
+            {
+              name: 'list.cargo-broken',
+              icon: 'table',
+              path: '/report/cargobroken',
+              component: './Report/Cargobroken',
+            },
+            {
+              name: 'list.cargo-status',
+              icon: 'table',
+              path: '/report/cargostatus',
+              component: './Report/Cargostatus',
+            },
+          ],
+        },
+        {
+          name: 'config',
+          icon: 'table',
+          path: '/config',
+          authority: ['super', 'admin'],
+          routes: [
+            {
+              name: 'email',
+              icon: 'table',
+              path: '/config/email',
               routes: [
                 {
-                  name: 'email',
+                  name: 'sending',
                   icon: 'table',
-                  path: '/config/email',
-                  routes: [
-                    {
-                      name: 'sending',
-                      icon: 'table',
-                      path: '/config/email/sending',
-                      component: './Configuration/Email/Sending',
-                    },
-                    {
-                      name: 'receiving',
-                      icon: 'table',
-                      path: '/config/email/recipients',
-                      component: './Configuration/Email/Recipients',
-                    },
-                  ],
+                  path: '/config/email/sending',
+                  component: './Configuration/Email/Sending',
+                },
+                {
+                  name: 'receiving',
+                  icon: 'table',
+                  path: '/config/email/recipients',
+                  component: './Configuration/Email/Recipients',
                 },
                 {
                   name: 'sino-user',
@@ -292,18 +287,12 @@ export default {
                 },
               ],
             },
-            {
-              component: './404',
-            },
           ],
         },
         {
           component: './404',
         },
       ],
-    },
-    {
-      component: './404',
     },
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
