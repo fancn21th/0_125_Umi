@@ -279,6 +279,12 @@ export default {
                   ],
                 },
                 {
+                  name: 'sino-user',
+                  icon: 'table',
+                  path: '/config/sinouser',
+                  component: './Configuration/SinoUser',
+                },
+                {
                   name: 'account',
                   icon: 'table',
                   path: '/config/account',
