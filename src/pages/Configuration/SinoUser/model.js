@@ -2,7 +2,7 @@ import { message } from 'antd';
 import { fakeSubmitForm } from './service';
 
 const Model = {
-  namespace: 'formAndbasicForm',
+  namespace: 'sinoUserForm',
   state: {},
   effects: {
     *submitRegularForm({ payload }, { call }) {

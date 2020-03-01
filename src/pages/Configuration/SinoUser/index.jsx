@@ -1,20 +1,19 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Input, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
+// import { InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Card, Input, Form } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import styles from './style.less';
+// import styles from './style.less';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+// const { Option } = Select;
+// const { RangePicker } = DatePicker;
+const { Password } = Input;
 
 const BasicForm = props => {
   const { submitting } = props;
   const [form] = Form.useForm();
-  const [showPublicUsers, setShowPublicUsers] = React.useState(false);
   const formItemLayout = {
     labelCol: {
       xs: {
@@ -52,7 +51,7 @@ const BasicForm = props => {
   const onFinish = values => {
     const { dispatch } = props;
     dispatch({
-      type: 'formAndbasicForm/submitRegularForm',
+      type: 'sinoUserForm/submitRegularForm',
       payload: values,
     });
   };
@@ -61,231 +60,82 @@ const BasicForm = props => {
     console.log('Failed:', errorInfo);
   };
 
-  const onValuesChange = changedValues => {
-    const { publicType } = changedValues;
-    if (publicType) setShowPublicUsers(publicType === '2');
-  };
+  const onValuesChange = () => {};
 
   return (
-    <PageHeaderWrapper content={<FormattedMessage id="formandbasic-form.basic.description" />}>
+    <PageHeaderWrapper content={<FormattedMessage id="sino-user-form.basic.description" />}>
       <Card bordered={false}>
         <Form
-          hideRequiredMark
+          hideRequiredMark={false}
           style={{
             marginTop: 8,
           }}
           form={form}
           name="basic"
-          initialValues={{
-            public: '1',
-          }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           onValuesChange={onValuesChange}
         >
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.title.label" />}
-            name="title"
+            label={<FormattedMessage id="sino-user-form.username.title" />}
+            name="username"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.title.required',
+                  id: 'sino-user-form.username.required',
                 }),
               },
             ]}
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.title.placeholder',
+                id: 'sino-user-form.username.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.date.label" />}
-            name="date"
+            label={<FormattedMessage id="sino-user-form.name.title" />}
+            name="name"
             rules={[
               {
                 required: true,
                 message: formatMessage({
-                  id: 'formandbasic-form.date.required',
+                  id: 'sino-user-form.name.required',
                 }),
               },
             ]}
-          >
-            <RangePicker
-              style={{
-                width: '100%',
-              }}
-              placeholder={[
-                formatMessage({
-                  id: 'formandbasic-form.placeholder.start',
-                }),
-                formatMessage({
-                  id: 'formandbasic-form.placeholder.end',
-                }),
-              ]}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.goal.label" />}
-            name="goal"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'formandbasic-form.goal.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'formandbasic-form.goal.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.standard.label" />}
-            name="standard"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'formandbasic-form.standard.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'formandbasic-form.standard.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.client.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                  <Tooltip title={<FormattedMessage id="formandbasic-form.label.tooltip" />}>
-                    <InfoCircleOutlined
-                      style={{
-                        marginRight: 4,
-                      }}
-                    />
-                  </Tooltip>
-                </em>
-              </span>
-            }
-            name="client"
           >
             <Input
               placeholder={formatMessage({
-                id: 'formandbasic-form.client.placeholder',
+                id: 'sino-user-form.name.placeholder',
               })}
             />
           </FormItem>
+
           <FormItem
             {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.invites.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="invites"
+            label={<FormattedMessage id="sino-user-form.pwd.title" />}
+            name="pwd"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'sino-user-form.pwd.required',
+                }),
+              },
+            ]}
           >
-            <Input
+            <Password
               placeholder={formatMessage({
-                id: 'formandbasic-form.invites.placeholder',
+                id: 'sino-user-form.pwd.placeholder',
               })}
             />
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.weight.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="weight"
-          >
-            <InputNumber
-              placeholder={formatMessage({
-                id: 'formandbasic-form.weight.placeholder',
-              })}
-              min={0}
-              max={100}
-            />
-            <span className="ant-form-text">%</span>
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.public.label" />}
-            help={<FormattedMessage id="formandbasic-form.label.help" />}
-            name="publicType"
-          >
-            <div>
-              <Radio.Group>
-                <Radio value="1">
-                  <FormattedMessage id="formandbasic-form.radio.public" />
-                </Radio>
-                <Radio value="2">
-                  <FormattedMessage id="formandbasic-form.radio.partially-public" />
-                </Radio>
-                <Radio value="3">
-                  <FormattedMessage id="formandbasic-form.radio.private" />
-                </Radio>
-              </Radio.Group>
-              <FormItem
-                style={{
-                  marginBottom: 0,
-                }}
-                name="publicUsers"
-              >
-                <Select
-                  mode="multiple"
-                  placeholder={formatMessage({
-                    id: 'formandbasic-form.publicUsers.placeholder',
-                  })}
-                  style={{
-                    margin: '8px 0',
-                    display: showPublicUsers ? 'block' : 'none',
-                  }}
-                >
-                  <Option value="1">
-                    <FormattedMessage id="formandbasic-form.option.A" />
-                  </Option>
-                  <Option value="2">
-                    <FormattedMessage id="formandbasic-form.option.B" />
-                  </Option>
-                  <Option value="3">
-                    <FormattedMessage id="formandbasic-form.option.C" />
-                  </Option>
-                </Select>
-              </FormItem>
-            </div>
-          </FormItem>
+
           <FormItem
             {...submitFormLayout}
             style={{
@@ -293,14 +143,14 @@ const BasicForm = props => {
             }}
           >
             <Button type="primary" htmlType="submit" loading={submitting}>
-              <FormattedMessage id="formandbasic-form.form.submit" />
+              <FormattedMessage id="sino-user-form.form.submit" />
             </Button>
             <Button
               style={{
                 marginLeft: 8,
               }}
             >
-              <FormattedMessage id="formandbasic-form.form.save" />
+              <FormattedMessage id="sino-user-form.form.save" />
             </Button>
           </FormItem>
         </Form>
@@ -310,5 +160,5 @@ const BasicForm = props => {
 };
 
 export default connect(({ loading }) => ({
-  submitting: loading.effects['formAndbasicForm/submitRegularForm'],
+  submitting: loading.effects['sinoUserForm/submitRegularForm'],
 }))(BasicForm);
