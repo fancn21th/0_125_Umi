@@ -1,6 +1,6 @@
 export default {
   'sino-user-form.basic.title': '基础表单',
-  'sino-user-form.basic.description': '中外运用户新增表单',
+  'sino-user-form.basic.description': '新增手持/车载用户',
   'sino-user-form.email.required': '请输入邮箱地址！',
   'sino-user-form.email.wrong-format': '邮箱地址格式错误！',
   'sino-user-form.userName.required': '请输入用户名!',
