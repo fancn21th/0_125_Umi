@@ -110,8 +110,9 @@ const BasicLayout = props => {
         payload,
       });
     }
-  }; // get children authority
+  };
 
+  // get children authority
   const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
     authority: undefined,
   };
