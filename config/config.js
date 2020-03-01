@@ -278,6 +278,12 @@ export default {
                     },
                   ],
                 },
+                {
+                  name: 'account',
+                  icon: 'table',
+                  path: '/config/account',
+                  component: './Configuration/Account',
+                },
               ],
             },
             {
