@@ -1,13 +1,6 @@
 import request from '@/utils/request';
 
-// export async function fakeSubmitForm(params) {
-//   return request('/api/forms', {
-//     method: 'POST',
-//     data: params,
-//   });
-// }
-
-export async function addEmailSendConfig(params) {
+export async function updateEmailSendConfig(params) {
   const { smtpFromUserName } = params;
   return request('/api/report/emailSendConfig', {
     method: 'PUT',
