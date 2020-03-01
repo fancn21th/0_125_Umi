@@ -1,7 +1,9 @@
 import React from 'react';
 import { Form, Input, Modal, Select } from 'antd';
+
 const { Option } = Select;
 const FormItem = Form.Item;
+const { Password } = Input;
 
 const CreateForm = props => {
   const [form] = Form.useForm();
@@ -96,7 +98,7 @@ const CreateForm = props => {
             },
           ]}
         >
-          <Input placeholder="请输入密码" />
+          <Password placeholder="请输入密码" />
         </FormItem>
         <FormItem
           labelCol={{
@@ -114,7 +116,7 @@ const CreateForm = props => {
             },
           ]}
         >
-          <Input placeholder="请输入密码" />
+          <Password placeholder="请输入确认密码" />
         </FormItem>
         <FormItem
           labelCol={{

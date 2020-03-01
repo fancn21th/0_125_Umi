@@ -7,6 +7,7 @@ import UpdateForm from './components/UpdateForm';
 import UpdatePasswordForm from './components/UpdatePasswordForm';
 import { queryCargos, update, add, remove, queryRoles, updatePassword } from './service';
 import { columns } from '../../../config/col-config-account';
+
 const { Search } = Input;
 /**
  * 添加节点

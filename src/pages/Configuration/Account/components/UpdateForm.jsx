@@ -7,7 +7,7 @@ const FormItem = Form.Item;
 const parseCode2Id = (code, roles) => {
   const match = roles.filter(item => item.roleCode === code);
   if (match.length) {
-    return match[0]['id'];
+    return match[0].id;
   }
   return code;
 };
@@ -84,7 +84,7 @@ const UpdateForm = props => {
             },
           ]}
         >
-          <Input disabled={true} />
+          <Input disabled />
         </FormItem>
         <FormItem
           labelCol={{
