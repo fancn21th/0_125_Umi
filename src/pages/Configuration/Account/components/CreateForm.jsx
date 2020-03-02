@@ -124,7 +124,7 @@ const CreateForm = props => {
                 if (!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(new Error('密码与确认密码不匹配!'));
+                return Promise.reject(new Error('确认密码与密码不一致!'));
               },
             }),
           ]}
