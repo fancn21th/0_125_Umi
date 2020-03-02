@@ -72,6 +72,7 @@ const TableList = () => {
           </Button>,
           <Text>日期：</Text>,
           <RangePicker
+            picker="month"
             format="YYYY-MM"
             defaultValue={[moment().startOf('month'), moment().endOf('month')]}
             onChange={date => {

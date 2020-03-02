@@ -14,17 +14,35 @@ const setLast = (params, data) => {
   };
 };
 
-const searchInLast = (keywords, data) => {
+let filterArrayByKeyword = null;
+
+const containInString = (keywords, str) => str.includes(keywords);
+
+const isString = item => typeof item === 'string';
+
+const containInObject = (keywords, obj, filter) =>
+  Object.keys(obj).some(key => {
+    const itemToCheck = obj[key];
+    if (itemToCheck && !filter.includes(key)) {
+      if (isString(itemToCheck)) {
+        return containInString(keywords, itemToCheck);
+      }
+      if (Array.isArray(itemToCheck)) {
+        return filterArrayByKeyword(keywords, itemToCheck, filter).length > 0;
+      }
+    }
+    return false;
+  });
+
+filterArrayByKeyword = (keywords, array, filter) =>
+  array.filter(item => containInObject(keywords, item, filter));
+
+const searchInLast = (keywords, data, filter) => {
   const { data: innerData } = data;
   if (data) {
     return {
       ...data,
-      data: innerData.filter(item =>
-        Object.keys(item).some(
-          // 只比较字符串类型
-          key => item[key] && typeof item[key] === 'string' && item[key].includes(keywords),
-        ),
-      ),
+      data: filterArrayByKeyword(keywords, innerData, filter),
     };
   }
   return null;
@@ -38,20 +56,23 @@ const searchInLast = (keywords, data) => {
 */
 const isKeywordsSearch = params => params.keywords && params.keywords.trim().length > 0;
 
-const searchByKeywords = params => {
+const searchByKeywords = (params, filter) => {
   const { keywords } = params;
   if (isKeywordsSearch(params)) {
-    return searchInLast(keywords.trim(), context.last.data);
+    return searchInLast(keywords.trim(), context.last.data, filter);
   }
   return params;
 };
 
 const isNonKeywordsSearchReturned = data => data.current;
 
-export const genAsyncSearch = asyncQueryFun => async params => {
-  let data = searchByKeywords(params);
+export const genAsyncSearch = (asyncQueryFunc, filter = []) => async params => {
+  if (!Array.isArray(filter) && typeof filter === 'string') {
+    filter = [filter];
+  }
+  let data = searchByKeywords(params, filter);
   if (isNonKeywordsSearchReturned(data)) {
-    data = await asyncQueryFun(params);
+    data = await asyncQueryFunc(params);
     setLast(params, data);
   }
   return data;

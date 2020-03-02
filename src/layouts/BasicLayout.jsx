@@ -91,17 +91,13 @@ const BasicLayout = props => {
    * constructor
    */
 
-  // 重复获取用户信息
-  // useEffect(() => {
-  //   if (dispatch) {
-  //     dispatch({
-  //       type: 'user/fetchCurrent',
-  //       payload: {
-  //         id: 17,
-  //       },
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: 'user/fetchCurrent',
+      });
+    }
+  }, []);
 
   /**
    * init variables
@@ -114,8 +110,9 @@ const BasicLayout = props => {
         payload,
       });
     }
-  }; // get children authority
+  };
 
+  // get children authority
   const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
     authority: undefined,
   };
@@ -123,12 +120,7 @@ const BasicLayout = props => {
     <ProLayout
       logo={logo}
       formatMessage={formatMessage}
-      menuHeaderRender={(logoDom, titleDom) => (
-        <Link to="/">
-          {logoDom}
-          {titleDom}
-        </Link>
-      )}
+      menuHeaderRender={logoDom => <Link to="/">{logoDom}</Link>}
       onCollapse={handleMenuCollapse}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {

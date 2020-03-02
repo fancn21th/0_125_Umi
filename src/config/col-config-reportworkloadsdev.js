@@ -1,32 +1,32 @@
 export const columns = [
   {
     title: '设备ID',
-    dataIndex: 'devId',
+    dataIndex: 'DevID',
     sorter: false,
   },
   {
     title: '收货任务数',
-    dataIndex: 'receipt',
+    dataIndex: 'Receipt',
     sorter: false,
   },
   {
     title: '入库任务数',
-    dataIndex: 'shelve',
+    dataIndex: 'Shelve',
     sorter: false,
   },
   {
     title: '移库任务数',
-    dataIndex: 'move',
+    dataIndex: 'Move',
     sorter: false,
   },
   {
     title: '拣货任务数',
-    dataIndex: 'pick',
+    dataIndex: 'Pick',
     sorter: false,
   },
   {
     title: '发运任务数',
-    dataIndex: 'ship',
+    dataIndex: 'Ship',
     sorter: false,
   },
 ];

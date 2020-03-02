@@ -1,17 +1,17 @@
 export const columns = [
   {
     title: '单号',
-    dataIndex: 'orderNo',
+    dataIndex: 'OrderNo',
     sorter: false,
   },
   {
     title: '任务流水号',
-    dataIndex: 'opSn',
+    dataIndex: 'OpSn',
     sorter: false,
   },
   {
     title: '作业类型',
-    dataIndex: 'opType',
+    dataIndex: 'OpType',
     filters: false,
     sorter: false,
     valueEnum: {
@@ -37,22 +37,22 @@ export const columns = [
   },
   {
     title: '作业人员',
-    dataIndex: 'opStaff',
+    dataIndex: 'OpStaff',
     sorter: false,
   },
   {
     title: '作业人员名称',
-    dataIndex: 'opStaffName',
+    dataIndex: 'OpStaffName',
     sorter: false,
   },
   {
     title: '作业设备',
-    dataIndex: 'opDev',
+    dataIndex: 'OpDev',
     sorter: false,
   },
   {
     title: '作业状态',
-    dataIndex: 'opSta',
+    dataIndex: 'OpSta',
     filters: false,
     sorter: false,
     valueEnum: {
@@ -69,56 +69,56 @@ export const columns = [
   },
   {
     title: '任务下拨时间',
-    dataIndex: 'orderTimestamp',
+    dataIndex: 'OrderTimestamp',
     sorter: false,
     valueType: 'dateTime',
   },
   {
     title: '要求完成时间',
-    dataIndex: 'deadlineTimestamp',
+    dataIndex: 'DeadlineTimestamp',
     sorter: false,
     valueType: 'dateTime',
   },
   {
     title: '任务开始时间',
-    dataIndex: 'beginTimestamp',
+    dataIndex: 'BeginTimestamp',
     sorter: false,
     valueType: 'dateTime',
   },
   {
     title: '任务结束时间',
-    dataIndex: 'endTimestamp',
+    dataIndex: 'EndTimestamp',
     sorter: false,
     valueType: 'dateTime',
   },
   {
     title: '货物RFID标签',
-    dataIndex: 'rfid',
+    dataIndex: 'RFID',
     sorter: false,
   },
   {
     title: '起始货位',
-    dataIndex: 'shelfGroupNo',
+    dataIndex: 'ShelfGroupNo',
     sorter: false,
   },
   {
     title: '目标货位',
-    dataIndex: 'newShelfGroupNo',
+    dataIndex: 'NewShelfGroupNo',
     sorter: false,
   },
   {
     title: '件数',
-    dataIndex: 'quantity',
+    dataIndex: 'Quantity',
     sorter: false,
   },
   {
     title: '物料名',
-    dataIndex: 'cargoName',
+    dataIndex: 'CargoName',
     sorter: false,
   },
   {
     title: '同步状态',
-    dataIndex: 'syncStatus',
+    dataIndex: 'SyncStatus',
     filters: false,
     sorter: false,
     valueEnum: {
