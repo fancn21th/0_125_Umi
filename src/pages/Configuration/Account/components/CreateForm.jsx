@@ -9,10 +9,15 @@ const CreateForm = props => {
   const [form] = Form.useForm();
   const { modalVisible, onSubmit: handleAdd, onCancel, roles } = props;
 
+  const onCallback = ok => {
+    if (ok) {
+      form.resetFields();
+    }
+  };
+
   const okHandle = async () => {
     const fieldsValue = await form.validateFields();
-    form.resetFields();
-    handleAdd(fieldsValue);
+    handleAdd(fieldsValue, onCallback);
   };
 
   return (
@@ -40,7 +45,7 @@ const CreateForm = props => {
             },
           ]}
         >
-          <Select placeholder="请选择角色" onChange={val => {}}>
+          <Select placeholder="请选择角色" onChange={() => {}}>
             {roles.map(({ id, roleCode }) => (
               <Option key={id} value={id}>{`${roleCode}`}</Option>
             ))}
@@ -114,6 +119,14 @@ const CreateForm = props => {
               required: true,
               message: '输入不能为空！',
             },
+            ({ getFieldValue }) => ({
+              validator(rule, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('密码与确认密码不匹配!'));
+              },
+            }),
           ]}
         >
           <Password placeholder="请输入确认密码" />
