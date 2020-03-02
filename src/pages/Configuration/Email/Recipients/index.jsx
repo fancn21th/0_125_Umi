@@ -19,8 +19,7 @@ const handleAdd = async fields => {
     email: fields.email,
   });
   hide();
-  if (res && res.status == 500) {
-    message.error(`the email already exists.`);
+  if (res && !res.ok) {
     return false;
   }
   message.success('新增成功');

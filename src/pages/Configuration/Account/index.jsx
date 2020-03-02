@@ -26,9 +26,7 @@ const handleAdd = async fields => {
     confirmPassword: fields.confirmPassword,
   });
   hide();
-  if (res && res.status === 500) {
-    const body = await res.json();
-    message.error(`新增失败，原因：${body.errorMsg}`);
+  if (res && !res.ok) {
     return false;
   }
   message.success('新增成功');
@@ -49,9 +47,7 @@ const handleUpdate = async fields => {
     email: fields.email,
   });
   hide();
-  if (res && res.status === 500) {
-    const body = await res.json();
-    message.error(`编辑失败，原因：${body.errorMsg}`);
+  if (res && !res.ok) {
     return false;
   }
   message.success('编辑成功');
@@ -70,9 +66,7 @@ const handleUpdatePassword = async fields => {
     confirmPassword: fields.confirmPassword,
   });
   hide();
-  if (res && res.status === 500) {
-    const body = await res.json();
-    message.error(`修改失败，原因：${body.errorMsg}`);
+  if (res && !res.ok) {
     return false;
   }
   message.success('修改成功');
