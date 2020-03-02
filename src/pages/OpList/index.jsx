@@ -12,6 +12,7 @@ import {
 } from './service';
 import { columns } from '../../config/col-config-oplist';
 import { columns as logColumns } from '../../config/col-config-loglist';
+import styles from './index.css';
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -52,12 +53,13 @@ const TableList = () => {
   const actionRef = useRef();
 
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper title={false}>
       <ProTable
         headerTitle="订单操作"
         actionRef={actionRef}
         rowKey="key"
         search={false}
+        scroll={{ x: '200%' }}
         options={{ fullScreen: false, reload: true, setting: true }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');
@@ -148,52 +150,67 @@ const TableList = () => {
         columns={[
           ...columns,
           {
-            title: '日志',
+            title: '操作',
             dataIndex: 'option',
             valueType: 'option',
+            fixed: 'right',
+            width: 100,
             render: (text, row) => [
-              <a
-                onClick={async () => {
-                  const hide = message.loading('正在查询...');
-                  try {
-                    const { OpSN: id } = row;
-                    const data = await queryUploadResult(id);
-                    hide();
-                    message.success('查询成功');
-                    await setLogData(transformDatetime(data, logColumns));
-                    return setLogModalVisibility(true);
-                  } catch (error) {
-                    hide();
-                    message.error(`查询失败,原因：${error.message}`);
-                    return setLogModalVisibility(false);
-                  }
-                }}
-              >
-                查询日志
-              </a>,
-              <TableDropdown
-                onSelect={async key => {
-                  const status = {
-                    updatefalse: 0,
-                    updatetrue: 1,
-                  };
-                  const hide = message.loading('正在同步...');
-                  try {
-                    const { OpSN: id } = row;
-                    await updateStatus(id, status[key]);
-                    actionRef.current.reload();
-                    hide();
-                    message.success('同步成功');
-                  } catch (error) {
-                    hide();
-                    message.error('同步失败');
-                  }
-                }}
-                menus={[
-                  { key: 'updatefalse', name: '强制同步' },
-                  { key: 'updatetrue', name: '同步成功' },
-                ]}
-              />,
+              <div className={styles.toolColum}>
+                <a
+                  onClick={async () => {
+                    const hide = message.loading('正在查询...');
+                    try {
+                      const { OpSN: id } = row;
+                      const data = await queryUploadResult(id);
+                      hide();
+                      message.success('查询成功');
+                      await setLogData(transformDatetime(data, logColumns));
+                      return setLogModalVisibility(true);
+                    } catch (error) {
+                      hide();
+                      message.error(`查询失败,原因：${error.message}`);
+                      return setLogModalVisibility(false);
+                    }
+                  }}
+                >
+                  查询日志
+                </a>
+                <a
+                  onClick={async () => {
+                    const hide = message.loading('正在同步...');
+                    try {
+                      const { OpSN: id } = row;
+                      await updateStatus(id, 0);
+                      actionRef.current.reload();
+                      hide();
+                      message.success('同步成功');
+                    } catch (error) {
+                      hide();
+                      message.error('同步失败');
+                    }
+                  }}
+                >
+                  强制同步
+                </a>
+                <a
+                  onClick={async () => {
+                    const hide = message.loading('正在同步...');
+                    try {
+                      const { OpSN: id } = row;
+                      await updateStatus(id, 1);
+                      actionRef.current.reload();
+                      hide();
+                      message.success('同步成功');
+                    } catch (error) {
+                      hide();
+                      message.error('同步失败');
+                    }
+                  }}
+                >
+                  同步成功
+                </a>
+              </div>,
             ],
           },
         ]}
