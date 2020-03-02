@@ -132,6 +132,7 @@ const TableList = () => {
         ) : null}
         {mode === 'month' ? (
           <RangePicker
+            picker="month"
             format="YYYY-MM"
             defaultValue={[moment().startOf('month'), moment().endOf('month')]}
             onChange={date => {
@@ -146,6 +147,7 @@ const TableList = () => {
         ) : null}
         {mode === 'year' ? (
           <RangePicker
+            picker="year"
             format="YYYY"
             defaultValue={[moment().startOf('year'), moment().endOf('year')]}
             onChange={date => {
@@ -167,7 +169,7 @@ const TableList = () => {
         onClick={() => {
           const body = data2ExcelJson(datasource, columns);
           const headerOrder = [
-            '员工',
+            '人员',
             '日期',
             '收货任务数',
             '入库任务数',

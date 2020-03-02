@@ -128,6 +128,7 @@ const TableList = () => {
         ) : null}
         {mode === 'month' ? (
           <RangePicker
+            picker="month"
             format="YYYY-MM"
             defaultValue={[moment().startOf('month'), moment().endOf('month')]}
             onChange={date => {
@@ -142,6 +143,7 @@ const TableList = () => {
         ) : null}
         {mode === 'year' ? (
           <RangePicker
+            picker="year"
             format="YYYY"
             defaultValue={[moment().startOf('year'), moment().endOf('year')]}
             onChange={date => {

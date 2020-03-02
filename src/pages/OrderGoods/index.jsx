@@ -13,6 +13,8 @@ const { Text } = Typography;
 const TableList = () => {
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
+  const [orderNoValue, setOrderNoValue] = useState('');
+  const [orderno, setOrderno] = useState('');
   const [cargoData, setCargoData] = useState([]);
   const [cargoModalVisibility, setCargoModalVisibility] = useState(false);
 
@@ -24,15 +26,46 @@ const TableList = () => {
         headerTitle="订单货物"
         actionRef={actionRef}
         rowKey="key"
-        search={true}
+        search={false}
         options={{ fullScreen: false, reload: true, setting: true }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');
           setKeywords('');
           return params;
         }}
-        params={{ keywords }}
+        params={{ keywords, orderno }}
         toolBarRender={(action, { selectedRows }) => [
+          <Text>单号：</Text>,
+          <Input
+            placeholder="请输入单号"
+            value={orderNoValue}
+            onChange={e => {
+              setOrderNoValue(e.target.value);
+            }}
+          ></Input>,
+          <Button
+            type="primary"
+            onClick={() => {
+              setKeywordsValue('');
+              setKeywords('');
+              action.resetPageIndex(1);
+              setOrderno(orderNoValue);
+            }}
+          >
+            查询
+          </Button>,
+          <Button
+            type="default"
+            onClick={() => {
+              setOrderNoValue('');
+              setOrderno('');
+              setKeywordsValue('');
+              setKeywords('');
+              action.resetPageIndex(1);
+            }}
+          >
+            重置
+          </Button>,
           <Search
             placeholder="搜索..."
             onSearch={val => {
@@ -71,8 +104,8 @@ const TableList = () => {
         ]}
         pagination={{
           showSizeChanger: true,
-          pageSize: 10,
-          current: 1,
+          defaultPageSize: 10,
+          defaultCurrent: 1,
         }}
       />
       <CargoModal

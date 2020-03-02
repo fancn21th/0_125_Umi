@@ -175,8 +175,8 @@ const TableList = () => {
               <>
                 <a
                   onClick={() => {
-                    const { img } = record;
-                    const imgs = img.map(img => ({ url: img }));
+                    const { Img } = record;
+                    const imgs = Img.map(img => ({ url: img }));
                     setImgurls(imgs);
                     setModalIsLoading(false);
                     setImageModalVisibilyty(true);
