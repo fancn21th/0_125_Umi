@@ -12,7 +12,7 @@ async function queryCargos2({ current, pageSize }) {
   });
   return ApiTransformToData(data);
 }
-export const queryCargos = genAsyncSearch(queryCargos2);
+export const queryCargos = genAsyncSearch(queryCargos2, 'roleName');
 
 export async function queryRoles({ pageNum, pageSize }) {
   const data = await request('/api/userManager/roles', {
@@ -46,7 +46,7 @@ export async function add({ username, realname, phone, roleId, email, password, 
   });
 }
 export async function update({ id, realname, phone, roleId, email }) {
-  return await request(`/api/userManager/user/${id}`, {
+  return request(`/api/userManager/user/${id}`, {
     method: 'PUT',
     data: { realname, phone, email, roleId },
   });
@@ -54,9 +54,10 @@ export async function update({ id, realname, phone, roleId, email }) {
 
 export async function updatePassword({ id, password = '', confirmPassword = '' }) {
   if (password && confirmPassword) {
-    return await request(`/api/userManager/user/${id}/password`, {
+    return request(`/api/userManager/user/${id}/password`, {
       method: 'PUT',
       data: { password, confirmPassword },
     });
   }
+  return null;
 }

@@ -57,6 +57,14 @@ const UpdatePasswordForm = props => {
               required: true,
               message: '输入不能为空！',
             },
+            ({ getFieldValue }) => ({
+              validator(rule, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('密码与确认密码不匹配!'));
+              },
+            }),
           ]}
         >
           <Password placeholder="请输入确认密码" />

@@ -11,7 +11,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: '', // in menu top
+  title: '中外运中台管理', // in menu top
   pwa: false,
   iconfontUrl: '',
 };

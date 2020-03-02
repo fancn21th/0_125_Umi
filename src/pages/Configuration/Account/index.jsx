@@ -9,11 +9,11 @@ import { queryCargos, update, add, remove, queryRoles, updatePassword } from './
 import { columns } from '../../../config/col-config-account';
 
 const { Search } = Input;
+
 /**
  * 添加节点
  * @param fields
  */
-
 const handleAdd = async fields => {
   const hide = message.loading('正在新增');
   const res = await add({
@@ -26,7 +26,7 @@ const handleAdd = async fields => {
     confirmPassword: fields.confirmPassword,
   });
   hide();
-  if (res && res.status == 500) {
+  if (res && res.status === 500) {
     const body = await res.json();
     message.error(`新增失败，原因：${body.errorMsg}`);
     return false;
@@ -34,11 +34,11 @@ const handleAdd = async fields => {
   message.success('新增成功');
   return true;
 };
+
 /**
  * 更新节点
  * @param fields
  */
-
 const handleUpdate = async fields => {
   const hide = message.loading('正在编辑');
   const res = await update({
@@ -49,7 +49,7 @@ const handleUpdate = async fields => {
     email: fields.email,
   });
   hide();
-  if (res && res.status == 500) {
+  if (res && res.status === 500) {
     const body = await res.json();
     message.error(`编辑失败，原因：${body.errorMsg}`);
     return false;
@@ -62,7 +62,6 @@ const handleUpdate = async fields => {
  * 更新密码
  * @param fields
  */
-
 const handleUpdatePassword = async fields => {
   const hide = message.loading('正在修改');
   const res = await updatePassword({
@@ -71,7 +70,7 @@ const handleUpdatePassword = async fields => {
     confirmPassword: fields.confirmPassword,
   });
   hide();
-  if (res && res.status == 500) {
+  if (res && res.status === 500) {
     const body = await res.json();
     message.error(`修改失败，原因：${body.errorMsg}`);
     return false;
@@ -79,11 +78,11 @@ const handleUpdatePassword = async fields => {
   message.success('修改成功');
   return true;
 };
+
 /**
  *  删除节点
  * @param id
  */
-
 const handleRemove = async id =>
   new Promise((resolve, reject) => {
     Modal.confirm({
@@ -113,7 +112,7 @@ const TableList = () => {
   const [createModalVisible, handleModalVisible] = useState(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [updatePasswordModalVisible, handleUpdatePasswordModalVisible] = useState(false);
-  const [eidtFormValues, setEidtFormValues] = useState({});
+  const [editFormValues, setEditFormValues] = useState({});
   const [passwordFormValues, setPasswordFormValues] = useState({});
   const [roleSelect, setRoleSelect] = useState([]);
   const [keywordsValue, setKeywordsValue] = useState('');
@@ -129,7 +128,7 @@ const TableList = () => {
         search={false}
         params={{ keywords }}
         options={{ fullScreen: false, reload: true, setting: true }}
-        toolBarRender={(action, { selectedRows }) => [
+        toolBarRender={() => [
           <Search
             placeholder="搜索..."
             onSearch={val => {
@@ -146,7 +145,7 @@ const TableList = () => {
             onClick={async () => {
               const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
               await setRoleSelect(roles);
-              return handleModalVisible(true);
+              handleModalVisible(true);
             }}
           >
             添加用户
@@ -165,7 +164,7 @@ const TableList = () => {
                   onClick={async () => {
                     const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
                     await setRoleSelect(roles);
-                    await setEidtFormValues(record);
+                    await setEditFormValues(record);
                     handleUpdateModalVisible(true);
                   }}
                 >
@@ -204,21 +203,22 @@ const TableList = () => {
       />
       <CreateForm
         roles={roleSelect}
-        onSubmit={async value => {
+        onSubmit={async (value, callback) => {
           const success = await handleAdd(value);
-
           if (success) {
             handleModalVisible(false);
-
+            callback(true);
             if (actionRef.current) {
               actionRef.current.reload();
             }
+          } else {
+            callback(false);
           }
         }}
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
       />
-      {eidtFormValues && Object.keys(eidtFormValues).length ? (
+      {editFormValues && Object.keys(editFormValues).length ? (
         <UpdateForm
           roles={roleSelect}
           onSubmit={async value => {
@@ -226,7 +226,7 @@ const TableList = () => {
 
             if (success) {
               handleUpdateModalVisible(false);
-              setEidtFormValues({});
+              setEditFormValues({});
 
               if (actionRef.current) {
                 actionRef.current.reload();
@@ -235,10 +235,10 @@ const TableList = () => {
           }}
           onCancel={() => {
             handleUpdateModalVisible(false);
-            setEidtFormValues({});
+            setEditFormValues({});
           }}
           updateModalVisible={updateModalVisible}
-          values={eidtFormValues}
+          values={editFormValues}
         />
       ) : null}
       {passwordFormValues && Object.keys(passwordFormValues).length ? (
