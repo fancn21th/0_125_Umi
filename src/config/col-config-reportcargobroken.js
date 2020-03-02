@@ -1,37 +1,37 @@
 export const columns = [
   {
     title: '货物RFID',
-    dataIndex: 'rfid',
+    dataIndex: 'RFID',
     sorter: false,
   },
   {
     title: '入库单号',
-    dataIndex: 'inOrderNo',
+    dataIndex: 'InOrderNo',
     sorter: false,
   },
   {
     title: '单行号',
-    dataIndex: 'itemNo',
+    dataIndex: 'ItemNo',
     sorter: false,
   },
   {
     title: '货主代码',
-    dataIndex: 'ownerCode',
+    dataIndex: 'OwnerCode',
     sorter: false,
   },
   {
     title: '物料名',
-    dataIndex: 'cargoName',
+    dataIndex: 'CargoName',
     sorter: false,
   },
   {
     title: '件数',
-    dataIndex: 'quantity',
+    dataIndex: 'Quantity',
     sorter: false,
   },
   {
     title: '当前货位',
-    dataIndex: 'currentShelf',
+    dataIndex: 'CurrentShelf',
     sorter: false,
   },
   {
