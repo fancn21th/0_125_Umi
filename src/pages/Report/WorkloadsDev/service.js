@@ -9,12 +9,14 @@ const typeMap = {
 };
 
 async function queryCargos2({ current, pageSize, mode, startTime, endTime, devType = 1 }) {
-  const data = await request('/api/report/workloads/devices', {
+  const data = await request('/api/sinoapi/exportworkloaddev', {
     params: {
-      startTime,
-      endTime,
+      begin: startTime,
+      end: endTime,
       mode,
-      devType,
+      devtype: devType,
+      pageindex: 0,
+      pagesize: 1000,
     },
   });
   return ApiTransformToData(data);

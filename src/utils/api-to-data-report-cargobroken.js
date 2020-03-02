@@ -1,12 +1,13 @@
 import uuid from './uuid';
 
 export function ApiTransformToData(apidata) {
-  const data = apidata.reduce((acc, val) => {
-    let { isbro: isbros } = val;
+  const { data: apiarr } = apidata;
+  const data = apiarr.reduce((acc, val) => {
+    let { Isbro: isbros } = val;
     isbros = isbros.map(v => {
       return {
         ...val,
-        brokenInfo: `破损数：${v.brokenCount} 破损类型：${v.brokenType}`,
+        brokenInfo: `破损数：${v.BrokenCount} 破损类型：${v.BrokenType}`,
         key: uuid(),
       };
     });

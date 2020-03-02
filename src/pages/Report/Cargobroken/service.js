@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import moment from 'moment';
 import { ApiTransformToData } from '../../../utils/api-to-data-report-cargobroken';
 
 export async function queryCargos({
@@ -9,12 +10,12 @@ export async function queryCargos({
   mode = 'day',
   devType = 1,
 }) {
-  const data = await request('/api/report/cargo/broken', {
+  const data = await request('/api/sinoapi/cargobroken', {
     params: {
-      startTime,
-      endTime,
-      mode,
-      devType,
+      pageindex: 0,
+      pagesize: 1000,
+      begin: moment(startTime).format('YYYY-MM-DD'),
+      end: moment(endTime).format('YYYY-MM-DD'),
     },
   });
   return ApiTransformToData(data);

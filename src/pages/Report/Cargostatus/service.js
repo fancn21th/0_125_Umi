@@ -2,11 +2,12 @@ import request from '@/utils/request';
 import { ApiTransformToData } from '../../../utils/api-to-data-staffwork';
 
 export async function queryCargos({ startTime, endTime, mode = 'day' }) {
-  const data = await request('/api/report/cargo/status', {
+  const data = await request('/api/sinoapi/getoplistbytime', {
     params: {
-      startTime,
-      endTime,
-      mode,
+      begin: startTime,
+      end: endTime,
+      pageindex: 0,
+      pagesize: 1000,
     },
   });
   return ApiTransformToData(data);
