@@ -195,7 +195,7 @@ const MailConfigForm = props => {
           </Input.Group>
         </Form.Item>
 
-        <FormItem {...formItemLayout} label="收件人" name="content">
+        <FormItem {...formItemLayout} label="内容" name="content">
           <TextArea
             style={{
               minHeight: 32,
