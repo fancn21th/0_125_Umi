@@ -1,7 +1,7 @@
 .undo {
-  background-color: rgb(255, 238, 238);
+  background-color: #fff1f0;
 }
 
 .doing {
-  background-color: rgba(173, 255, 47, 0.3);
+  background-color: #f0faff;
 }
