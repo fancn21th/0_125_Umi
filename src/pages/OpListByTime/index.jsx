@@ -27,16 +27,10 @@ const defaultDate = [moment(1581436800000), moment(1581523199999)];
  */
 
 const getRowClass = (record, index) => {
-  // if (record.OpSta === 'undo') {
-  //   return styles.undo;
-  // }
-  // if (record.OpSta === 'doing') {
-  //   return styles.doing;
-  // }
-  if (Math.random() < 0.5) {
+  if (record.OpSta === 'undo') {
     return styles.undo;
   }
-  if (Math.random() >= 0.5) {
+  if (record.OpSta === 'doing') {
     return styles.doing;
   }
   return '';
