@@ -9,6 +9,7 @@ import { columns } from '../../config/col-config-oplistbytime';
 import momentToTimestamp from '../../utils/moment-to-timestamp';
 import data2ExcelJson from '../../utils/excel/data2ExcelJson';
 import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
+import styles from './index.css';
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -19,6 +20,21 @@ const defaultDate = [moment(1581436800000), moment(1581523199999)];
 
 // 默认起止时间
 // const defaultDate = [moment().startOf('day'), moment().endOf('day')];
+
+/**
+ * Function(record, index):string
+ * 通过OpSta判断背景色
+ */
+
+const getRowClass = (record, index) => {
+  if (record.OpSta === 'undo') {
+    return styles.undo;
+  }
+  if (record.OpSta === 'doing') {
+    return styles.doing;
+  }
+  return '';
+};
 
 const TableList = () => {
   const [keywordsValue, setKeywordsValue] = useState('');
@@ -35,13 +51,14 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search={false}
+        rowClassName={getRowClass}
         options={{ fullScreen: false, reload: true, setting: true }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');
           setKeywords('');
           return params;
         }}
-        params={{ current: 1, pageSize: 10, begin, end, keywords }}
+        params={{ begin, end, keywords }}
         toolBarRender={(action, { selectedRows }) => [
           <Button
             type="primary"
@@ -106,8 +123,8 @@ const TableList = () => {
         columns={columns}
         pagination={{
           showSizeChanger: true,
-          pageSize: 10,
-          current: 1,
+          defaultPageSize: 10,
+          defaultCurrent: 1,
         }}
       />
     </PageHeaderWrapper>
