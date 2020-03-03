@@ -152,8 +152,9 @@ const TableList = () => {
             title: '操作',
             dataIndex: 'option',
             valueType: 'option',
-            render: (_, record) =>
-              record.roleCode !== 'SUPERADMIN' ? (
+            render: (_, record) => {
+              const isSuper = record.roleCode === 'SUPERADMIN';
+              return (
                 <>
                   <a
                     onClick={async () => {
@@ -162,6 +163,7 @@ const TableList = () => {
                       await setEditFormValues(record);
                       handleUpdateModalVisible(true);
                     }}
+                    disabled={isSuper}
                   >
                     编辑
                   </a>
@@ -171,6 +173,7 @@ const TableList = () => {
                       await setPasswordFormValues({ id: record.id });
                       handleUpdatePasswordModalVisible(true);
                     }}
+                    disabled={isSuper}
                   >
                     修改密码
                   </a>
@@ -183,13 +186,13 @@ const TableList = () => {
                         actionRef.current.reload();
                       }
                     }}
+                    disabled={isSuper}
                   >
                     删除
                   </a>
                 </>
-              ) : (
-                ''
-              ),
+              );
+            },
           },
         ]}
         pagination={{
