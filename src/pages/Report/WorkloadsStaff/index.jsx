@@ -207,7 +207,7 @@ const TableList = () => {
   );
 
   return (
-    <PageHeaderWrapper content={headerContent}>
+    <PageHeaderWrapper title={false} content={headerContent}>
       <ProTable
         headerTitle="人员工作量报表"
         actionRef={actionRef}
