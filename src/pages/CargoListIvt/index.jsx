@@ -15,6 +15,7 @@ import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
 const { Search } = Input;
 const { Option } = Select;
 const { Text } = Typography;
+let localAction = null;
 
 const mapStringToOption = function(str) {
   return (
@@ -36,6 +37,28 @@ const TableList = ({ ivtList }) => {
   const [cargoModalVisibility, setCargoModalVisibility] = useState(false);
 
   const actionRef = useRef();
+
+  const headerContent = (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+    >
+      <Text>盘点编号：</Text>
+      <Select
+        style={{ width: 120 }}
+        onChange={val => {
+          setInventoryno(val);
+        }}
+      >
+        {mapStringsToOptions(ivtList)}
+      </Select>
+    </div>
+  );
+
   const hasNoData = () => new Promise(resolve => resolve([]));
   const hasData = params => {
     return queryCargoListIvt(params);
@@ -43,9 +66,9 @@ const TableList = ({ ivtList }) => {
 
   if (ivtList.length > 0) {
     return (
-      <PageHeaderWrapper title={false}>
+      <PageHeaderWrapper title={false} content={headerContent}>
         <ProTable
-          headerTitle="盘库记录"
+          headerTitle={false}
           actionRef={actionRef}
           rowKey="key"
           search={false}
@@ -57,15 +80,6 @@ const TableList = ({ ivtList }) => {
           }}
           params={{ keywords, inventoryno }}
           toolBarRender={(action, { selectedRows }) => [
-            <Text>盘点编号：</Text>,
-            <Select
-              style={{ width: 120 }}
-              onChange={val => {
-                setInventoryno(val);
-              }}
-            >
-              {mapStringsToOptions(ivtList)}
-            </Select>,
             <Button
               type="primary"
               onClick={async () => {
@@ -166,10 +180,6 @@ const TableList = ({ ivtList }) => {
           return params;
         }}
         toolBarRender={(action, { selectedRows }) => [
-          <Text>盘点编号：</Text>,
-          <Select default="loading" style={{ width: 120 }} loading>
-            <Option value="loading">loading...</Option>
-          </Select>,
           <Search
             placeholder="搜索..."
             onSearch={val => {
