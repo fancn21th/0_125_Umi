@@ -3,7 +3,7 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification, message } from 'antd';
+import { message, notification } from 'antd';
 import { getToken } from '@/utils/authority';
 
 const codeMessage = {
@@ -35,10 +35,12 @@ const errorHandler = error => {
   if (!codeFilter.includes(response.status) && response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
-    notification.error({
-      message: `请求错误 ${status}: ${url}`,
-      description: errorText,
-    });
+    message.error('请求发生错误');
+    console.error(` ${status}: ${url} ${errorText}`);
+    // notification.error({
+    //   message: `请求错误 ${status}: ${url}`,
+    //   description: errorText,
+    // });
   } else if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
@@ -82,7 +84,7 @@ request.interceptors.response.use(async response => {
 export const setToken = token => {
   request.extendOptions({
     headers: {
-      xtoken: token,
+      xtoken: token || '', // 避免服务端认为是攻击
     },
   });
 };
