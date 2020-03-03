@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { ApiTransformToData } from '../../../utils/api-to-data-staffwork';
+import { ApiTransformToData } from '../../../utils/api-to-data-report-cargostatus';
 
 export async function queryCargos({ startTime, endTime, mode = 'day' }) {
   const data = await request('/api/sinoapi/getoplistbytime', {
