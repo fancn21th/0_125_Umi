@@ -3,7 +3,7 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import { getToken } from '@/utils/authority';
 
 const codeMessage = {
@@ -23,14 +23,16 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
+const codeFilter = [500];
+
 /**
  * 异常处理程序
  */
-
 const errorHandler = error => {
   const { response } = error;
 
-  if (response && response.status) {
+  if (!codeFilter.includes(response.status) && response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
     notification.error({
@@ -46,10 +48,10 @@ const errorHandler = error => {
 
   return response;
 };
+
 /**
  * 配置request请求时的默认参数
  */
-
 const request = extend({
   errorHandler,
   // 默认错误处理
@@ -59,10 +61,24 @@ const request = extend({
   },
 });
 
+// 现有api返回规范
+// {errorCode: "5003", errorMsg: "inconsistent password"}
+const codeHandlers = {
+  500: ({ errorMsg }) => message.error(errorMsg || '500 服务端错误'),
+};
+
+// 自定义拦截器
+request.interceptors.response.use(async response => {
+  if (codeFilter.includes(response.status)) {
+    const data = await response.clone().json();
+    codeHandlers[response.status](data);
+  }
+  return response;
+});
+
 /**
  * 扩展request,增加token
  */
-
 export const setToken = token => {
   request.extendOptions({
     headers: {

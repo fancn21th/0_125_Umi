@@ -5,6 +5,7 @@ export const columns = [
     sorter: false,
     filters: false,
     hideInSearch: true,
+    align: 'center',
     valueEnum: {
       receipt: {
         text: '收货',

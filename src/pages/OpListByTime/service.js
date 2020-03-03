@@ -6,7 +6,7 @@ async function queryCargos2({ current, pageSize, sorter, begin, end }) {
   const data = await request('/api/sinoapi/getoplistbytime', {
     params: {
       pageindex: current - 1,
-      pagesize: pageSize,
+      pageSize,
       begin,
       end,
     },
