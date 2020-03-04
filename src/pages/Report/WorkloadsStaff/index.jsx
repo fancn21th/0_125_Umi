@@ -158,26 +158,6 @@ const TableList = () => {
         配置邮件信息
       </Button>
       <Button
-        type="primary"
-        onClick={() => {
-          const body = data2ExcelJson(datasource, columns);
-          const headerOrder = [
-            '人员',
-            '日期',
-            '收货任务数',
-            '入库任务数',
-            '拣货任务数',
-            '移库任务数',
-            '发运任务数',
-          ];
-          const sheetname = '人员工作量报表';
-          const filename = '人员工作量报表';
-          return exportJson2Sheet(body, headerOrder, sheetname, filename);
-        }}
-      >
-        导出报表
-      </Button>
-      <Button
         type="default"
         onClick={async () => {
           const hide = message.loading('正在发送...');
@@ -201,8 +181,29 @@ const TableList = () => {
 
   return (
     <PageHeaderWrapper title={false} content={headerContent}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={() => {
+            const body = data2ExcelJson(datasource, columns);
+            const headerOrder = [
+              '人员',
+              '日期',
+              '收货任务数',
+              '入库任务数',
+              '拣货任务数',
+              '移库任务数',
+              '发运任务数',
+            ];
+            const sheetname = '人员工作量报表';
+            const filename = '人员工作量报表';
+            return exportJson2Sheet(body, headerOrder, sheetname, filename);
+          }}
+        >
+          导出报表
+        </Button>
+      </div>
       <ProTable
-        headerTitle="人员工作量报表"
         actionRef={actionRef}
         rowKey="key"
         options={{ fullScreen: false, reload: true, setting: true }}
