@@ -16,7 +16,7 @@ import styles from './index.css';
 
 const { Search } = Input;
 const { Text } = Typography;
-
+let localAction = null;
 const validate = ono => {
   const reg = /^(IN|WV|OU)[_a-zA-Z0-9]+/g;
   return ono !== '' && reg.test(ono);
@@ -68,82 +68,85 @@ const TableList = () => {
           return params;
         }}
         params={{ orderno, keywords }}
-        toolBarRender={(action, { selectedRows }) => [
-          <Text>单号：</Text>,
-          <Input
-            placeholder="请输入单号"
-            value={ordernoValue}
-            onChange={e => {
-              setOrdernoValue(e.target.value);
-            }}
-          ></Input>,
-          <Button
-            type="primary"
-            onClick={() => {
-              if (validate(ordernoValue)) {
+        toolBarRender={(action, { selectedRows }) => {
+          localAction = action;
+          return [
+            <Text>单号：</Text>,
+            <Input
+              placeholder="请输入单号"
+              value={ordernoValue}
+              onChange={e => {
+                setOrdernoValue(e.target.value);
+              }}
+            ></Input>,
+            <Button
+              type="primary"
+              onClick={() => {
+                if (validate(ordernoValue)) {
+                  setKeywordsValue('');
+                  setKeywords('');
+                  action.resetPageIndex(1);
+                  setIsNeedQuery(true);
+                  setOrderno(ordernoValue);
+                } else {
+                  message.warning('请输入合规单号，示例前缀：IN、WV、OU');
+                }
+              }}
+            >
+              查询
+            </Button>,
+            <Button
+              type="default"
+              onClick={() => {
+                setOrdernoValue('');
+                setOrderno('');
                 setKeywordsValue('');
                 setKeywords('');
-                action.resetPageIndex(1);
-                setIsNeedQuery(true);
-                setOrderno(ordernoValue);
-              } else {
-                message.warning('请输入合规单号，示例前缀：IN、WV、OU');
-              }
-            }}
-          >
-            查询
-          </Button>,
-          <Button
-            type="default"
-            onClick={() => {
-              setOrdernoValue('');
-              setOrderno('');
-              setKeywordsValue('');
-              setKeywords('');
-              setIsNeedQuery(false);
-            }}
-          >
-            重置
-          </Button>,
-          <Button
-            type="primary"
-            onClick={async () => {
-              if (validate(ordernoValue)) {
-                const hide = message.loading('正在查询...');
-                try {
-                  const data = await queryUploadResultByInorder(ordernoValue);
-                  hide();
-                  await setLogData(transformDatetime(data, logColumns));
-                  if (data.length) {
-                    message.success('查询成功');
-                  } else {
-                    message.success('数据为空，请检查单号是否输入正确');
+                setIsNeedQuery(false);
+              }}
+            >
+              重置
+            </Button>,
+            <Button
+              type="primary"
+              onClick={async () => {
+                if (validate(ordernoValue)) {
+                  const hide = message.loading('正在查询...');
+                  try {
+                    const data = await queryUploadResultByInorder(ordernoValue);
+                    hide();
+                    await setLogData(transformDatetime(data, logColumns));
+                    if (data.length) {
+                      message.success('查询成功');
+                    } else {
+                      message.success('数据为空，请检查单号是否输入正确');
+                    }
+                    return setLogModalVisibility(true);
+                  } catch (error) {
+                    hide();
+                    message.error(`查询失败,原因：${error.message}`);
+                    return setLogModalVisibility(false);
                   }
-                  return setLogModalVisibility(true);
-                } catch (error) {
-                  hide();
-                  message.error(`查询失败,原因：${error.message}`);
-                  return setLogModalVisibility(false);
+                } else {
+                  message.warning('请输入合规单号，示例前缀：IN、WV、OU');
                 }
-              } else {
-                message.warning('请输入合规单号，示例前缀：IN、WV、OU');
-              }
-            }}
-          >
-            查询日志
-          </Button>,
-          <Search
-            placeholder="搜索..."
-            onSearch={val => {
-              setKeywords(val);
-            }}
-            onChange={e => {
-              setKeywordsValue(e.target.value);
-            }}
-            value={keywordsValue}
-            style={{ width: 200 }}
-          />,
-        ]}
+              }}
+            >
+              查询日志
+            </Button>,
+            <Search
+              placeholder="搜索..."
+              onSearch={val => {
+                setKeywords(val);
+              }}
+              onChange={e => {
+                setKeywordsValue(e.target.value);
+              }}
+              value={keywordsValue}
+              style={{ width: 200 }}
+            />,
+          ];
+        }}
         request={params => {
           if (isNeedQuery) {
             return queryOpList(params);
@@ -194,6 +197,11 @@ const TableList = () => {
                     try {
                       const { OpSN: id } = row;
                       await updateStatus(id, 0);
+                      setKeywordsValue('');
+                      setKeywords('');
+                      localAction.resetPageIndex(1);
+                      setIsNeedQuery(true);
+                      setOrderno(ordernoValue);
                       actionRef.current.reload();
                       hide();
                       message.success('同步成功');
@@ -211,6 +219,11 @@ const TableList = () => {
                     try {
                       const { OpSN: id } = row;
                       await updateStatus(id, 1);
+                      setKeywordsValue('');
+                      setKeywords('');
+                      localAction.resetPageIndex(1);
+                      setIsNeedQuery(true);
+                      setOrderno(ordernoValue);
                       actionRef.current.reload();
                       hide();
                       message.success('同步成功');
