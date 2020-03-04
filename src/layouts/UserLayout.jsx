@@ -4,8 +4,8 @@ import { Link } from 'umi';
 import React from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
-import SelectLang from '@/components/SelectLang';
-import logo from '../assets/sinotrans-logo.png';
+// import SelectLang from '@/components/SelectLang';
+import logo from '../assets/login-logo.png';
 import styles from './UserLayout.less';
 
 const UserLayout = props => {

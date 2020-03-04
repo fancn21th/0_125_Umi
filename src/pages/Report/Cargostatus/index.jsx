@@ -149,7 +149,7 @@ const TableList = () => {
     </div>
   );
   return (
-    <PageHeaderWrapper content={headerContent}>
+    <PageHeaderWrapper title={false} content={headerContent}>
       <ProTable
         headerTitle="货物状态信息报表"
         actionRef={actionRef}

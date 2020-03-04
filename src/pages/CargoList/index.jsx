@@ -19,7 +19,7 @@ const TableList = () => {
   const actionRef = useRef();
 
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper title={false}>
       <ProTable
         headerTitle="库存记录"
         actionRef={actionRef}

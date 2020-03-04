@@ -45,7 +45,7 @@ const TableList = ({ ivtList }) => {
 
   if (ivtList.length > 0) {
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title={false}>
         <ProTable
           headerTitle="盘库记录"
           actionRef={actionRef}
@@ -71,12 +71,15 @@ const TableList = ({ ivtList }) => {
             <Button
               type="primary"
               onClick={async () => {
-                let { data } = await queryCargoListIvt({
+                const { data } = await queryCargoListIvt({
                   current: 1,
-                  pageSize: 10000000,
+                  pageSize: 1000000,
                   inventoryno,
                 });
-                const body = data2ExcelJson(expandCargos(data), [...columns, ...cargoColumns]);
+                const expandedData = expandCargos(data);
+                const body = expandedData.length
+                  ? data2ExcelJson(expandedData, [...columns, ...cargoColumns])
+                  : data2ExcelJson(data, columns);
                 const headerOrder = [
                   '入库单号',
                   '货物RFID',
@@ -155,7 +158,7 @@ const TableList = ({ ivtList }) => {
     );
   }
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper title={false}>
       <ProTable
         headerTitle="盘库记录"
         actionRef={actionRef}

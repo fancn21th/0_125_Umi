@@ -32,7 +32,7 @@ const TableList = () => {
 
   if (type) {
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title={false}>
         <ProTable
           headerTitle="月工作量"
           actionRef={actionRef}
@@ -124,7 +124,7 @@ const TableList = () => {
     );
   } else {
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title={false}>
         <ProTable
           headerTitle="月工作量"
           actionRef={actionRef}

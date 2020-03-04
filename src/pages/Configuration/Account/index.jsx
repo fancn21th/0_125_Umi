@@ -114,7 +114,7 @@ const TableList = () => {
   const actionRef = useRef();
 
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper title={false}>
       <ProTable
         headerTitle="账号管理"
         actionRef={actionRef}

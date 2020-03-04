@@ -31,7 +31,7 @@ const TableList = () => {
   const actionRef = useRef();
   if (type) {
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title={false}>
         <ProTable
           headerTitle="年工作量"
           actionRef={actionRef}
@@ -123,7 +123,7 @@ const TableList = () => {
     );
   } else {
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title={false}>
         <ProTable
           headerTitle="年工作量"
           actionRef={actionRef}
