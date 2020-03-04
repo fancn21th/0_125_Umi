@@ -377,6 +377,7 @@ export default {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
+      // logLevel: 'debug',
     },
   },
 };
