@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'dva';
+import _ from 'lodash';
 import { queryCargoListIvt } from './service';
 import { columns } from '../../config/col-config-cargolistivt';
 import { columns as cargoColumns } from '../../config/col-config-cargos';
@@ -11,6 +12,7 @@ import CargoModal from './components/CargoModal';
 import uuid from '../../utils/uuid';
 import data2ExcelJson from '../../utils/excel/data2ExcelJson';
 import exportJson2Sheet from '../../utils/excel/exportJson2Sheet';
+import expandCargos from '../../utils/excel/expandCargos';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -85,10 +87,13 @@ const TableList = ({ ivtList }) => {
               onClick={async () => {
                 const { data } = await queryCargoListIvt({
                   current: 1,
-                  pageSize: 10000000,
+                  pageSize: 1000000,
                   inventoryno,
                 });
-                const body = data2ExcelJson(data, columns);
+                const expandedData = expandCargos(data);
+                const body = expandedData.length
+                  ? data2ExcelJson(expandedData, [...columns, ...cargoColumns])
+                  : data2ExcelJson(data, columns);
                 const headerOrder = [
                   '入库单号',
                   '货物RFID',
@@ -151,8 +156,9 @@ const TableList = ({ ivtList }) => {
           ]}
           pagination={{
             showSizeChanger: true,
-            pageSize: 10,
-            current: 1,
+            defaultPageSize: 100,
+            defaultCurrent: 1,
+            pageSizeOptions: ['100', '200', '300', '400', '500'],
           }}
         />
         <CargoModal

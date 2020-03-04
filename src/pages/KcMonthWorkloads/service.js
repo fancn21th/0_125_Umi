@@ -11,16 +11,16 @@ async function getMonthWorkloads2({ current, pageSize, sorter, type }) {
       end: sorter[1],
       devtype: type,
       mode: 'month',
-      pageindex: current - 1,
-      pageSize,
+      pageindex: 0,
+      pageSize: 1000,
     };
   } else {
     params = {
       begin: sorter[0],
       end: sorter[1],
       mode: 'day',
-      pageindex: current - 1,
-      pageSize,
+      pageindex: 0,
+      pageSize: 1000,
     };
   }
   const data = await request(url, {

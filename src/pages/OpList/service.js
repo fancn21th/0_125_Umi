@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-01 09:51:33
+ * @LastEditTime: 2020-03-04 10:37:21
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \SinotransUIOptimization\0_125_Umi\src\pages\OpList\service.js
+ */
 import request from '@/utils/request';
 import { ApiTransformToData } from '../../utils/api-to-data-op';
 import { ApiTransformToData as ApiTransformToLogData } from '../../utils/api-to-data-loglist';
@@ -13,8 +21,8 @@ async function queryOpList2({ current, pageSize, orderno = '' }) {
   }
   const data = await request('/api/sinoapi/getoplist', {
     params: {
-      pageindex: nextPageIndex,
-      pageSize,
+      pageindex: 0,
+      pageSize: 1000,
       orderno,
     },
   });

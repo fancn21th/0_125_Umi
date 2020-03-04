@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-02-27 09:14:36
+ * @LastEditTime: 2020-03-04 10:36:15
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \SinotransUIOptimization\0_125_Umi\src\utils\api-to-data-op.js
+ */
 import uuid from './uuid';
 import { timetrans, timetrans_sim } from './date-transform';
 
@@ -33,7 +41,7 @@ export function ApiTransformToData(apidata) {
       };
     });
     return {
-      total,
+      total: data.length,
       success: true,
       data,
     };

@@ -102,6 +102,10 @@ export default {
       component: '../layouts/BlankLayout',
       routes: [
         {
+          path: '/',
+          redirect: '/user/login',
+        },
+        {
           path: '/user',
           component: '../layouts/UserLayout',
           routes: [
@@ -122,31 +126,28 @@ export default {
           Routes: ['src/pages/Authorized'],
           authority: ['super', 'admin', 'user'],
           routes: [
-            {
-              path: '/',
-              redirect: '/cargo/cargolist',
-            },
+            // {
+            //   path: '/',
+            //   redirect: '/cargo/cargolist',
+            // },
             {
               name: 'category.cargo',
-              icon: 'table',
+              icon: 'AppstoreOutlined',
               path: '/cargo',
               authority: ['super', 'admin', 'user'],
               routes: [
                 {
                   name: 'list.cargo-list',
-                  icon: 'UnorderedListOutlined',
                   path: '/cargo/cargolist',
                   component: './CargoList',
                 },
                 {
                   name: 'list.out-cargo-list',
-                  icon: 'UnorderedListOutlined',
                   path: '/cargo/outcargolist',
                   component: './OutCargoList',
                 },
                 {
                   name: 'list.cargo-list-ivt',
-                  icon: 'UnorderedListOutlined',
                   path: '/cargo/cargolistivt',
                   component: './CargoListIvt',
                 },
@@ -154,25 +155,22 @@ export default {
             },
             {
               name: 'category.order',
-              icon: 'table',
+              icon: 'ProfileOutlined',
               path: '/order',
               authority: ['super', 'admin', 'user'],
               routes: [
                 {
                   name: 'list.order-goods',
-                  icon: 'UnorderedListOutlined',
                   path: '/order/ordergoods',
                   component: './OrderGoods',
                 },
                 {
                   name: 'list.op-list',
-                  icon: 'UnorderedListOutlined',
                   path: '/order/oplist',
                   component: './OpList',
                 },
                 {
                   name: 'list.op-list-by-time',
-                  icon: 'UnorderedListOutlined',
                   path: '/order/oplistbytime',
                   component: './OpListByTime',
                 },
@@ -180,25 +178,22 @@ export default {
             },
             {
               name: 'category.workloads',
-              icon: 'HistoryOutlined',
+              icon: 'TeamOutlined',
               path: '/workloads',
               authority: ['super', 'admin', 'user'],
               routes: [
                 {
                   name: 'list.day-workloads',
-                  icon: 'UnorderedListOutlined',
                   path: '/workloads/dayworkloads',
                   component: './KcWorkloads',
                 },
                 {
                   name: 'list.month-workloads',
-                  icon: 'UnorderedListOutlined',
                   path: '/workloads/monthworkloads',
                   component: './KcMonthWorkloads',
                 },
                 {
                   name: 'list.year-workloads',
-                  icon: 'UnorderedListOutlined',
                   path: '/workloads/yearworkloads',
                   component: './KcYearWorkloads',
                 },
@@ -206,19 +201,17 @@ export default {
             },
             {
               name: 'cargoinfo',
-              icon: 'table',
+              icon: 'ContainerOutlined',
               path: '/cargoinfo',
               authority: ['super', 'admin', 'user'],
               routes: [
                 {
                   name: 'cargobroken-by-inorder',
-                  icon: 'UnorderedListOutlined',
                   path: '/cargoinfo/cargobrokenbyinorder',
                   component: './Cargoinfo/CargobrokenByInorder',
                 },
                 {
                   name: 'shelf-utilization',
-                  icon: 'BarChartOutlined',
                   path: '/cargoinfo/shelfutilization',
                   component: './Cargoinfo/ShelfUtilization',
                 },
@@ -232,25 +225,22 @@ export default {
               routes: [
                 {
                   name: 'list.workloads-staff',
-                  icon: 'UnorderedListOutlined',
+
                   path: '/report/workloadsstaff',
                   component: './Report/WorkloadsStaff',
                 },
                 {
                   name: 'list.workloads-dev',
-                  icon: 'UnorderedListOutlined',
                   path: '/report/workloadsdev',
                   component: './Report/WorkloadsDev',
                 },
                 {
                   name: 'list.cargo-broken',
-                  icon: 'UnorderedListOutlined',
                   path: '/report/cargobroken',
                   component: './Report/Cargobroken',
                 },
                 {
                   name: 'list.cargo-status',
-                  icon: 'UnorderedListOutlined',
                   path: '/report/cargostatus',
                   component: './Report/Cargostatus',
                 },
@@ -269,13 +259,11 @@ export default {
                   routes: [
                     {
                       name: 'sending',
-                      icon: 'SendOutlined',
                       path: '/config/email/sending',
                       component: './Configuration/Email/Sending',
                     },
                     {
                       name: 'receiving',
-                      icon: 'UsergroupAddOutlined',
                       path: '/config/email/recipients',
                       component: './Configuration/Email/Recipients',
                     },
@@ -283,13 +271,11 @@ export default {
                 },
                 {
                   name: 'sino-user',
-                  icon: 'UserOutlined',
                   path: '/config/sinouser',
                   component: './Configuration/SinoUser',
                 },
                 {
                   name: 'account',
-                  icon: 'UsergroupAddOutlined',
                   path: '/config/account',
                   component: './Configuration/Account',
                 },
@@ -395,6 +381,7 @@ export default {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
+      logLevel: 'debug',
     },
   },
 };

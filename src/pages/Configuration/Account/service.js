@@ -30,7 +30,15 @@ export async function remove({ id }) {
   });
 }
 
-export async function add({ username, realname, phone, roleId, email, password, confirmPassword }) {
+export async function add({
+  username,
+  realname,
+  phone = '',
+  roleId,
+  email,
+  password,
+  confirmPassword,
+}) {
   return request('/api/userManager/user', {
     method: 'POST',
     data: {
@@ -41,7 +49,6 @@ export async function add({ username, realname, phone, roleId, email, password, 
       email,
       password,
       confirmPassword,
-      phone: phone || '',
     },
   });
 }

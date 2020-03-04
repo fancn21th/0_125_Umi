@@ -48,6 +48,7 @@ const TableList = () => {
   const [keywords, setKeywords] = useState('');
   const [ordernoValue, setOrdernoValue] = useState('');
   const [orderno, setOrderno] = useState('');
+  const [isNeedQuery, setIsNeedQuery] = useState(false);
   const [logData, setLogData] = useState([]);
   const [logModalVisibility, setLogModalVisibility] = useState(false);
   const actionRef = useRef();
@@ -83,6 +84,7 @@ const TableList = () => {
                 setKeywordsValue('');
                 setKeywords('');
                 action.resetPageIndex(1);
+                setIsNeedQuery(true);
                 setOrderno(ordernoValue);
               } else {
                 message.warning('请输入合规单号，示例前缀：IN、WV、OU');
@@ -98,6 +100,7 @@ const TableList = () => {
               setOrderno('');
               setKeywordsValue('');
               setKeywords('');
+              setIsNeedQuery(false);
             }}
           >
             重置
@@ -141,7 +144,16 @@ const TableList = () => {
             style={{ width: 200 }}
           />,
         ]}
-        request={params => queryOpList(params)}
+        request={params => {
+          if (isNeedQuery) {
+            return queryOpList(params);
+          }
+          return Promise.resolve({
+            success: true,
+            data: [],
+            total: 0,
+          });
+        }}
         pagination={{
           showSizeChanger: true,
           defaultPageSize: 10,

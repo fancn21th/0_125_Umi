@@ -106,6 +106,7 @@ const TableList = () => {
                     '拣货任务数',
                     '移库任务数',
                     '发运任务数',
+                    '总计',
                   ];
                   const sheetname = '月工作量';
                   const filename = '月工作量';
@@ -172,6 +173,7 @@ const TableList = () => {
                     '拣货任务数',
                     '移库任务数',
                     '发运任务数',
+                    '总计',
                   ];
                   const sheetname = '月工作量';
                   const filename = '月工作量';

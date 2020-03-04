@@ -65,7 +65,7 @@ const BasicForm = props => {
   };
 
   const onFinishFailed = errorInfo => {
-    message.error('Failed:', errorInfo);
+    console.error('Failed:', errorInfo);
   };
 
   const onValuesChange = () => {};

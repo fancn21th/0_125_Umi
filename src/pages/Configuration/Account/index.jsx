@@ -152,41 +152,47 @@ const TableList = () => {
             title: '操作',
             dataIndex: 'option',
             valueType: 'option',
-            render: (_, record) => (
-              <>
-                <a
-                  onClick={async () => {
-                    const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
-                    await setRoleSelect(roles);
-                    await setEditFormValues(record);
-                    handleUpdateModalVisible(true);
-                  }}
-                >
-                  编辑
-                </a>
-                <Divider type="vertical" />
-                <a
-                  onClick={async () => {
-                    await setPasswordFormValues({ id: record.id });
-                    handleUpdatePasswordModalVisible(true);
-                  }}
-                >
-                  修改密码
-                </a>
-                <Divider type="vertical" />
-                <a
-                  onClick={async () => {
-                    const { id } = record;
-                    await handleRemove(id);
-                    if (actionRef.current) {
-                      actionRef.current.reload();
-                    }
-                  }}
-                >
-                  删除
-                </a>
-              </>
-            ),
+            render: (_, record) => {
+              const isSuper = record.roleCode === 'SUPERADMIN';
+              return (
+                <>
+                  <a
+                    onClick={async () => {
+                      const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
+                      await setRoleSelect(roles);
+                      await setEditFormValues(record);
+                      handleUpdateModalVisible(true);
+                    }}
+                    disabled={isSuper}
+                  >
+                    编辑
+                  </a>
+                  <Divider type="vertical" />
+                  <a
+                    onClick={async () => {
+                      await setPasswordFormValues({ id: record.id });
+                      handleUpdatePasswordModalVisible(true);
+                    }}
+                    disabled={isSuper}
+                  >
+                    修改密码
+                  </a>
+                  <Divider type="vertical" />
+                  <a
+                    onClick={async () => {
+                      const { id } = record;
+                      await handleRemove(id);
+                      if (actionRef.current) {
+                        actionRef.current.reload();
+                      }
+                    }}
+                    disabled={isSuper}
+                  >
+                    删除
+                  </a>
+                </>
+              );
+            },
           },
         ]}
         pagination={{
