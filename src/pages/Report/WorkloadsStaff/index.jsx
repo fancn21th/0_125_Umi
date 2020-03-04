@@ -1,5 +1,5 @@
 // import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, message, DatePicker, Input, Typography, Select, Divider } from 'antd';
+import { Button, message, DatePicker, Input, Typography, Select } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -82,14 +82,7 @@ const TableList = () => {
   };
 
   const headerContent = (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <Text>周期：</Text>
       <Select
         defaultValue="day"
@@ -220,7 +213,7 @@ const TableList = () => {
           return params;
         }}
         params={{ mode, startTime, endTime, keywords }}
-        toolBarRender={(action, { selectedRows }) => [
+        toolBarRender={() => [
           <Search
             placeholder="搜索..."
             onSearch={val => {

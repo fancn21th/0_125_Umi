@@ -52,3 +52,24 @@ ol {
     min-height: 100vh;
   }
 }
+
+// :global(.ant-pro-page-header-wrap-content) {
+//
+// }
+
+// Variables
+@headerContent-input-right-margin: 32px;
+@headerContent-btn-right-margin: 16px;
+
+:global(.dc-headerContent-wrapper) {
+  width: '100%';
+  display: 'flex';
+  justify-content: 'flex-start';
+  align-items: 'center';
+  & > div {
+    margin-right: @headerContent-input-right-margin;
+  }
+  & > button {
+    margin-right: @headerContent-btn-right-margin;
+  }
+}
