@@ -50,7 +50,7 @@ const ShelfUtilization = props => {
     </div>
   );
   return (
-    <PageHeaderWrapper content={mainSearch}>
+    <PageHeaderWrapper title={false} content={mainSearch}>
       <Card bordered={false}>
         <BarChart data={data} />
       </Card>

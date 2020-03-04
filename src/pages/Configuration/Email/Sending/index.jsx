@@ -77,6 +77,7 @@ const BasicForm = props => {
 
   return (
     <PageHeaderWrapper
+      title={false}
       content={<FormattedMessage id="email-sending-config-form.basic.description" />}
     >
       <Card bordered={false}>

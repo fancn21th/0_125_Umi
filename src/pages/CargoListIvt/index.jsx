@@ -43,7 +43,7 @@ const TableList = ({ ivtList }) => {
 
   if (ivtList.length > 0) {
     return (
-      <PageHeaderWrapper>
+      <PageHeaderWrapper title={false}>
         <ProTable
           headerTitle="盘库记录"
           actionRef={actionRef}
@@ -152,7 +152,7 @@ const TableList = ({ ivtList }) => {
     );
   }
   return (
-    <PageHeaderWrapper>
+    <PageHeaderWrapper title={false}>
       <ProTable
         headerTitle="盘库记录"
         actionRef={actionRef}
