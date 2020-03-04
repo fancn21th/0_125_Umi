@@ -39,7 +39,7 @@ const handleUpdate = async fields => {
   });
   hide();
   if (res) {
-    message.error(`the email already exists.`);
+    message.error('邮箱已经存在');
     return false;
   }
   message.success('编辑成功');
