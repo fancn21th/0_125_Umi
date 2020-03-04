@@ -21,7 +21,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper title={false}>
       <ProTable
-        headerTitle="出库记录"
+        headerTitle={false}
         actionRef={actionRef}
         rowKey="key"
         search={false}

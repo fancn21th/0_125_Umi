@@ -9,7 +9,7 @@ import { columns as cargoColumns } from '../../config/col-config-cargos';
 import CargoModal from './components/CargoModal';
 const { Search } = Input;
 const { Text } = Typography;
-
+let localAction = null;
 const TableList = () => {
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
@@ -21,10 +21,55 @@ const TableList = () => {
 
   const actionRef = useRef();
 
+  const headerContent = (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+    >
+      <Text>单号：</Text>
+      <Input
+        placeholder="请输入单号"
+        value={orderNoValue}
+        onChange={e => {
+          setOrderNoValue(e.target.value);
+        }}
+      ></Input>
+      <Button
+        type="primary"
+        onClick={() => {
+          setKeywordsValue('');
+          setKeywords('');
+          setIsNeedQuery(true);
+          localAction.resetPageIndex(1);
+          setOrderno(orderNoValue);
+        }}
+      >
+        查询
+      </Button>
+      <Button
+        type="default"
+        onClick={() => {
+          setOrderNoValue('');
+          setOrderno('');
+          setKeywordsValue('');
+          setKeywords('');
+          setIsNeedQuery(false);
+          localAction.resetPageIndex(1);
+        }}
+      >
+        重置
+      </Button>
+    </div>
+  );
+
   return (
-    <PageHeaderWrapper title={false}>
+    <PageHeaderWrapper title={false} content={headerContent}>
       <ProTable
-        headerTitle="订单货物"
+        headerTitle={false}
         actionRef={actionRef}
         rowKey="key"
         search={false}
@@ -35,52 +80,22 @@ const TableList = () => {
           return params;
         }}
         params={{ keywords, orderno }}
-        toolBarRender={(action, { selectedRows }) => [
-          <Text>单号：</Text>,
-          <Input
-            placeholder="请输入单号"
-            value={orderNoValue}
-            onChange={e => {
-              setOrderNoValue(e.target.value);
-            }}
-          ></Input>,
-          <Button
-            type="primary"
-            onClick={() => {
-              setKeywordsValue('');
-              setKeywords('');
-              setIsNeedQuery(true);
-              action.resetPageIndex(1);
-              setOrderno(orderNoValue);
-            }}
-          >
-            查询
-          </Button>,
-          <Button
-            type="default"
-            onClick={() => {
-              setOrderNoValue('');
-              setOrderno('');
-              setKeywordsValue('');
-              setKeywords('');
-              setIsNeedQuery(false);
-              action.resetPageIndex(1);
-            }}
-          >
-            重置
-          </Button>,
-          <Search
-            placeholder="搜索..."
-            onSearch={val => {
-              setKeywords(val);
-            }}
-            onChange={e => {
-              setKeywordsValue(e.target.value);
-            }}
-            value={keywordsValue}
-            style={{ width: 200 }}
-          />,
-        ]}
+        toolBarRender={(action, { selectedRows }) => {
+          localAction = action;
+          return [
+            <Search
+              placeholder="搜索..."
+              onSearch={val => {
+                setKeywords(val);
+              }}
+              onChange={e => {
+                setKeywordsValue(e.target.value);
+              }}
+              value={keywordsValue}
+              style={{ width: 200 }}
+            />,
+          ];
+        }}
         request={params => {
           if (isNeedQuery) {
             return queryCargos(params);
