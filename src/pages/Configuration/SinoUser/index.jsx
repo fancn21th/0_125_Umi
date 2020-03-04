@@ -57,7 +57,7 @@ const BasicForm = props => {
   };
 
   const onFinishFailed = errorInfo => {
-    message.error('Failed:', errorInfo);
+    console.error('Failed:', errorInfo);
   };
 
   const onValuesChange = () => {};
@@ -67,7 +67,10 @@ const BasicForm = props => {
   }, [isCreated]);
 
   return (
-    <PageHeaderWrapper title={false} content={<FormattedMessage id="sino-user-form.basic.description" />}>
+    <PageHeaderWrapper
+      title={false}
+      content={<FormattedMessage id="sino-user-form.basic.description" />}
+    >
       <Card bordered={false}>
         <Form
           hideRequiredMark={false}
