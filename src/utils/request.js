@@ -59,7 +59,7 @@ const request = extend({
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
   headers: {
-    xtoken: getToken(),
+    xtoken: getToken() || '', // 避免服务端认为是攻击
   },
 });
 
