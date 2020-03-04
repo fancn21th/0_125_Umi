@@ -71,25 +71,21 @@ export const columns = [
     title: '任务下拨时间',
     dataIndex: 'OrderTimestamp',
     sorter: false,
-    valueType: 'dateTime',
   },
   {
     title: '要求完成时间',
     dataIndex: 'DeadlineTimestamp',
     sorter: false,
-    valueType: 'dateTime',
   },
   {
     title: '任务开始时间',
     dataIndex: 'BeginTimestamp',
     sorter: false,
-    valueType: 'dateTime',
   },
   {
     title: '任务结束时间',
     dataIndex: 'EndTimestamp',
     sorter: false,
-    valueType: 'dateTime',
   },
   {
     title: '货物RFID标签',

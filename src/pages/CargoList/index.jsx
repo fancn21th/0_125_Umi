@@ -25,7 +25,11 @@ const TableList = () => {
         actionRef={actionRef}
         rowKey="key"
         search
-        options={{ fullScreen: false, reload: true, setting: true }}
+        options={{
+          fullScreen: false,
+          reload: true,
+          setting: true,
+        }}
         beforeSearchSubmit={params => {
           setKeywordsValue('');
           setKeywords('');
@@ -71,8 +75,9 @@ const TableList = () => {
         ]}
         pagination={{
           showSizeChanger: true,
-          pageSize: 10,
-          current: 1,
+          defaultPageSize: 100,
+          defaultCurrent: 1,
+          pageSizeOptions: ['100', '200', '300', '400', '500'],
         }}
       />
       <CargoModal

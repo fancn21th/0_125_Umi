@@ -15,6 +15,7 @@ const TableList = () => {
   const [keywords, setKeywords] = useState('');
   const [orderNoValue, setOrderNoValue] = useState('');
   const [orderno, setOrderno] = useState('');
+  const [isNeedQuery, setIsNeedQuery] = useState(false);
   const [cargoData, setCargoData] = useState([]);
   const [cargoModalVisibility, setCargoModalVisibility] = useState(false);
 
@@ -48,6 +49,7 @@ const TableList = () => {
             onClick={() => {
               setKeywordsValue('');
               setKeywords('');
+              setIsNeedQuery(true);
               action.resetPageIndex(1);
               setOrderno(orderNoValue);
             }}
@@ -61,6 +63,7 @@ const TableList = () => {
               setOrderno('');
               setKeywordsValue('');
               setKeywords('');
+              setIsNeedQuery(false);
               action.resetPageIndex(1);
             }}
           >
@@ -78,7 +81,12 @@ const TableList = () => {
             style={{ width: 200 }}
           />,
         ]}
-        request={params => queryCargos(params)}
+        request={params => {
+          if (isNeedQuery) {
+            return queryCargos(params);
+          }
+          return Promise.resolve({ success: true, data: [], total: 0 });
+        }}
         columns={[
           ...columns,
           {
