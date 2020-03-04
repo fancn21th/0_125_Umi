@@ -102,6 +102,10 @@ export default {
       component: '../layouts/BlankLayout',
       routes: [
         {
+          path: '/',
+          redirect: '/user/login',
+        },
+        {
           path: '/user',
           component: '../layouts/UserLayout',
           routes: [
@@ -122,10 +126,10 @@ export default {
           Routes: ['src/pages/Authorized'],
           authority: ['super', 'admin', 'user'],
           routes: [
-            {
-              path: '/',
-              redirect: '/cargo/cargolist',
-            },
+            // {
+            //   path: '/',
+            //   redirect: '/cargo/cargolist',
+            // },
             {
               name: 'category.cargo',
               icon: 'AppstoreOutlined',
@@ -377,7 +381,7 @@ export default {
       target: serveUrlMap[SERVE_ENV],
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
-      // logLevel: 'debug',
+      logLevel: 'debug',
     },
   },
 };

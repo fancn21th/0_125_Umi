@@ -43,7 +43,6 @@ const Model = {
 
           if (redirect) {
             const redirectUrlParams = new URL(redirect);
-
             if (redirectUrlParams.origin === urlParams.origin) {
               redirect = redirect.substr(urlParams.origin.length);
 
@@ -54,6 +53,8 @@ const Model = {
               window.location.href = '/';
               return;
             }
+          } else {
+            redirect = '/cargo/cargolist';
           }
 
           router.replace(redirect || '/');
