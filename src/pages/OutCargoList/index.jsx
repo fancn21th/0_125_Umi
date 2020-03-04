@@ -71,8 +71,9 @@ const TableList = () => {
         ]}
         pagination={{
           showSizeChanger: true,
-          pageSize: 10,
-          current: 1,
+          defaultPageSize: 100,
+          defaultCurrent: 1,
+          pageSizeOptions: ['100', '200', '300', '400', '500'],
         }}
       />
       <CargoModal
