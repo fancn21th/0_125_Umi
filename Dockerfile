@@ -1,2 +1,2 @@
 FROM nginx:alpine
-COPY  dist/. /home/nantonghtml/
+COPY  dist/. /usr/share/nginx/html/
