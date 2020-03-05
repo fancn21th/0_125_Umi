@@ -73,7 +73,7 @@ if (isAntDesignProPreview) {
 const serveUrlMap = {
   local: 'http://localhost:3000',
   // dev: 'http://36.110.117.58:8000',
-  dev: 'http://10.3.69.26:9000',
+  dev: 'http://10.3.69.40:3000',
 };
 
 // const rewriteMap = {
