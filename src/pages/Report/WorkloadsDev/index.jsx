@@ -1,5 +1,5 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, message, DatePicker, Input, Typography, Select, Divider } from 'antd';
+// import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, message, DatePicker, Input, Typography, Select } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -78,14 +78,7 @@ const TableList = () => {
     }
   };
   const headerContent = (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <Text>周期：</Text>
       <Select
         defaultValue="day"
@@ -161,26 +154,6 @@ const TableList = () => {
         配置邮件信息
       </Button>
       <Button
-        type="primary"
-        onClick={() => {
-          const body = data2ExcelJson(datasource, columns);
-          const headerOrder = [
-            '设备ID',
-            '收货任务数',
-            '入库任务数',
-            '移库任务数',
-            '拣货任务数',
-            '发运任务数',
-            '总计',
-          ];
-          const sheetname = '叉车工作量报表';
-          const filename = '叉车工作量报表';
-          return exportJson2Sheet(body, headerOrder, sheetname, filename);
-        }}
-      >
-        导出报表
-      </Button>
-      <Button
         type="default"
         onClick={async () => {
           const hide = message.loading('正在发送...');
@@ -204,6 +177,28 @@ const TableList = () => {
 
   return (
     <PageHeaderWrapper title={false} content={headerContent}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={() => {
+            const body = data2ExcelJson(datasource, columns);
+            const headerOrder = [
+              '设备ID',
+              '收货任务数',
+              '入库任务数',
+              '移库任务数',
+              '拣货任务数',
+              '发运任务数',
+              '总计',
+            ];
+            const sheetname = '叉车工作量报表';
+            const filename = '叉车工作量报表';
+            return exportJson2Sheet(body, headerOrder, sheetname, filename);
+          }}
+        >
+          导出报表
+        </Button>
+      </div>
       <ProTable
         headerTitle={false}
         actionRef={actionRef}
@@ -216,7 +211,7 @@ const TableList = () => {
           return params;
         }}
         params={{ mode, startTime, endTime, keywords }}
-        toolBarRender={(action, { selectedRows }) => [
+        toolBarRender={() => [
           <Search
             placeholder="搜索..."
             onSearch={val => {
@@ -231,8 +226,8 @@ const TableList = () => {
         ]}
         request={async params => {
           const data = await queryCargos(params);
-          const { data: datasource } = data;
-          await setDatasource(datasource);
+          const { data: datasource2 } = data;
+          await setDatasource(datasource2);
           return data;
         }}
         columns={columns}
