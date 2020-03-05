@@ -52,3 +52,38 @@ ol {
     min-height: 100vh;
   }
 }
+
+// :global(.ant-pro-page-header-wrap-content) {
+//
+// }
+
+:global(.dc-pageHeaderWrapper-fix-ahead-panel) {
+  position: absolute;
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 64px;
+  padding-left: 16px;
+  line-height: 64px;
+}
+
+// Variables
+@headerContent-input-right-margin: 32px;
+@headerContent-btn-right-margin: 16px;
+
+:global(.dc-headerContent-wrapper) {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: 1px solid #eceff3;
+  padding-top: 16px;
+  margin-top: 4px;
+  & > div {
+    margin-right: @headerContent-input-right-margin;
+  }
+  & > button {
+    margin-right: @headerContent-btn-right-margin;
+  }
+}
