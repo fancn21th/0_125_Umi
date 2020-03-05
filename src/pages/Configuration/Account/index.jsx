@@ -115,8 +115,20 @@ const TableList = () => {
 
   return (
     <PageHeaderWrapper title={false}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={async () => {
+            const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
+            await setRoleSelect(roles);
+            handleModalVisible(true);
+          }}
+        >
+          添加用户
+        </Button>
+      </div>
       <ProTable
-        headerTitle="账号管理"
+        headerTitle={false}
         actionRef={actionRef}
         rowKey="key"
         search={false}
@@ -134,16 +146,6 @@ const TableList = () => {
             value={keywordsValue}
             style={{ width: 200 }}
           />,
-          <Button
-            type="primary"
-            onClick={async () => {
-              const roles = await queryRoles({ pageNum: 1, pageSize: 1000 });
-              await setRoleSelect(roles);
-              handleModalVisible(true);
-            }}
-          >
-            添加用户
-          </Button>,
         ]}
         request={params => queryCargos(params)}
         columns={[
