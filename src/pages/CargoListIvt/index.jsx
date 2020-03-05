@@ -17,6 +17,7 @@ import expandCargos from '../../utils/excel/expandCargos';
 const { Search } = Input;
 const { Option } = Select;
 const { Text } = Typography;
+let localAction = null;
 
 const mapStringToOption = function(str) {
   return (
@@ -38,6 +39,21 @@ const TableList = ({ ivtList }) => {
   const [cargoModalVisibility, setCargoModalVisibility] = useState(false);
 
   const actionRef = useRef();
+
+  const headerContent = (
+    <div className="dc-headerContent-wrapper">
+      <Text>盘点编号：</Text>
+      <Select
+        style={{ width: 120 }}
+        onChange={val => {
+          setInventoryno(val);
+        }}
+      >
+        {mapStringsToOptions(ivtList)}
+      </Select>
+    </div>
+  );
+
   const hasNoData = () => new Promise(resolve => resolve([]));
   const hasData = params => {
     return queryCargoListIvt(params);
@@ -45,9 +61,48 @@ const TableList = ({ ivtList }) => {
 
   if (ivtList.length > 0) {
     return (
-      <PageHeaderWrapper title={false}>
+      <PageHeaderWrapper title={false} content={headerContent}>
+        <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+          <Button
+            type="primary"
+            onClick={async () => {
+              const { data } = await queryCargoListIvt({
+                current: 1,
+                pageSize: 1000000,
+                inventoryno,
+              });
+              const expandedData = expandCargos(data);
+              const body = expandedData.length
+                ? data2ExcelJson(expandedData, [...columns, ...cargoColumns])
+                : data2ExcelJson(data, columns);
+              const headerOrder = [
+                '入库单号',
+                '货物RFID',
+                '货位号',
+                '物料行数',
+                '行号',
+                '物料号',
+                '物料名',
+                '批次号',
+                '应收',
+                '实收',
+                '包装',
+                '危险等级',
+                '货物状态',
+                '盘点状态',
+                '盘点时间',
+              ];
+              const sheetname = '盘库记录';
+              const filename = '库存盘点表';
+              return exportJson2Sheet(body, headerOrder, sheetname, filename);
+            }}
+          >
+            导出表格
+          </Button>
+        </div>
+
         <ProTable
-          headerTitle="盘库记录"
+          headerTitle={false}
           actionRef={actionRef}
           rowKey="key"
           search={false}
@@ -59,51 +114,6 @@ const TableList = ({ ivtList }) => {
           }}
           params={{ keywords, inventoryno }}
           toolBarRender={(action, { selectedRows }) => [
-            <Text>盘点编号：</Text>,
-            <Select
-              style={{ width: 120 }}
-              onChange={val => {
-                setInventoryno(val);
-              }}
-            >
-              {mapStringsToOptions(ivtList)}
-            </Select>,
-            <Button
-              type="primary"
-              onClick={async () => {
-                const { data } = await queryCargoListIvt({
-                  current: 1,
-                  pageSize: 1000000,
-                  inventoryno,
-                });
-                const expandedData = expandCargos(data);
-                const body = expandedData.length
-                  ? data2ExcelJson(expandedData, [...columns, ...cargoColumns])
-                  : data2ExcelJson(data, columns);
-                const headerOrder = [
-                  '入库单号',
-                  '货物RFID',
-                  '货位号',
-                  '物料行数',
-                  '行号',
-                  '物料号',
-                  '物料名',
-                  '批次号',
-                  '应收',
-                  '实收',
-                  '包装',
-                  '危险等级',
-                  '货物状态',
-                  '盘点状态',
-                  '盘点时间',
-                ];
-                const sheetname = '盘库记录';
-                const filename = '库存盘点表';
-                return exportJson2Sheet(body, headerOrder, sheetname, filename);
-              }}
-            >
-              导出表格
-            </Button>,
             <Search
               placeholder="搜索..."
               onSearch={val => {
@@ -160,7 +170,7 @@ const TableList = ({ ivtList }) => {
   return (
     <PageHeaderWrapper title={false}>
       <ProTable
-        headerTitle="盘库记录"
+        headerTitle={false}
         actionRef={actionRef}
         rowKey="key"
         search={false}
@@ -172,10 +182,6 @@ const TableList = ({ ivtList }) => {
           return params;
         }}
         toolBarRender={(action, { selectedRows }) => [
-          <Text>盘点编号：</Text>,
-          <Select default="loading" style={{ width: 120 }} loading>
-            <Option value="loading">loading...</Option>
-          </Select>,
           <Search
             placeholder="搜索..."
             onSearch={val => {
