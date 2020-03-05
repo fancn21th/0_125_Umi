@@ -60,7 +60,7 @@ const Model = {
           router.replace(redirect || '/');
         }
       } else {
-        message.error('登陆失败,请检查用户名或密码是否输入正确');
+        // message.error('登陆失败,请检查用户名或密码是否输入正确');
       }
     },
 
