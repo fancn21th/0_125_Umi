@@ -171,6 +171,7 @@ const TableList = () => {
             '移库任务数',
             '拣货任务数',
             '发运任务数',
+            '总计',
           ];
           const sheetname = '叉车工作量报表';
           const filename = '叉车工作量报表';
@@ -204,7 +205,7 @@ const TableList = () => {
   return (
     <PageHeaderWrapper title={false} content={headerContent}>
       <ProTable
-        headerTitle="叉车工作量报表"
+        headerTitle={false}
         actionRef={actionRef}
         rowKey="key"
         search={false}
