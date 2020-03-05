@@ -1,4 +1,4 @@
-import { Button, Divider, Dropdown, DatePicker, message, Input, Typography } from 'antd';
+import { Button, DatePicker, message, Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -25,7 +25,7 @@ const TableList = () => {
   const [imgurls, setImgurls] = useState([]);
   const [recipients, setRecipients] = useState([]);
   const [mailConfig, setMailConfig] = useState(null);
-  const [searchText, setSearchText] = useState('');
+  // const [searchText, setSearchText] = useState('');
   const [tableparams, setTableparams] = useState({
     startTime: moment()
       .startOf('day')
@@ -79,14 +79,7 @@ const TableList = () => {
     }
   };
   const headerContent = (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <Text>选择日期：</Text>
       <RangePicker
         format="YYYY-MM-DD"
@@ -104,27 +97,7 @@ const TableList = () => {
       <Button type="primary" onClick={onEmailConfigClick}>
         配置邮件信息
       </Button>
-      <Button
-        type="primary"
-        onClick={() => {
-          const body = data2ExcelJson(datasource, columns);
-          const headerOrder = [
-            '货物RFID',
-            '入库单号',
-            '单行号',
-            '货主代码',
-            '物料名',
-            '件数',
-            '当前货位',
-            '破损情况',
-          ];
-          const sheetname = '货物破损信息报表';
-          const filename = '货物破损信息报表';
-          return exportJson2Sheet(body, headerOrder, sheetname, filename);
-        }}
-      >
-        导出报表
-      </Button>
+
       <Button
         type="default"
         onClick={async () => {
@@ -148,6 +121,29 @@ const TableList = () => {
 
   return (
     <PageHeaderWrapper title={headerTitle} content={headerContent}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={() => {
+            const body = data2ExcelJson(datasource, columns);
+            const headerOrder = [
+              '货物RFID',
+              '入库单号',
+              '单行号',
+              '货主代码',
+              '物料名',
+              '件数',
+              '当前货位',
+              '破损情况',
+            ];
+            const sheetname = '货物破损信息报表';
+            const filename = '货物破损信息报表';
+            return exportJson2Sheet(body, headerOrder, sheetname, filename);
+          }}
+        >
+          导出报表
+        </Button>
+      </div>
       <ProTable
         headerTitle={tableTitle}
         actionRef={actionRef}
@@ -157,8 +153,8 @@ const TableList = () => {
         params={tableparams}
         request={async params => {
           const data = await queryCargos(params);
-          const { data: datasource } = data;
-          await setDatasource(datasource);
+          const { data: datasource2 } = data;
+          await setDatasource(datasource2);
           return data;
         }}
         pagination={{

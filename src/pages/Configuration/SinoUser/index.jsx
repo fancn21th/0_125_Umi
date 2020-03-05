@@ -67,10 +67,7 @@ const BasicForm = props => {
   }, [isCreated]);
 
   return (
-    <PageHeaderWrapper
-      title={false}
-      content={<FormattedMessage id="sino-user-form.basic.description" />}
-    >
+    <PageHeaderWrapper title={false}>
       <Card bordered={false}>
         <Form
           hideRequiredMark={false}

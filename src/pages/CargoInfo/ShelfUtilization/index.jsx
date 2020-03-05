@@ -35,11 +35,7 @@ const ShelfUtilization = props => {
   };
 
   const mainSearch = (
-    <div
-      style={{
-        textAlign: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <RangePicker
         value={dateSpan}
         onChange={onRangePickerChange}

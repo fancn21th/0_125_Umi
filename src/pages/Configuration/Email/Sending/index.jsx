@@ -76,10 +76,7 @@ const BasicForm = props => {
   }, [sender]);
 
   return (
-    <PageHeaderWrapper
-      title={false}
-      content={<FormattedMessage id="email-sending-config-form.basic.description" />}
-    >
+    <PageHeaderWrapper title={false}>
       <Card bordered={false}>
         <Form
           hideRequiredMark={false}

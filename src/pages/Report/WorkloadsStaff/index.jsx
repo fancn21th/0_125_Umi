@@ -160,27 +160,6 @@ const TableList = () => {
         配置邮件信息
       </Button>
       <Button
-        type="primary"
-        onClick={() => {
-          const body = data2ExcelJson(datasource, columns);
-          const headerOrder = [
-            '人员',
-            '日期',
-            '收货任务数',
-            '入库任务数',
-            '拣货任务数',
-            '移库任务数',
-            '发运任务数',
-            '总计',
-          ];
-          const sheetname = '人员工作量报表';
-          const filename = '人员工作量报表';
-          return exportJson2Sheet(body, headerOrder, sheetname, filename);
-        }}
-      >
-        导出报表
-      </Button>
-      <Button
         type="default"
         onClick={async () => {
           const hide = message.loading('正在发送...');
@@ -217,6 +196,7 @@ const TableList = () => {
               '拣货任务数',
               '移库任务数',
               '发运任务数',
+              '总计',
             ];
             const sheetname = '人员工作量报表';
             const filename = '人员工作量报表';
@@ -253,8 +233,8 @@ const TableList = () => {
         ]}
         request={async params => {
           const data = await queryCargos(params);
-          const { data: datasource } = data;
-          await setDatasource(datasource);
+          const { data: datasource2 } = data;
+          await setDatasource(datasource2);
           return data;
         }}
         columns={columns}

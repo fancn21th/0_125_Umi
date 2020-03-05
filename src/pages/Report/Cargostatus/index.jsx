@@ -1,4 +1,4 @@
-import { Button, Divider, Dropdown, DatePicker, message, Input, Typography } from 'antd';
+import { Button, DatePicker, message, Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -19,7 +19,7 @@ const { Text } = Typography;
 const TableList = () => {
   const [datasource, setDatasource] = useState(null);
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  // const [searchText, setSearchText] = useState('');
   const [recipients, setRecipients] = useState([]);
   const [mailConfig, setMailConfig] = useState(null);
   const [tableparams, setTableparams] = useState({
@@ -53,6 +53,7 @@ const TableList = () => {
       return false;
     }
   };
+
   // 更新邮件配置回调
   const onUpdateMailConfig = async data => {
     const hide = message.loading('正在更新');
@@ -73,15 +74,9 @@ const TableList = () => {
       return false;
     }
   };
+
   const headerContent = (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <Text>选择日期：</Text>
       <RangePicker
         format="YYYY-MM-DD"
@@ -98,36 +93,6 @@ const TableList = () => {
       />
       <Button type="primary" onClick={onEmailConfigClick}>
         配置邮件信息
-      </Button>
-      <Button
-        type="primary"
-        onClick={() => {
-          const body = data2ExcelJson(datasource, columns);
-          const headerOrder = [
-            '单号',
-            '任务流水号',
-            '作业类型',
-            '作业人员',
-            '作业人员名称',
-            '作业设备',
-            '作业状态',
-            '任务下拨时间',
-            '要求完成时间',
-            '任务开始时间',
-            '任务结束时间',
-            '货物RFID标签',
-            '起始货位',
-            '目标货位',
-            '件数',
-            '物料名',
-            '同步状态',
-          ];
-          const sheetname = '货物状态信息报表';
-          const filename = '货物状态信息报表';
-          return exportJson2Sheet(body, headerOrder, sheetname, filename);
-        }}
-      >
-        导出报表
       </Button>
       <Button
         type="default"
@@ -151,6 +116,38 @@ const TableList = () => {
   );
   return (
     <PageHeaderWrapper title={headerTitle} content={headerContent}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={() => {
+            const body = data2ExcelJson(datasource, columns);
+            const headerOrder = [
+              '单号',
+              '任务流水号',
+              '作业类型',
+              '作业人员',
+              '作业人员名称',
+              '作业设备',
+              '作业状态',
+              '任务下拨时间',
+              '要求完成时间',
+              '任务开始时间',
+              '任务结束时间',
+              '货物RFID标签',
+              '起始货位',
+              '目标货位',
+              '件数',
+              '物料名',
+              '同步状态',
+            ];
+            const sheetname = '货物状态信息报表';
+            const filename = '货物状态信息报表';
+            return exportJson2Sheet(body, headerOrder, sheetname, filename);
+          }}
+        >
+          导出报表
+        </Button>
+      </div>
       <ProTable
         headerTitle={tableTitle}
         actionRef={actionRef}
@@ -160,8 +157,8 @@ const TableList = () => {
         params={tableparams}
         request={async params => {
           const data = await queryCargos(params);
-          const { data: datasource } = data;
-          await setDatasource(datasource);
+          const { data: datasource2 } = data;
+          await setDatasource(datasource2);
           return data;
         }}
         pagination={{
