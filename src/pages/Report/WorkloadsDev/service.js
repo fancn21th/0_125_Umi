@@ -3,7 +3,7 @@ import { genAsyncSearch } from '../../../utils/search/searchInCurPage';
 import { WorkloadsDataTranlate } from '../../../utils/api-to-data-workloads';
 
 const typeMap = {
-  day: 'DAY_REPORT',
+  day: 'DEV_WORKLOAD_DAY_REPORT',
   month: 'DEV_WORKLOAD_MONTH_REPORT',
   year: 'DEV_WORKLOAD_YEAR_REPORT',
 };
