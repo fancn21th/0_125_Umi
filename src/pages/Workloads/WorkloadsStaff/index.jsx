@@ -33,14 +33,7 @@ const TableList = () => {
   const actionRef = useRef();
 
   const headerContent = (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <Text>周期：</Text>
       <Select
         defaultValue="day"
@@ -112,32 +105,34 @@ const TableList = () => {
           />
         ) : null}
       </>
-      <Button
-        type="primary"
-        onClick={() => {
-          const body = data2ExcelJson(datasource, columns);
-          const headerOrder = [
-            '人员',
-            '日期',
-            '收货任务数',
-            '入库任务数',
-            '拣货任务数',
-            '移库任务数',
-            '发运任务数',
-            '总计',
-          ];
-          const sheetname = '人员工作量';
-          const filename = '人员工作量';
-          return exportJson2Sheet(body, headerOrder, sheetname, filename);
-        }}
-      >
-        导出报表
-      </Button>
     </div>
   );
 
   return (
     <PageHeaderWrapper title={false} content={headerContent}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={() => {
+            const body = data2ExcelJson(datasource, columns);
+            const headerOrder = [
+              '人员',
+              '日期',
+              '收货任务数',
+              '入库任务数',
+              '拣货任务数',
+              '移库任务数',
+              '发运任务数',
+              '总计',
+            ];
+            const sheetname = '人员工作量';
+            const filename = '人员工作量';
+            return exportJson2Sheet(body, headerOrder, sheetname, filename);
+          }}
+        >
+          导出报表
+        </Button>
+      </div>
       <ProTable
         headerTitle={false}
         actionRef={actionRef}
