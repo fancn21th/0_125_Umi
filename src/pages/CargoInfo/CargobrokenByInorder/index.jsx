@@ -22,14 +22,7 @@ const TableList = () => {
   const actionRef = useRef();
 
   const headerContent = (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
+    <div className="dc-headerContent-wrapper">
       <Text>入库单号：</Text>
       <Input
         placeholder="请输入单号"

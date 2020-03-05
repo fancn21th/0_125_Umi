@@ -15,11 +15,8 @@ const { Search } = Input;
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
 
-// 测试用默认起止时间;
-const defaultDate = [moment(1581436800000), moment(1581523199999)];
-
 // 默认起止时间
-// const defaultDate = [moment().startOf('day'), moment().endOf('day')];
+const defaultDate = [moment().startOf('day'), moment().endOf('day')];
 
 /**
  * Function(record, index):string
@@ -44,10 +41,64 @@ const TableList = () => {
 
   const actionRef = useRef();
 
+  const headerContent = (
+    <div className="dc-headerContent-wrapper">
+      <Text>日期：</Text>
+      <RangePicker
+        format="YYYY-MM-DD"
+        defaultValue={defaultDate}
+        onChange={dates => {
+          if (dates && dates.length) {
+            setBegin(momentToTimestamp(dates[0]));
+            setEnd(momentToTimestamp(dates[1]));
+          }
+        }}
+      />
+    </div>
+  );
+
   return (
-    <PageHeaderWrapper title={false}>
+    <PageHeaderWrapper title={false} content={headerContent}>
+      <div className="dc-pageHeaderWrapper-fix-ahead-panel">
+        <Button
+          type="primary"
+          onClick={async () => {
+            const { data: dataSource } = await queryCargos({
+              current: 1,
+              pageSize: 100000,
+              begin,
+              end,
+            });
+            const body = data2ExcelJson(dataSource, columns);
+            const headerOrder = [
+              '操作类型',
+              '单号',
+              '货物RFID',
+              '物料名',
+              '件数',
+              '原货位',
+              '推荐货位',
+              '新货位',
+              '作业人员',
+              '人员姓名',
+              '作业设备',
+              '作业状态',
+              '下发时间',
+              '截止时间',
+              '开始时间',
+              '完成时间',
+              '同步状态',
+            ];
+            const sheetname = '操作流水';
+            const filename = '操作流水';
+            return exportJson2Sheet(body, headerOrder, sheetname, filename);
+          }}
+        >
+          导出表格
+        </Button>
+      </div>
       <ProTable
-        headerTitle="流水操作"
+        headerTitle={false}
         actionRef={actionRef}
         rowKey="key"
         search={false}
@@ -60,53 +111,6 @@ const TableList = () => {
         }}
         params={{ begin, end, keywords }}
         toolBarRender={(action, { selectedRows }) => [
-          <Button
-            type="primary"
-            onClick={async () => {
-              const { data: dataSource } = await queryCargos({
-                current: 1,
-                pageSize: 100000,
-                begin,
-                end,
-              });
-              const body = data2ExcelJson(dataSource, columns);
-              const headerOrder = [
-                '操作类型',
-                '单号',
-                '货物RFID',
-                '物料名',
-                '件数',
-                '原货位',
-                '推荐货位',
-                '新货位',
-                '作业人员',
-                '人员姓名',
-                '作业设备',
-                '作业状态',
-                '下发时间',
-                '截止时间',
-                '开始时间',
-                '完成时间',
-                '同步状态',
-              ];
-              const sheetname = '操作流水';
-              const filename = '操作流水';
-              return exportJson2Sheet(body, headerOrder, sheetname, filename);
-            }}
-          >
-            导出表格
-          </Button>,
-          <Text>日期：</Text>,
-          <RangePicker
-            format="YYYY-MM-DD"
-            defaultValue={defaultDate}
-            onChange={dates => {
-              if (dates && dates.length) {
-                setBegin(momentToTimestamp(dates[0]));
-                setEnd(momentToTimestamp(dates[1]));
-              }
-            }}
-          />,
           <Search
             placeholder="搜索..."
             onSearch={val => {
