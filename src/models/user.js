@@ -1,4 +1,5 @@
 import { queryCurrent, query as queryUsers } from '@/services/user';
+import { router } from 'umi';
 
 const UserModel = {
   namespace: 'user',
@@ -16,13 +17,18 @@ const UserModel = {
 
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: {
-          ...response,
-          avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-        },
-      });
+      if (response.ok) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: {
+            ...response,
+            avatar:
+              'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+          },
+        });
+      } else if (response.status === 401) {
+        router.replace('/');
+      }
     },
   },
   reducers: {
