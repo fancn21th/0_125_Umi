@@ -4,8 +4,9 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import ImageModal from './components/ImageModal';
 import { queryCargos } from './service';
-import { columns } from '../../../config/col-config-cargobrokenbyinorder';
-
+import { columns } from './config/col-config';
+import config from './config/config';
+const { tableTitle, headerTitle } = config;
 const { Search } = Input;
 const { Text } = Typography;
 let localAction = null;
@@ -58,9 +59,9 @@ const TableList = () => {
   );
 
   return (
-    <PageHeaderWrapper title={false} content={headerContent}>
+    <PageHeaderWrapper title={headerTitle} content={headerContent}>
       <ProTable
-        headerTitle={false}
+        headerTitle={tableTitle}
         actionRef={actionRef}
         rowKey="key"
         search={false}

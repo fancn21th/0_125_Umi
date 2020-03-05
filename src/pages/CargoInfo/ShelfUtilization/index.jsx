@@ -3,6 +3,8 @@ import { DatePicker, Button, Card, message } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import BarChart from './components/BarChart';
+import config from './config/config';
+const { headerTitle } = config;
 
 const { RangePicker } = DatePicker;
 
@@ -50,7 +52,7 @@ const ShelfUtilization = props => {
     </div>
   );
   return (
-    <PageHeaderWrapper title={false} content={mainSearch}>
+    <PageHeaderWrapper title={headerTitle} content={mainSearch}>
       <Card bordered={false}>
         <BarChart data={data} />
       </Card>

@@ -6,12 +6,13 @@ import moment from 'moment';
 import { queryRecipients } from '@/services/recipients';
 import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
 import { queryCargos, sendmail } from './service';
-import { columns } from '../../../config/col-config-reportcargostatus';
-import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
-import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
+import { columns } from './config/col-config';
+import config from './config/config';
+import data2ExcelJson from '@/utils/excel/data2ExcelJson';
+import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
 import MailConfigForm from '../components/MailConfigForm';
 
-const { Search } = Input;
+const { tableTitle, headerTitle, defaultDate } = config;
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
@@ -84,7 +85,7 @@ const TableList = () => {
       <Text>选择日期：</Text>
       <RangePicker
         format="YYYY-MM-DD"
-        defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+        defaultValue={defaultDate}
         onChange={date => {
           if (date && date.length) {
             setTableparams({
@@ -149,9 +150,9 @@ const TableList = () => {
     </div>
   );
   return (
-    <PageHeaderWrapper title={false} content={headerContent}>
+    <PageHeaderWrapper title={headerTitle} content={headerContent}>
       <ProTable
-        headerTitle={false}
+        headerTitle={tableTitle}
         actionRef={actionRef}
         rowKey="key"
         search={false}

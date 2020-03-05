@@ -6,8 +6,9 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import UpdatePasswordForm from './components/UpdatePasswordForm';
 import { queryCargos, update, add, remove, queryRoles, updatePassword } from './service';
-import { columns } from '../../../config/col-config-account';
-
+import { columns } from './config/col-config';
+import config from './config/config';
+const { tableTitle, headerTitle } = config;
 const { Search } = Input;
 
 /**
@@ -114,7 +115,7 @@ const TableList = () => {
   const actionRef = useRef();
 
   return (
-    <PageHeaderWrapper title={false}>
+    <PageHeaderWrapper title={headerTitle}>
       <div className="dc-pageHeaderWrapper-fix-ahead-panel">
         <Button
           type="primary"
@@ -128,7 +129,7 @@ const TableList = () => {
         </Button>
       </div>
       <ProTable
-        headerTitle={false}
+        headerTitle={tableTitle}
         actionRef={actionRef}
         rowKey="key"
         search={false}

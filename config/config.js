@@ -141,17 +141,17 @@ export default {
                 {
                   name: 'list.cargo-list',
                   path: '/cargo/cargolist',
-                  component: './CargoList',
+                  component: './Cargo/CargoList',
                 },
                 {
                   name: 'list.out-cargo-list',
                   path: '/cargo/outcargolist',
-                  component: './OutCargoList',
+                  component: './Cargo/OutCargoList',
                 },
                 {
                   name: 'list.cargo-list-ivt',
                   path: '/cargo/cargolistivt',
-                  component: './CargoListIvt',
+                  component: './Cargo/CargoListIvt',
                 },
               ],
             },
@@ -164,17 +164,17 @@ export default {
                 {
                   name: 'list.order-goods',
                   path: '/order/ordergoods',
-                  component: './OrderGoods',
+                  component: './Order/OrderGoods',
                 },
                 {
                   name: 'list.op-list',
                   path: '/order/oplist',
-                  component: './OpList',
+                  component: './Order/OpList',
                 },
                 {
                   name: 'list.op-list-by-time',
                   path: '/order/oplistbytime',
-                  component: './OpListByTime',
+                  component: './Order/OpListByTime',
                 },
               ],
             },

@@ -1,7 +1,7 @@
 import request from '@/utils/request';
-import { ApiTransformToData } from './utils/api-to-data-account';
-import { ApiTransformToData as ApiTransformToDataRole } from './utils/api-to-data-roles';
-import { genAsyncSearch } from '../../../utils/search/searchInCurPage';
+import { dataTransformAccount } from './utils/dataTransformAccount';
+import { dataTransformRoles } from './utils/dataTransformRoles';
+import { genAsyncSearch } from '@/utils/search/searchInCurPage';
 
 async function queryCargos2({ current, pageSize }) {
   const data = await request('/api/userManager/users', {
@@ -10,7 +10,7 @@ async function queryCargos2({ current, pageSize }) {
       pageSize,
     },
   });
-  return ApiTransformToData(data);
+  return dataTransformAccount(data);
 }
 export const queryCargos = genAsyncSearch(queryCargos2, 'roleName');
 
@@ -21,7 +21,7 @@ export async function queryRoles({ pageNum, pageSize }) {
       pageSize,
     },
   });
-  return ApiTransformToDataRole(data);
+  return dataTransformRoles(data);
 }
 
 export async function remove({ id }) {

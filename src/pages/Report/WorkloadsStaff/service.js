@@ -1,6 +1,6 @@
 import request from '@/utils/request';
-import { genAsyncSearch } from '../../../utils/search/searchInCurPage';
-import { WorkloadsDataTranlate } from '../../../utils/api-to-data-workloads';
+import { genAsyncSearch } from '@/utils/search/searchInCurPage';
+import { dataTransform } from './utils/dataTransform';
 
 const typeMap = {
   day: 'DAY_REPORT',
@@ -18,7 +18,7 @@ async function queryCargos2({ current, pageSize, sorter, mode, startTime, endTim
       mode,
     },
   });
-  return WorkloadsDataTranlate(data);
+  return dataTransform(data);
 }
 export const queryCargos = genAsyncSearch(queryCargos2);
 
