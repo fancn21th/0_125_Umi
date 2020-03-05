@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import moment from 'moment';
-import { ApiTransformToData } from '../../../utils/api-to-data-report-cargobroken';
+import { dataTransform } from './utils/dataTransform';
 
 export async function queryCargos({
   current,
@@ -18,7 +18,7 @@ export async function queryCargos({
       end: moment(endTime).format('YYYY-MM-DD'),
     },
   });
-  return ApiTransformToData(data);
+  return dataTransform(data);
 }
 
 export async function sendmail({

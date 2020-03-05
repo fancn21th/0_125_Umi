@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { ApiTransformToData } from '../../../../utils/api-to-data-recipients';
+import { dataTransform } from './utils/dataTransform';
 
 export async function queryCargos({ current, pageSize }) {
   const data = await request('/api/report/recipients', {
@@ -8,7 +8,7 @@ export async function queryCargos({ current, pageSize }) {
       pageSize,
     },
   });
-  return ApiTransformToData(data);
+  return dataTransform(data);
 }
 
 export async function remove({ id }) {

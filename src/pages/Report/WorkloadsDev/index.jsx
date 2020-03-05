@@ -7,11 +7,13 @@ import moment from 'moment';
 import { queryRecipients } from '@/services/recipients';
 import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
 import { queryCargos, sendmail } from './service';
-import { columns } from '../../../config/col-config-reportworkloadsdev';
-import data2ExcelJson from '../../../utils/excel/data2ExcelJson';
-import exportJson2Sheet from '../../../utils/excel/exportJson2Sheet';
+import { columns } from './config/col-config';
+import config from './config/config';
+import data2ExcelJson from '@/utils/excel/data2ExcelJson';
+import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
 import MailConfigForm from '../components/MailConfigForm';
 
+const { tableTitle, headerTitle, dayDefaultDate, monthDefaultDate, yearDefaultDate } = config;
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -108,7 +110,7 @@ const TableList = () => {
         {mode === 'day' ? (
           <RangePicker
             format="YYYY-MM-DD"
-            defaultValue={[moment().startOf('day'), moment().endOf('day')]}
+            defaultValue={dayDefaultDate}
             onChange={date => {
               if (date && date.length) {
                 setKeywordsValue('');
@@ -123,7 +125,7 @@ const TableList = () => {
           <RangePicker
             picker="month"
             format="YYYY-MM"
-            defaultValue={[moment().startOf('month'), moment().endOf('month')]}
+            defaultValue={monthDefaultDate}
             onChange={date => {
               if (date && date.length) {
                 setKeywordsValue('');
@@ -138,7 +140,7 @@ const TableList = () => {
           <RangePicker
             picker="year"
             format="YYYY"
-            defaultValue={[moment().startOf('year'), moment().endOf('year')]}
+            defaultValue={yearDefaultDate}
             onChange={date => {
               if (date && date.length) {
                 setKeywordsValue('');
@@ -176,7 +178,7 @@ const TableList = () => {
   );
 
   return (
-    <PageHeaderWrapper title={false} content={headerContent}>
+    <PageHeaderWrapper title={headerTitle} content={headerContent}>
       <div className="dc-pageHeaderWrapper-fix-ahead-panel">
         <Button
           type="primary"
@@ -200,7 +202,7 @@ const TableList = () => {
         </Button>
       </div>
       <ProTable
-        headerTitle={false}
+        headerTitle={tableTitle}
         actionRef={actionRef}
         rowKey="key"
         search={false}

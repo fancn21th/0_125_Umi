@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { ApiTransformToData } from '../../../utils/api-to-data-report-cargostatus';
+import { dataTransform } from './utils/dataTransform';
 
 export async function queryCargos({ startTime, endTime, mode = 'day' }) {
   const data = await request('/api/sinoapi/getoplistbytime', {
@@ -10,7 +10,7 @@ export async function queryCargos({ startTime, endTime, mode = 'day' }) {
       pagesize: 1000,
     },
   });
-  return ApiTransformToData(data);
+  return dataTransform(data);
 }
 
 export async function sendmail({

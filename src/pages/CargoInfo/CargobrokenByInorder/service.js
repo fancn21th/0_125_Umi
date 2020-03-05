@@ -1,6 +1,6 @@
 import request from '@/utils/request';
-import { ApiTransformToData } from '../../../utils/api-to-data-cargobroken';
-import { genAsyncSearch } from '../../../utils/search/searchInCurPage';
+import { dataTransform } from './utils/dataTransform';
+import { genAsyncSearch } from '@/utils/search/searchInCurPage';
 
 async function queryCargos2({ current, pageSize, InOrderNo }) {
   const data = await request('/api/sinoapi/cargobrokenbyinorder', {
@@ -8,6 +8,6 @@ async function queryCargos2({ current, pageSize, InOrderNo }) {
       inorder: InOrderNo || '',
     },
   });
-  return ApiTransformToData(data);
+  return dataTransform(data);
 }
 export const queryCargos = genAsyncSearch(queryCargos2);

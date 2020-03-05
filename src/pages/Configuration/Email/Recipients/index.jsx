@@ -5,7 +5,9 @@ import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { queryCargos, update, add, remove } from './service';
-import { columns } from '../../../../config/col-config-reportrecipients';
+import { columns } from './config/col-config';
+import config from './config/config';
+const { tableTitle, headerTitle } = config;
 
 /**
  * 添加节点
@@ -82,9 +84,9 @@ const TableList = () => {
   const actionRef = useRef();
 
   return (
-    <PageHeaderWrapper title={false}>
+    <PageHeaderWrapper title={headerTitle}>
       <ProTable
-        headerTitle="收件人配置"
+        headerTitle={tableTitle}
         actionRef={actionRef}
         rowKey="key"
         search={false}
