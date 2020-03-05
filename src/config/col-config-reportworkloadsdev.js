@@ -29,4 +29,9 @@ export const columns = [
     dataIndex: 'Ship',
     sorter: false,
   },
+  {
+    title: '总计',
+    dataIndex: 'Total',
+    sorter: false,
+  },
 ];

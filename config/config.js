@@ -73,7 +73,7 @@ if (isAntDesignProPreview) {
 const serveUrlMap = {
   local: 'http://localhost:3000',
   // dev: 'http://36.110.117.58:8000',
-  dev: 'http://10.3.69.26:9000',
+  dev: 'http://10.3.69.40:3000',
 };
 
 // const rewriteMap = {
@@ -183,19 +183,14 @@ export default {
               authority: ['super', 'admin', 'user'],
               routes: [
                 {
-                  name: 'list.day-workloads',
-                  path: '/workloads/dayworkloads',
-                  component: './KcWorkloads',
+                  name: 'list.workloads-staff',
+                  path: '/workloads/workloadsstaff',
+                  component: './Workloads/WorkloadsStaff',
                 },
                 {
-                  name: 'list.month-workloads',
-                  path: '/workloads/monthworkloads',
-                  component: './KcMonthWorkloads',
-                },
-                {
-                  name: 'list.year-workloads',
-                  path: '/workloads/yearworkloads',
-                  component: './KcYearWorkloads',
+                  name: 'list.workloads-dev',
+                  path: '/workloads/workloadsdev',
+                  component: './Workloads/WorkloadsDev',
                 },
               ],
             },

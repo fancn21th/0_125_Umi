@@ -1,4 +1,5 @@
 import islocal from './islocal-total';
+import uuid from './uuid';
 
 export function WorkloadsDataTranlate(apidata) {
   if (islocal(apidata)) {
@@ -20,6 +21,7 @@ export function WorkloadsDataTranlate(apidata) {
         return {
           ...item,
           Total,
+          key: uuid(),
         };
       })
       .filter(item => item.Total && item.Total !== 0);
