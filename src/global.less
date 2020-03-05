@@ -59,7 +59,7 @@ ol {
 
 :global(.dc-pageHeaderWrapper-fix-ahead-panel) {
   position: absolute;
-  z-index: 10000;
+  z-index: 2;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -85,5 +85,9 @@ ol {
   }
   & > button {
     margin-right: @headerContent-btn-right-margin;
+  }
+  & > input[type='text'] {
+    max-width: 200px;
+    margin-right: @headerContent-input-right-margin;
   }
 }
