@@ -51,6 +51,13 @@ ol {
   body .ant-design-pro > .ant-layout {
     min-height: 100vh;
   }
+  input[placeholder='开始日期'],
+  input[placeholder='结束日期'] {
+    line-height: 1.286 !important;
+  }
+  td.ant-table-cell {
+    word-break: break-all;
+  }
 }
 
 // :global(.ant-pro-page-header-wrap-content) {
@@ -89,13 +96,5 @@ ol {
   & > input[type='text'] {
     max-width: 200px;
     margin-right: @headerContent-input-right-margin;
-  }
-}
-
-// 兼容IE11
-@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
-  input[placeholder='开始日期'],
-  input[placeholder='结束日期'] {
-    line-height: 1.286 !important;
   }
 }
