@@ -7,7 +7,7 @@ export async function queryCargos({ startTime, endTime, mode = 'day' }) {
       begin: startTime,
       end: endTime,
       pageindex: 0,
-      pagesize: 1000,
+      pagesize: 10000,
     },
   });
   return dataTransform(data);

@@ -6,7 +6,7 @@ async function queryCargos2({ current, pageSize, sorter, mode, startTime, endTim
   const data = await request('/api/sinoapi/exportworkloadstaff', {
     params: {
       pageindex: 0,
-      pagesize: 1000,
+      pagesize: 10000,
       begin: startTime,
       end: endTime,
       mode,
