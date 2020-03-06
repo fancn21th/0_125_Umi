@@ -90,6 +90,9 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
   headers: {
     xtoken: getToken() || '', // 避免服务端认为是攻击
+    //以下两项同时启用时，IE11、Edge及现代浏览器均不使用缓存，链接：https://blog.csdn.net/qq_26941173/article/details/84935421
+    // 'Cache-Control': 'no-cache', //兼容IE11，避免使用缓存，只设置该项时IE11依然使用缓存
+    Pragma: 'no-cache', //兼容IE11，避免使用缓存，只设置该项IE11、Edge及现代浏览器均不使用缓存
   },
 });
 
