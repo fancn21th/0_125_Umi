@@ -9,18 +9,26 @@ export default (body, header, sheetName, fileName) => {
     type: 'array',
   });
   const blob = new Blob([result], { type: 'application/octet-stream' });
-  const link = document.createElement('a');
   const dateStr = new Date()
     .toLocaleDateString()
     .split('/')
     .map(val => (val.length <= 1 ? `0${val}` : val))
     .join('');
   fileName = `${fileName}-${dateStr}.xlsx`;
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  link.click();
-  return Promise.resolve().then(() => {
-    URL.revokeObjectURL(link.href);
-    link.remove();
-  });
+  //for IE11
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(blob, fileName);
+    return true;
+  } else {
+    //for Non-IE(chrome, firefox etc.)
+    const link = document.createElement('a');
+    document.documentElement.appendChild(link);
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    return Promise.resolve().then(() => {
+      URL.revokeObjectURL(link.href);
+      document.documentElement.removeChild(link);
+    });
+  }
 };
