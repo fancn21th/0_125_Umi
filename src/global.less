@@ -91,3 +91,11 @@ ol {
     margin-right: @headerContent-input-right-margin;
   }
 }
+
+// 兼容IE11
+@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+  input[placeholder='开始日期'],
+  input[placeholder='结束日期'] {
+    line-height: 1.286 !important;
+  }
+}
