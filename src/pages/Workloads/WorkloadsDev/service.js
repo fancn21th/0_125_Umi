@@ -10,7 +10,7 @@ async function queryCargos2({ current, pageSize, mode, startTime, endTime, devTy
       mode,
       devtype: devType,
       pageindex: 0,
-      pagesize: 1000,
+      pagesize: 10000,
     },
   });
   return dataTransform(data);

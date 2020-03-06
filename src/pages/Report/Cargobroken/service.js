@@ -13,7 +13,7 @@ export async function queryCargos({
   const data = await request('/api/sinoapi/cargobroken', {
     params: {
       pageindex: 0,
-      pagesize: 1000,
+      pagesize: 10000,
       begin: moment(startTime).format('YYYY-MM-DD'),
       end: moment(endTime).format('YYYY-MM-DD'),
     },
