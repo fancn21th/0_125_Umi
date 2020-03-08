@@ -4,13 +4,14 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
-import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
+import { updateEmailSetting } from '@/services/emailConfig';
 import data2ExcelJson from '@/utils/excel/data2ExcelJson';
 import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
 import { queryCargos, sendmail } from './service';
 import { columns } from './config/col-config';
 import config from './config/config';
 import MailConfigForm from '../components/MailConfigForm';
+import { useEmailConfig } from '../hooks/useEmailConfig';
 import { useRecipients } from '../hooks/useRecipients';
 
 const { tableTitle, headerTitle, dayDefaultDate, monthDefaultDate, yearDefaultDate } = config;
@@ -21,8 +22,8 @@ const { Text } = Typography;
 
 const TableList = () => {
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
-  const [mailConfig, setMailConfig] = useState({});
   const [mode, setMode] = useState('day');
+  const { emailConfig, reload, isEmailConfigReady } = useEmailConfig('human', mode);
   const { recipients } = useRecipients([]);
   const [datasource, setDatasource] = useState(null);
   const [keywordsValue, setKeywordsValue] = useState('');
@@ -41,26 +42,12 @@ const TableList = () => {
   const actionRef = useRef();
 
   // 点击邮件配置按钮回调
-  const onEmailConfigClick = async () => {
-    const hide = message.loading('正在加载邮件配置');
-
+  const onEmailConfigClick = () => {
     if (recipients.length === 0) {
       message.error('请先设置常用联系人');
       return;
     }
-
-    try {
-      const emailSettingRes = await queryEmailSetting({
-        category: 'human',
-        mode,
-      });
-      await setMailConfig(emailSettingRes);
-      setEmailModalConfigVisible(true);
-      hide();
-    } catch (error) {
-      hide();
-      message.error('获取常用联系人失败');
-    }
+    setEmailModalConfigVisible(true);
   };
 
   // 更新邮件配置回调
@@ -75,7 +62,7 @@ const TableList = () => {
       hide();
       message.success('邮件配置更新成功');
       await setEmailModalConfigVisible(false);
-      setMailConfig({});
+      await reload();
     } catch (error) {
       hide();
       message.error('邮件配置更新失败,请重试');
@@ -85,7 +72,6 @@ const TableList = () => {
   // 更新邮件配置取消
   const onCancelMailConfig = async () => {
     await setEmailModalConfigVisible(false);
-    await setMailConfig({});
   };
 
   // 日月年切换
@@ -250,11 +236,11 @@ const TableList = () => {
           current: 1,
         }}
       />
-      {recipients.length && mailConfig && Object.keys(mailConfig).length ? (
+      {isEmailConfigReady ? (
         <MailConfigForm
           mode={mode}
           recipients={recipients}
-          mailConfig={mailConfig}
+          mailConfig={emailConfig}
           onSubmit={onUpdateMailConfig}
           onCancel={onCancelMailConfig}
           modalVisible={emailConfigModalVisible}
