@@ -4,7 +4,6 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
-import { queryRecipients } from '@/services/recipients';
 import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
 import data2ExcelJson from '@/utils/excel/data2ExcelJson';
 import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
@@ -12,6 +11,7 @@ import { queryCargos, sendmail } from './service';
 import { columns } from './config/col-config';
 import config from './config/config';
 import MailConfigForm from '../components/MailConfigForm';
+import { useRecipients } from '../hooks/useRecipients';
 
 const { tableTitle, headerTitle, dayDefaultDate, monthDefaultDate, yearDefaultDate } = config;
 const { Search } = Input;
@@ -23,7 +23,7 @@ const TableList = () => {
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
   const [mailConfig, setMailConfig] = useState({});
   const [mode, setMode] = useState('day');
-  const [recipients, setRecipients] = useState([]);
+  const { recipients } = useRecipients([]);
   const [datasource, setDatasource] = useState(null);
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
@@ -44,9 +44,12 @@ const TableList = () => {
   const onEmailConfigClick = async () => {
     const hide = message.loading('正在加载邮件配置');
 
+    if (recipients.length === 0) {
+      message.error('请先设置常用联系人');
+      return;
+    }
+
     try {
-      const { data: recipientsRes } = await queryRecipients();
-      await setRecipients(recipientsRes);
       const emailSettingRes = await queryEmailSetting({
         category: 'human',
         mode,
@@ -247,7 +250,7 @@ const TableList = () => {
           current: 1,
         }}
       />
-      {mailConfig && Object.keys(mailConfig).length ? (
+      {recipients.length && mailConfig && Object.keys(mailConfig).length ? (
         <MailConfigForm
           mode={mode}
           recipients={recipients}
