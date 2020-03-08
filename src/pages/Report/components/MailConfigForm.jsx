@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
 import moment from 'moment';
 

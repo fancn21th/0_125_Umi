@@ -6,11 +6,11 @@ import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
 import { queryRecipients } from '@/services/recipients';
 import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
+import data2ExcelJson from '@/utils/excel/data2ExcelJson';
+import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
 import { queryCargos, sendmail } from './service';
 import { columns } from './config/col-config';
 import config from './config/config';
-import data2ExcelJson from '@/utils/excel/data2ExcelJson';
-import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
 import MailConfigForm from '../components/MailConfigForm';
 
 const { tableTitle, headerTitle, dayDefaultDate, monthDefaultDate, yearDefaultDate } = config;
@@ -21,10 +21,10 @@ const { Text } = Typography;
 
 const TableList = () => {
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
+  const [mailConfig, setMailConfig] = useState({});
   const [mode, setMode] = useState('day');
   const [recipients, setRecipients] = useState([]);
   const [datasource, setDatasource] = useState(null);
-  const [mailConfig, setMailConfig] = useState(null);
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
   const [startTime, setStartTime] = useState(
@@ -46,19 +46,17 @@ const TableList = () => {
 
     try {
       const { data: recipientsRes } = await queryRecipients();
-      setRecipients(recipientsRes);
+      await setRecipients(recipientsRes);
       const emailSettingRes = await queryEmailSetting({
         category: 'human',
         mode,
       });
-      setMailConfig(emailSettingRes);
+      await setMailConfig(emailSettingRes);
       setEmailModalConfigVisible(true);
       hide();
-      return true;
     } catch (error) {
       hide();
       message.error('获取常用联系人失败');
-      return false;
     }
   };
 
@@ -73,38 +71,43 @@ const TableList = () => {
       });
       hide();
       message.success('邮件配置更新成功');
-
-      setEmailModalConfigVisible(false);
-      return true;
+      await setEmailModalConfigVisible(false);
+      await setMailConfig({});
     } catch (error) {
       hide();
       message.error('邮件配置更新失败,请重试');
-      return false;
     }
+  };
+
+  // 更新邮件配置取消
+  const onCancelMailConfig = async () => {
+    await setEmailModalConfigVisible(false);
+    await setMailConfig({});
+  };
+
+  // 日月年切换
+  const onSelectionChange = val => {
+    setMode(val);
+    setKeywordsValue('');
+    setKeywords('');
+    // https://momentjs.com/docs/#/manipulating/start-of/
+    setStartTime(
+      moment()
+        .startOf(val)
+        .valueOf(),
+    );
+    // https://momentjs.com/docs/#/manipulating/end-of/
+    setEndTime(
+      moment()
+        .endOf(val)
+        .valueOf(),
+    );
   };
 
   const headerContent = (
     <div className="dc-headerContent-wrapper">
       <Text>周期：</Text>
-      <Select
-        defaultValue="day"
-        style={{ width: 120 }}
-        onChange={val => {
-          setMode(val);
-          setKeywordsValue('');
-          setKeywords('');
-          setStartTime(
-            moment()
-              .startOf(val)
-              .valueOf(),
-          );
-          setEndTime(
-            moment()
-              .endOf(val)
-              .valueOf(),
-          );
-        }}
-      >
+      <Select defaultValue="day" style={{ width: 120 }} onChange={onSelectionChange}>
         <Option value="day">日</Option>
         <Option value="month">月</Option>
         <Option value="year">年</Option>
@@ -244,14 +247,16 @@ const TableList = () => {
           current: 1,
         }}
       />
-      <MailConfigForm
-        mode={mode}
-        recipients={recipients}
-        mailConfig={mailConfig}
-        onSubmit={onUpdateMailConfig}
-        onCancel={() => setEmailModalConfigVisible(false)}
-        modalVisible={emailConfigModalVisible}
-      />
+      {mailConfig && Object.keys(mailConfig).length ? (
+        <MailConfigForm
+          mode={mode}
+          recipients={recipients}
+          mailConfig={mailConfig}
+          onSubmit={onUpdateMailConfig}
+          onCancel={onCancelMailConfig}
+          modalVisible={emailConfigModalVisible}
+        />
+      ) : null}
     </PageHeaderWrapper>
   );
 };
