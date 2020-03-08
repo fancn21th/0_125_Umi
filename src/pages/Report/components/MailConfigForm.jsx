@@ -82,7 +82,6 @@ const MailConfigForm = props => {
   const okHandle = async () => {
     const fieldsValue = await form.validateFields();
     const convertedFieldsValue = convertBackwardsMailConfig(fieldsValue);
-    form.resetFields();
     handleUpdate(convertedFieldsValue);
   };
 
