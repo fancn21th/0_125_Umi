@@ -72,7 +72,7 @@ const TableList = () => {
       hide();
       message.success('邮件配置更新成功');
       await setEmailModalConfigVisible(false);
-      await setMailConfig({});
+      setMailConfig({});
     } catch (error) {
       hide();
       message.error('邮件配置更新失败,请重试');

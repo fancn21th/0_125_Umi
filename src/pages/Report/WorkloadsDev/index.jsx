@@ -59,6 +59,7 @@ const TableList = () => {
       message.error('获取常用联系人失败');
     }
   };
+
   // 更新邮件配置回调
   const onUpdateMailConfig = async data => {
     const hide = message.loading('正在更新');
@@ -71,7 +72,7 @@ const TableList = () => {
       hide();
       message.success('邮件配置更新成功');
       await setEmailModalConfigVisible(false);
-      await setMailConfig({});
+      setMailConfig({});
     } catch (error) {
       hide();
       message.error('邮件配置更新失败,请重试');
