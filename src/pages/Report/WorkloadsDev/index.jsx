@@ -4,14 +4,15 @@ import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import moment from 'moment';
-import { queryRecipients } from '@/services/recipients';
-import { queryEmailSetting, updateEmailSetting } from '@/services/emailConfig';
+import { updateEmailSetting } from '@/services/emailConfig';
 import data2ExcelJson from '@/utils/excel/data2ExcelJson';
 import exportJson2Sheet from '@/utils/excel/exportJson2Sheet';
 import { queryCargos, sendmail } from './service';
 import { columns } from './config/col-config';
 import config from './config/config';
 import MailConfigForm from '../components/MailConfigForm';
+import { useEmailConfig } from '../hooks/useEmailConfig';
+import { useRecipients } from '../hooks/useRecipients';
 
 const { tableTitle, headerTitle, dayDefaultDate, monthDefaultDate, yearDefaultDate } = config;
 const { Search } = Input;
@@ -21,12 +22,12 @@ const { Text } = Typography;
 
 const TableList = () => {
   const [emailConfigModalVisible, setEmailModalConfigVisible] = useState(false);
-  const [mailConfig, setMailConfig] = useState({});
-  const [datasource, setDatasource] = useState(null);
   const [mode, setMode] = useState('day');
+  const { emailConfig, reload, isEmailConfigReady } = useEmailConfig('machine', mode);
+  const { recipients } = useRecipients([]);
+  const [datasource, setDatasource] = useState(null);
   const [keywordsValue, setKeywordsValue] = useState('');
   const [keywords, setKeywords] = useState('');
-  const [recipients, setRecipients] = useState([]);
   const [startTime, setStartTime] = useState(
     moment()
       .startOf(mode)
@@ -42,22 +43,11 @@ const TableList = () => {
 
   // 点击邮件配置按钮回调
   const onEmailConfigClick = async () => {
-    const hide = message.loading('正在加载邮件配置');
-
-    try {
-      const { data: recipientsRes } = await queryRecipients();
-      await setRecipients(recipientsRes);
-      const emailSettingRes = await queryEmailSetting({
-        category: 'machine',
-        mode,
-      });
-      await setMailConfig(emailSettingRes);
-      setEmailModalConfigVisible(true);
-      hide();
-    } catch (error) {
-      hide();
-      message.error('获取常用联系人失败');
+    if (recipients.length === 0) {
+      message.error('请先设置常用联系人');
+      return;
     }
+    setEmailModalConfigVisible(true);
   };
 
   // 更新邮件配置回调
@@ -72,7 +62,7 @@ const TableList = () => {
       hide();
       message.success('邮件配置更新成功');
       await setEmailModalConfigVisible(false);
-      setMailConfig({});
+      await reload();
     } catch (error) {
       hide();
       message.error('邮件配置更新失败,请重试');
@@ -82,7 +72,6 @@ const TableList = () => {
   // 更新邮件配置取消
   const onCancelMailConfig = async () => {
     await setEmailModalConfigVisible(false);
-    await setMailConfig({});
   };
 
   // 日月年切换
@@ -246,11 +235,11 @@ const TableList = () => {
           current: 1,
         }}
       />
-      {mailConfig && Object.keys(mailConfig).length ? (
+      {isEmailConfigReady ? (
         <MailConfigForm
           mode={mode}
           recipients={recipients}
-          mailConfig={mailConfig}
+          mailConfig={emailConfig}
           onSubmit={onUpdateMailConfig}
           onCancel={onCancelMailConfig}
           modalVisible={emailConfigModalVisible}
