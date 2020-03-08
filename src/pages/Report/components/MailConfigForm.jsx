@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
 import moment from 'moment';
 
@@ -149,7 +149,7 @@ const MailConfigForm = props => {
         >
           <Select mode="multiple" placeholder="从常用联系人中选择">
             {recipients.map(({ id, email, name }) => (
-              <Option key="{id}" value={id}>{`${name} (${email})`}</Option>
+              <Option key={id} value={id}>{`${name} (${email})`}</Option>
             ))}
           </Select>
         </FormItem>
@@ -160,7 +160,7 @@ const MailConfigForm = props => {
               <Form.Item noStyle name="monthSendTime" rules={monthRule}>
                 <Select placeholder="请选择月">
                   {[...new Array(12)].map((val, index) => (
-                    <Option key="{index}" value={index + 1}>{`${index + 1} 月`}</Option>
+                    <Option key={index} value={index + 1}>{`${index + 1} 月`}</Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -170,11 +170,11 @@ const MailConfigForm = props => {
                 <Select placeholder="请选择日">
                   {[...new Array(29)].map((val, index) =>
                     index === 28 ? (
-                      <Option key="{index}" value={index + 1}>
+                      <Option key={index} value={index + 1}>
                         每月最后一日
                       </Option>
                     ) : (
-                      <Option key="{index}" value={index + 1}>{`${index + 1} 日`}</Option>
+                      <Option key={index} value={index + 1}>{`${index + 1} 日`}</Option>
                     ),
                   )}
                 </Select>
