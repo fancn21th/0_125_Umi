@@ -15,6 +15,10 @@ export default (body, header, sheetName, fileName) => {
     .map(val => (val.length <= 1 ? `0${val}` : val))
     .join('');
   fileName = `${fileName}-${dateStr}.xlsx`;
+  /*
+    修复问题：IE11和edge浏览器导出报表功能无法使用
+    涉及页面：所有包含导出报表的页面
+  */
   //for IE11
   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveOrOpenBlob(blob, fileName);

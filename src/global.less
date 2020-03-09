@@ -51,12 +51,27 @@ ol {
   body .ant-design-pro > .ant-layout {
     min-height: 100vh;
   }
+  /*
+    修复问题：日期范围选择器的placehorder未垂直居中
+    涉及页面：所有包含日期范围选择器的页面
+  */
   input[placeholder='开始日期'],
   input[placeholder='结束日期'] {
     line-height: 1.286 !important;
   }
+  /*
+    修复问题：单号和货物RFID显示重叠
+    涉及页面：订单操作页面
+  */
   td.ant-table-cell {
     word-break: break-all;
+  }
+  /*
+    修复问题：邮件配置的发送日期菜单项未垂直居中
+    涉及页面：包含邮件配置的页面
+  */
+  .ant-input-group {
+    display: flex !important;
   }
 }
 

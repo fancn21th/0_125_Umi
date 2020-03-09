@@ -90,8 +90,13 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
   headers: {
     xtoken: getToken() || '', // 避免服务端认为是攻击
-    //以下两项同时启用时，IE11、Edge及现代浏览器均不使用缓存，链接：https://blog.csdn.net/qq_26941173/article/details/84935421
-    // 'Cache-Control': 'no-cache', //兼容IE11，避免使用缓存，只设置该项时IE11依然使用缓存
+    /*
+    修复问题：单号和货物RFID显示重叠
+    涉及页面：订单操作页面
+    问题原因：IE缓存
+    解决方法：链接：https://blog.csdn.net/qq_26941173/article/details/84935421
+  */
+    'Cache-Control': 'no-cache', //兼容IE11，避免使用缓存，只设置该项时IE11依然使用缓存
     Pragma: 'no-cache', //兼容IE11，避免使用缓存，只设置该项IE11、Edge及现代浏览器均不使用缓存
   },
 });
