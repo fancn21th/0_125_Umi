@@ -28,6 +28,7 @@ const TableList = () => {
     <div className="dc-headerContent-wrapper">
       <Text>单号：</Text>
       <Input
+        className="dc-orderno-input-width"
         placeholder="请输入单号"
         value={orderNoValue}
         onChange={e => {
