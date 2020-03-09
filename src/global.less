@@ -60,10 +60,6 @@ ol {
   }
 }
 
-// :global(.ant-pro-page-header-wrap-content) {
-//
-// }
-
 :global(.dc-pageHeaderWrapper-fix-ahead-panel) {
   position: absolute;
   z-index: 2;
@@ -75,7 +71,8 @@ ol {
   line-height: 64px;
 }
 
-// Variables
+// 作用于: PageHeaderWrapper content
+// 设置 该区域功能控件之间的间距
 @headerContent-input-right-margin: 32px;
 @headerContent-btn-right-margin: 16px;
 
@@ -99,10 +96,17 @@ ol {
   }
 }
 
-// 侧边栏上的logo尺寸覆盖
+// 作用于: 侧边栏顶部的Logo区域
+// logo尺寸覆盖
 :global(.ant-pro-sider-menu-logo) {
   padding: 0 16px 0 16px !important;
   & img {
     height: 26px !important;
   }
+}
+
+// 作用于: Protable 2.0 的 th 的 table cell
+// 文字不折行
+:global(th.ant-table-cell) {
+  white-space: nowrap;
 }
