@@ -45,7 +45,7 @@ const TableList = ({ ivtList }) => {
     <div className="dc-headerContent-wrapper">
       <Text>盘点编号：</Text>
       <Select
-        style={{ width: 120 }}
+        style={{ width: 150 }}
         onChange={val => {
           setInventoryno(val);
         }}
