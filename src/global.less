@@ -73,6 +73,13 @@ ol {
   .ant-input-group {
     display: flex !important;
   }
+  /*
+    修复问题：报表服务下收件人选择多个收件人超出边框
+    涉及页面：所有包含邮件配置的页面
+  */
+  .dc-email-config-recipients-select {
+    width: 295px !important;
+  }
 }
 
 // :global(.ant-pro-page-header-wrap-content) {
