@@ -1,6 +1,6 @@
 export const columns = [
   {
-    title: '行号',
+    title: '单行号',
     dataIndex: 'InOrderItemNo',
     sorter: false,
   },
