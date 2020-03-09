@@ -4,13 +4,13 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import BarChart from './components/BarChart';
 import config from './config/config';
-const { headerTitle } = config;
+const { headerTitle, defaultDate } = config;
 
 const { RangePicker } = DatePicker;
 
 const ShelfUtilization = props => {
   const { dispatch, data } = props;
-  const [dateSpan, setDateSpan] = useState(null);
+  const [dateSpan, setDateSpan] = useState(defaultDate);
   const [dateSpanArray, setDateSpanArray] = useState([]);
 
   const onSearch = () => {
@@ -37,6 +37,7 @@ const ShelfUtilization = props => {
   const mainSearch = (
     <div className="dc-headerContent-wrapper">
       <RangePicker
+        defaultValue={defaultDate}
         value={dateSpan}
         onChange={onRangePickerChange}
         format="YYYY-MM-DD"
