@@ -146,7 +146,7 @@ const MailConfigForm = props => {
             },
           ]}
         >
-          <Select mode="multiple" placeholder="从常用联系人中选择">
+          <Select mode="multiple" placeholder="从常用联系人中选择" className="dc-email-config-recipients-select">
             {recipients.map(({ id, email, name }) => (
               <Option key={id} value={id}>{`${name} (${email})`}</Option>
             ))}
