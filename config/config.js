@@ -153,6 +153,11 @@ export default {
                   path: '/cargo/cargolistivt',
                   component: './Cargo/CargoListIvt',
                 },
+                {
+                  name: 'list.op-list-by-time',
+                  path: '/cargo/oplistbytime',
+                  component: './Cargo/OpListByTime',
+                },
               ],
             },
             {
@@ -170,11 +175,6 @@ export default {
                   name: 'list.op-list',
                   path: '/order/oplist',
                   component: './Order/OpList',
-                },
-                {
-                  name: 'list.op-list-by-time',
-                  path: '/order/oplistbytime',
-                  component: './Order/OpListByTime',
                 },
               ],
             },
@@ -194,6 +194,11 @@ export default {
                   path: '/workloads/workloadsdev',
                   component: './Workloads/WorkloadsDev',
                 },
+                {
+                  name: 'shelf-utilization',
+                  path: '/workloads/shelfutilization',
+                  component: './Workloads/ShelfUtilization',
+                },
               ],
             },
             {
@@ -206,11 +211,6 @@ export default {
                   name: 'cargobroken-by-inorder',
                   path: '/cargoinfo/cargobrokenbyinorder',
                   component: './Cargoinfo/CargobrokenByInorder',
-                },
-                {
-                  name: 'shelf-utilization',
-                  path: '/cargoinfo/shelfutilization',
-                  component: './Cargoinfo/ShelfUtilization',
                 },
               ],
             },
@@ -245,7 +245,7 @@ export default {
             },
             {
               name: 'config',
-              icon: 'UserOutlined',
+              icon: 'SettingFilled',
               path: '/config',
               authority: ['super', 'admin'],
               routes: [
@@ -267,14 +267,21 @@ export default {
                   ],
                 },
                 {
-                  name: 'sino-user',
-                  path: '/config/sinouser',
-                  component: './Configuration/SinoUser',
-                },
-                {
-                  name: 'account',
-                  path: '/config/account',
-                  component: './Configuration/Account',
+                  name: 'manage',
+                  icon: 'UserOutlined',
+                  path: '/config/manage',
+                  routes: [
+                    {
+                      name: 'sino-user',
+                      path: '/config/manage/sinouser',
+                      component: './Configuration/Manage/SinoUser',
+                    },
+                    {
+                      name: 'account',
+                      path: '/config/manage/account',
+                      component: './Configuration/Manage/Account',
+                    },
+                  ],
                 },
               ],
             },
