@@ -20,11 +20,12 @@ const UserModel = {
       if (response.role) {
         yield put({
           type: 'saveCurrentUser',
-          payload: {
-            ...response,
-            avatar:
-              'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-          },
+          // payload: {
+          //   ...response,
+          //   avatar:
+          //     'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+          // },
+          payload: response,
         });
       } else if (response.status === 401) {
         router.replace('/');
